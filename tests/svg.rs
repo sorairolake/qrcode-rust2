@@ -5,11 +5,11 @@
 
 #![cfg(feature = "svg")]
 
-use qrcode2::{QrCode, render::svg::Color};
+use qrcode2::{EcLevel, QrCode, Version, render::svg::Color};
 
 #[test]
 fn test_annex_i_qr_as_svg() {
-    let code = QrCode::new(b"01234567").unwrap();
+    let code = QrCode::with_version(b"01234567", Version::Normal(1), EcLevel::M).unwrap();
     let image = code.render::<Color<'_>>().build();
     let expected = include_str!("data/test_annex_i_qr_as_svg.svg");
     assert_eq!(&image, expected);
@@ -17,7 +17,7 @@ fn test_annex_i_qr_as_svg() {
 
 #[test]
 fn test_annex_i_micro_qr_as_svg() {
-    let code = QrCode::new_micro(b"01234567").unwrap();
+    let code = QrCode::with_version(b"01234567", Version::Micro(2), EcLevel::L).unwrap();
     let image = code
         .render()
         .min_dimensions(200, 200)
@@ -30,7 +30,7 @@ fn test_annex_i_micro_qr_as_svg() {
 
 #[test]
 fn test_annex_i_rmqr_as_svg() {
-    let code = QrCode::new_rect_micro(b"01234567").unwrap();
+    let code = QrCode::with_version(b"0123456", Version::RectMicro(11, 27), EcLevel::H).unwrap();
     let image = code.render::<Color<'_>>().build();
     let expected = include_str!("data/test_annex_i_rmqr_as_svg.svg");
     assert_eq!(&image, expected);

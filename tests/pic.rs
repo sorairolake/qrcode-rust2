@@ -5,11 +5,11 @@
 
 #![cfg(feature = "pic")]
 
-use qrcode2::{QrCode, render::pic::Color};
+use qrcode2::{EcLevel, QrCode, Version, render::pic::Color};
 
 #[test]
 fn test_annex_i_qr_as_pic() {
-    let code = QrCode::new(b"01234567").unwrap();
+    let code = QrCode::with_version(b"01234567", Version::Normal(1), EcLevel::M).unwrap();
     let image = code.render::<Color>().build();
     let expected = include_str!("data/test_annex_i_qr_as_pic.pic");
     assert_eq!(&image, expected);
@@ -17,7 +17,7 @@ fn test_annex_i_qr_as_pic() {
 
 #[test]
 fn test_annex_i_micro_qr_as_pic() {
-    let code = QrCode::new_micro(b"01234567").unwrap();
+    let code = QrCode::with_version(b"01234567", Version::Micro(2), EcLevel::L).unwrap();
     let image = code.render::<Color>().min_dimensions(1, 1).build();
     let expected = include_str!("data/test_annex_i_micro_qr_as_pic.pic");
     assert_eq!(&image, expected);
@@ -25,7 +25,7 @@ fn test_annex_i_micro_qr_as_pic() {
 
 #[test]
 fn test_annex_i_rmqr_as_pic() {
-    let code = QrCode::new_rect_micro(b"01234567").unwrap();
+    let code = QrCode::with_version(b"0123456", Version::RectMicro(11, 27), EcLevel::H).unwrap();
     let image = code.render::<Color>().build();
     let expected = include_str!("data/test_annex_i_rmqr_as_pic.pic");
     assert_eq!(&image, expected);
