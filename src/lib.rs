@@ -64,7 +64,7 @@ use core::ops::Index;
 #[cfg(feature = "image")]
 pub use image;
 
-pub use crate::types::{Color, EcLevel, QrResult, Version};
+pub use crate::types::{Color, EcLevel, QrError, QrResult, Version};
 use crate::{
     bits::{Bits, RectMicroStrategy},
     canvas::Canvas,

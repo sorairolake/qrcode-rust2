@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.17.0\...HEAD[Unreleased]
+
+=== Added
+
+* Re-export `types::QrError` ({pull-request-url}/48[#48])
+
 == {compare-url}/v0.16.1\...v0.17.0[0.17.0] - 2025-11-01
 
 === Added

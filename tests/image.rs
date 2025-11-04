@@ -9,9 +9,8 @@
 use std::sync::LazyLock;
 
 use qrcode2::{
-    EcLevel, QrCode, Version,
+    EcLevel, QrCode, QrError, Version,
     image::{Luma, Rgb},
-    types::QrError,
 };
 use sha3::{Shake128, digest::ExtendableOutput};
 
