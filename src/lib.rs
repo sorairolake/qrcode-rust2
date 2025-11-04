@@ -85,8 +85,8 @@ pub struct QrCode {
 impl QrCode {
     /// Constructs a new QR code which automatically encodes the given data.
     ///
-    /// This method uses the "medium" error correction level and automatically
-    /// chooses the smallest QR code.
+    /// This method uses [`EcLevel::M`] and automatically chooses the smallest
+    /// QR code based on [`bits::encode_auto`].
     ///
     /// # Errors
     ///
@@ -102,14 +102,14 @@ impl QrCode {
     /// ```
     #[inline]
     pub fn new(data: impl AsRef<[u8]>) -> QrResult<Self> {
-        Self::with_error_correction_level(data, EcLevel::M)
+        Self::with_error_correction_level(data, EcLevel::default())
     }
 
     /// Constructs a new Micro QR code which automatically encodes the given
     /// data.
     ///
-    /// This method uses the "medium" error correction level and automatically
-    /// chooses the smallest Micro QR code.
+    /// This method uses [`EcLevel::M`] and automatically chooses the smallest
+    /// Micro QR code based on [`bits::encode_auto_micro`].
     ///
     /// # Errors
     ///
@@ -125,13 +125,14 @@ impl QrCode {
     /// ```
     #[inline]
     pub fn new_micro(data: impl AsRef<[u8]>) -> QrResult<Self> {
-        Self::micro_with_error_correction_level(data, EcLevel::M)
+        Self::micro_with_error_correction_level(data, EcLevel::default())
     }
 
     /// Constructs a new rMQR code which automatically encodes the given data.
     ///
-    /// This method uses the "medium" error correction level and automatically
-    /// chooses the smallest rMQR code based on [`RectMicroStrategy::Area`].
+    /// This method uses [`EcLevel::M`] and automatically chooses the smallest
+    /// rMQR code based on [`bits::encode_auto_rect_micro`] and
+    /// [`RectMicroStrategy::Area`].
     ///
     /// # Errors
     ///
@@ -147,13 +148,14 @@ impl QrCode {
     /// ```
     #[inline]
     pub fn new_rect_micro(data: impl AsRef<[u8]>) -> QrResult<Self> {
-        Self::rect_micro_with_error_correction_level(data, EcLevel::M)
+        Self::rect_micro_with_error_correction_level(data, EcLevel::default())
     }
 
     /// Constructs a new QR code which automatically encodes the given data at a
     /// specific error correction level.
     ///
-    /// This method automatically chooses the smallest QR code.
+    /// This method automatically chooses the smallest QR code based on
+    /// [`bits::encode_auto`].
     ///
     /// # Errors
     ///
@@ -179,7 +181,8 @@ impl QrCode {
     /// Constructs a new Micro QR code which automatically encodes the given
     /// data at a specific error correction level.
     ///
-    /// This method automatically chooses the smallest Micro QR code.
+    /// This method automatically chooses the smallest Micro QR code based on
+    /// [`bits::encode_auto_micro`].
     ///
     /// # Errors
     ///
@@ -206,7 +209,7 @@ impl QrCode {
     /// a specific error correction level.
     ///
     /// This method automatically chooses the smallest rMQR code based on
-    /// [`RectMicroStrategy::Area`].
+    /// [`bits::encode_auto_rect_micro`] and [`RectMicroStrategy::Area`].
     ///
     /// # Errors
     ///
@@ -270,9 +273,9 @@ impl QrCode {
     /// Use this method only if there are very special need to manipulate the
     /// raw bits before encoding. Some examples are:
     ///
-    /// - Encode data using specific character set with ECI
-    /// - Use the FNC1 modes
-    /// - Avoid the optimal segmentation algorithm
+    /// - Encode data using specific character set with ECI.
+    /// - Use the FNC1 modes.
+    /// - Avoid the optimal segmentation algorithm.
     ///
     /// See the [`Bits`] structure for detail.
     ///
@@ -429,7 +432,7 @@ impl QrCode {
         self.content.clone()
     }
 
-    /// Converts the QR code to a vector of colors.
+    /// Consumes the QR code, returning a vector of colors.
     #[must_use]
     #[inline]
     pub fn into_colors(self) -> Vec<Color> {

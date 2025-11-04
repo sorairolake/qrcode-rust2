@@ -67,8 +67,7 @@ pub enum Color {
 }
 
 impl Color {
-    /// Selects a value according to color of the module. Equivalent to `if self
-    /// != Color::Light { dark } else { light }`.
+    /// Selects a value according to color of the module.
     ///
     /// # Examples
     ///
@@ -108,7 +107,7 @@ pub enum EcLevel {
     /// Low error correction. Allows up to 7% of wrong blocks.
     L = 0,
 
-    /// Medium error correction (default). Allows up to 15% of wrong blocks.
+    /// Medium error correction. Allows up to 15% of wrong blocks.
     #[default]
     M = 1,
 

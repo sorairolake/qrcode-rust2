@@ -2652,28 +2652,28 @@ mod draw_codewords_tests {
 /// pattern number, we name them according to their shape instead of the number.
 #[derive(Clone, Copy, Debug)]
 pub enum MaskPattern {
-    /// QR code pattern 000: `(x + y) % 2 == 0`.
+    /// QR code mask pattern `000`.
     Checkerboard = 0b000,
 
-    /// QR code pattern 001: `y % 2 == 0`.
+    /// QR code mask pattern `001`.
     HorizontalLines = 0b001,
 
-    /// QR code pattern 010: `x % 3 == 0`.
+    /// QR code mask pattern `010`.
     VerticalLines = 0b010,
 
-    /// QR code pattern 011: `(x + y) % 3 == 0`.
+    /// QR code mask pattern `011`.
     DiagonalLines = 0b011,
 
-    /// QR code pattern 100: `((x/3) + (y/2)) % 2 == 0`.
+    /// QR code mask pattern `100`.
     LargeCheckerboard = 0b100,
 
-    /// QR code pattern 101: `(x*y)%2 + (x*y)%3 == 0`.
+    /// QR code mask pattern `101`.
     Fields = 0b101,
 
-    /// QR code pattern 110: `((x*y)%2 + (x*y)%3) % 2 == 0`.
+    /// QR code mask pattern `110`.
     Diamonds = 0b110,
 
-    /// QR code pattern 111: `((x+y)%2 + (x*y)%3) % 2 == 0`.
+    /// QR code mask pattern `111`.
     Meadow = 0b111,
 }
 
