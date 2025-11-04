@@ -40,7 +40,7 @@
 //! [Micro QR code]: https://www.qrcode.com/codes/microqr.html
 //! [rMQR code]: https://www.qrcode.com/codes/rmqr.html
 
-#![doc(html_root_url = "https://docs.rs/qrcode2/0.17.0/")]
+#![doc(html_root_url = "https://docs.rs/qrcode2/0.17.1/")]
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 // Lint levels of rustc.

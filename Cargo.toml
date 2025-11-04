@@ -11,7 +11,7 @@
 
 [package]
 name = "qrcode2"
-version = "0.17.0"
+version = "0.17.1"
 edition = "2024"
 rust-version = "1.85.0"
 description = "A QR code, Micro QR code, and rMQR code encoding library"
