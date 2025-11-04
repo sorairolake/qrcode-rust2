@@ -94,6 +94,54 @@ fn test_qr_v40_ec_l_as_image() {
 }
 
 #[test]
+fn test_qr_v40_ec_m_as_image() {
+    {
+        let code = QrCode::new(&INPUT_DATA[..2331]).unwrap();
+        let image = code.render::<Luma<u8>>().build();
+        let expected =
+            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_m_as_image.png"))
+                .unwrap()
+                .into_luma8();
+        assert_eq!(image.dimensions(), expected.dimensions());
+        assert_eq!(image.into_raw(), expected.into_raw());
+    }
+    {
+        let err = QrCode::new(&INPUT_DATA[..2332]).unwrap_err();
+        assert_eq!(err, QrError::DataTooLong);
+    }
+    {
+        let code = QrCode::with_error_correction_level(&INPUT_DATA[..2331], EcLevel::M).unwrap();
+        let image = code.render::<Luma<u8>>().build();
+        let expected =
+            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_m_as_image.png"))
+                .unwrap()
+                .into_luma8();
+        assert_eq!(image.dimensions(), expected.dimensions());
+        assert_eq!(image.into_raw(), expected.into_raw());
+    }
+    {
+        let err = QrCode::with_error_correction_level(&INPUT_DATA[..2332], EcLevel::M).unwrap_err();
+        assert_eq!(err, QrError::DataTooLong);
+    }
+    {
+        let code =
+            QrCode::with_version(&INPUT_DATA[..2331], Version::Normal(40), EcLevel::M).unwrap();
+        let image = code.render::<Luma<u8>>().build();
+        let expected =
+            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_m_as_image.png"))
+                .unwrap()
+                .into_luma8();
+        assert_eq!(image.dimensions(), expected.dimensions());
+        assert_eq!(image.into_raw(), expected.into_raw());
+    }
+    {
+        let err =
+            QrCode::with_version(&INPUT_DATA[..2332], Version::Normal(40), EcLevel::M).unwrap_err();
+        assert_eq!(err, QrError::DataTooLong);
+    }
+}
+
+#[test]
 fn test_qr_v40_ec_h_as_image() {
     {
         let code = QrCode::with_error_correction_level(&INPUT_DATA[..1273], EcLevel::H).unwrap();
@@ -163,6 +211,55 @@ fn test_micro_qr_v4_ec_l_as_image() {
 }
 
 #[test]
+fn test_micro_qr_v4_ec_m_as_image() {
+    {
+        let code = QrCode::new_micro(&INPUT_DATA[..13]).unwrap();
+        let image = code.render::<Luma<u8>>().build();
+        let expected =
+            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_m_as_image.png"))
+                .unwrap()
+                .into_luma8();
+        assert_eq!(image.dimensions(), expected.dimensions());
+        assert_eq!(image.into_raw(), expected.into_raw());
+    }
+    {
+        let err = QrCode::new_micro(&INPUT_DATA[..14]).unwrap_err();
+        assert_eq!(err, QrError::DataTooLong);
+    }
+    {
+        let code =
+            QrCode::micro_with_error_correction_level(&INPUT_DATA[..13], EcLevel::M).unwrap();
+        let image = code.render::<Luma<u8>>().build();
+        let expected =
+            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_m_as_image.png"))
+                .unwrap()
+                .into_luma8();
+        assert_eq!(image.dimensions(), expected.dimensions());
+        assert_eq!(image.into_raw(), expected.into_raw());
+    }
+    {
+        let err =
+            QrCode::micro_with_error_correction_level(&INPUT_DATA[..14], EcLevel::M).unwrap_err();
+        assert_eq!(err, QrError::DataTooLong);
+    }
+    {
+        let code = QrCode::with_version(&INPUT_DATA[..13], Version::Micro(4), EcLevel::M).unwrap();
+        let image = code.render::<Luma<u8>>().build();
+        let expected =
+            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_m_as_image.png"))
+                .unwrap()
+                .into_luma8();
+        assert_eq!(image.dimensions(), expected.dimensions());
+        assert_eq!(image.into_raw(), expected.into_raw());
+    }
+    {
+        let err =
+            QrCode::with_version(&INPUT_DATA[..14], Version::Micro(4), EcLevel::M).unwrap_err();
+        assert_eq!(err, QrError::DataTooLong);
+    }
+}
+
+#[test]
 fn test_micro_qr_v4_ec_q_as_image() {
     {
         let code = QrCode::micro_with_error_correction_level(&INPUT_DATA[..9], EcLevel::Q).unwrap();
@@ -198,6 +295,20 @@ fn test_micro_qr_v4_ec_q_as_image() {
 
 #[test]
 fn test_rmqr_vr17x139_ec_m_as_image() {
+    {
+        let code = QrCode::new_rect_micro(&INPUT_DATA[..150]).unwrap();
+        let image = code.render::<Luma<u8>>().build();
+        let expected =
+            image::load_from_memory(include_bytes!("data/test_rmqr_vr17x139_ec_m_as_image.png"))
+                .unwrap()
+                .into_luma8();
+        assert_eq!(image.dimensions(), expected.dimensions());
+        assert_eq!(image.into_raw(), expected.into_raw());
+    }
+    {
+        let err = QrCode::new_rect_micro(&INPUT_DATA[..151]).unwrap_err();
+        assert_eq!(err, QrError::DataTooLong);
+    }
     {
         let code =
             QrCode::rect_micro_with_error_correction_level(&INPUT_DATA[..150], EcLevel::M).unwrap();
