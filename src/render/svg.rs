@@ -90,7 +90,8 @@ impl<'a> RenderCanvas for Canvas<'a> {
 
     #[inline]
     fn draw_dark_rect(&mut self, left: u32, top: u32, width: u32, height: u32) {
-        write!(self.svg, "M{left} {top}h{width}v{height}h-{width}z").unwrap();
+        write!(self.svg, "M{left} {top}h{width}v{height}h-{width}z")
+            .expect("dark rectangle should be drawn");
     }
 
     #[inline]

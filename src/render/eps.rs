@@ -89,7 +89,8 @@ impl RenderCanvas for Canvas {
     #[inline]
     fn draw_dark_rect(&mut self, left: u32, top: u32, width: u32, height: u32) {
         let bottom = self.height - top;
-        writeln!(self.eps, "{left} {bottom} {width} {height} rectfill").unwrap();
+        writeln!(self.eps, "{left} {bottom} {width} {height} rectfill")
+            .expect("dark rectangle should be drawn");
     }
 
     #[inline]
