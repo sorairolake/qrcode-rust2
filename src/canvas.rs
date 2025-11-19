@@ -254,7 +254,7 @@ mod basic_canvas_tests {
         }
 
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "?????????????????????\n",
@@ -349,7 +349,7 @@ mod finder_pattern_tests {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_finder_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.?????.#######\n",
@@ -382,7 +382,7 @@ mod finder_pattern_tests {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_finder_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.???\n",
@@ -405,7 +405,7 @@ mod finder_pattern_tests {
         let mut c = Canvas::new(Version::RectMicro(7, 43), EcLevel::M);
         c.draw_finder_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.???????????????????????????????????\n",
@@ -497,7 +497,7 @@ mod alignment_pattern_tests {
         c.draw_finder_patterns();
         c.draw_alignment_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.?????.#######\n",
@@ -531,7 +531,7 @@ mod alignment_pattern_tests {
         c.draw_finder_patterns();
         c.draw_alignment_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.?????????????.#######\n",
@@ -573,7 +573,7 @@ mod alignment_pattern_tests {
         c.draw_finder_patterns();
         c.draw_alignment_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.?????????????????????????????.#######\n",
@@ -631,7 +631,7 @@ mod alignment_pattern_tests {
         c.draw_finder_patterns();
         c.draw_alignment_patterns_rmqr();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.????????????????###???????????????????????###????????????????????????\n",
@@ -842,7 +842,7 @@ mod timing_pattern_tests {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "?????????????????????\n",
@@ -875,7 +875,7 @@ mod timing_pattern_tests {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "????????#.#\n",
@@ -898,7 +898,7 @@ mod timing_pattern_tests {
         let mut c = Canvas::new(Version::RectMicro(7, 77), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "????????#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#??\n",
@@ -917,7 +917,7 @@ mod timing_pattern_tests {
         let mut c = Canvas::new(Version::RectMicro(9, 77), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "????????#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#??\n",
@@ -938,7 +938,7 @@ mod timing_pattern_tests {
         let mut c = Canvas::new(Version::RectMicro(11, 77), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "????????#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#??\n",
@@ -1086,7 +1086,7 @@ mod draw_version_info_tests {
             &[(0, 0), (0, -1), (-2, -2), (-2, 0)],
         );
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#????????.?\n",
@@ -1109,7 +1109,7 @@ mod draw_version_info_tests {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_version_info_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "?????????????????????\n",
@@ -1143,7 +1143,7 @@ mod draw_version_info_tests {
         c.draw_version_info_patterns();
 
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "??????????????????????????????????..#????????\n",
@@ -1200,7 +1200,7 @@ mod draw_version_info_tests {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_reserved_format_info_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "????????.????????????\n",
@@ -1233,7 +1233,7 @@ mod draw_version_info_tests {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_reserved_format_info_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "???????????\n",
@@ -1608,7 +1608,7 @@ mod all_functional_patterns_tests {
         let mut c = Canvas::new(Version::Normal(2), EcLevel::L);
         c.draw_all_functional_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######..????????.#######\n",
@@ -1645,7 +1645,7 @@ mod all_functional_patterns_tests {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_all_functional_patterns();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.#.#\n",
@@ -2562,7 +2562,7 @@ mod draw_codewords_tests {
         c.draw_all_functional_patterns();
         c.draw_data(b"\x6e\x5d\xe2", b"\x2b\x63");
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.#.#\n",
@@ -2585,12 +2585,16 @@ mod draw_codewords_tests {
         let mut c = Canvas::new(Version::Normal(2), EcLevel::L);
         c.draw_all_functional_patterns();
         c.draw_data(
-            b"\x92I$\x92I$\x92I$\x92I$\x92I$\x92I$\x92I$\x92I$\
-              \x92I$\x92I$\x92I$\x92I$\x92I$\x92I$\x92I$",
+            &[
+                0x92, 0x49, 0x24, 0x92, 0x49, 0x24, 0x92, 0x49, 0x24, 0x92, 0x49, 0x24, 0x92, 0x49,
+                0x24, 0x92, 0x49, 0x24, 0x92, 0x49, 0x24, 0x92, 0x49, 0x24, 0x92, 0x49, 0x24, 0x92,
+                0x49, 0x24, 0x92, 0x49, 0x24, 0x92, 0x49, 0x24, 0x92, 0x49, 0x24, 0x92, 0x49, 0x24,
+                0x92, 0x49, 0x24,
+            ],
             b"",
         );
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######..--*---*-.#######\n",
@@ -2627,11 +2631,15 @@ mod draw_codewords_tests {
         let mut c = Canvas::new(Version::RectMicro(7, 77), EcLevel::M);
         c.draw_all_functional_patterns();
         c.draw_data(
-            b"\x71\x68\x74\x74\x70\x73\x3a\x2f\x2f\x6f\x75\x64\x6f\x6e\x2e\x78\x79\x7a\x00\xec\xff\x6b\xc6\xcb\x02\x06\xa5\xfe\x36\x6e\x55\xff",
+            &[
+                0x71, 0x68, 0x74, 0x74, 0x70, 0x73, 0x3a, 0x2f, 0x2f, 0x6f, 0x75, 0x64, 0x6f, 0x6e,
+                0x2e, 0x78, 0x79, 0x7a, 0x00, 0xec, 0xff, 0x6b, 0xc6, 0xcb, 0x02, 0x06, 0xa5, 0xfe,
+                0x36, 0x6e, 0x55, 0xff,
+            ],
             b"",
         );
         assert_eq!(
-            &*c.to_debug_str_mask_same(),
+            c.to_debug_str_mask_same(),
             concat!(
                 "\n",
                 "#######.#.#.#.#.#.#.#.#.###.#.#.#.#.#.#.#.#.#.#.#.###.#.#.#.#.#.#.#.#.#.#.###\n",
@@ -2793,7 +2801,7 @@ mod mask_tests {
         c.apply_mask(MaskPattern::Checkerboard);
 
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######...#.#.#######\n",
@@ -2826,7 +2834,7 @@ mod mask_tests {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_format_info_patterns(MaskPattern::LargeCheckerboard);
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "????????#????????????\n",
@@ -2859,7 +2867,7 @@ mod mask_tests {
         let mut c = Canvas::new(Version::Micro(2), EcLevel::L);
         c.draw_format_info_patterns(MaskPattern::LargeCheckerboard);
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "?????????????\n",
@@ -2982,7 +2990,7 @@ impl Canvas {
                     Box::new(|k| self.get(i, k).into())
                 };
 
-                if (j..(j + 7)).map(&*get).ne(PATTERN.iter().copied()) {
+                if (j..(j + 7)).map(&get).ne(PATTERN.iter().copied()) {
                     continue;
                 }
 
@@ -3076,7 +3084,7 @@ mod penalty_tests {
     fn check_penalty_canvas() {
         let c = create_test_canvas();
         assert_eq!(
-            &*c.to_debug_str(),
+            c.to_debug_str(),
             concat!(
                 "\n",
                 "#######.##....#######\n",
