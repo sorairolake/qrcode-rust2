@@ -2674,7 +2674,7 @@ pub enum MaskPattern {
     /// QR code mask pattern `000`.
     Checkerboard = 0b000,
 
-    /// QR code mask pattern `001`.
+    /// QR code mask pattern `001`, and Micro QR code mask pattern `00`.
     HorizontalLines = 0b001,
 
     /// QR code mask pattern `010`.
@@ -2683,16 +2683,16 @@ pub enum MaskPattern {
     /// QR code mask pattern `011`.
     DiagonalLines = 0b011,
 
-    /// QR code mask pattern `100`.
+    /// QR code mask pattern `100`, and Micro QR code mask pattern `01`.
     LargeCheckerboard = 0b100,
 
     /// QR code mask pattern `101`.
     Fields = 0b101,
 
-    /// QR code mask pattern `110`.
+    /// QR code mask pattern `110`, and Micro QR code mask pattern `10`.
     Diamonds = 0b110,
 
-    /// QR code mask pattern `111`.
+    /// QR code mask pattern `111`, and Micro QR code mask pattern `11`.
     Meadow = 0b111,
 }
 
