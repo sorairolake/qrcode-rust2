@@ -151,7 +151,7 @@ impl Bits {
     /// ```
     #[must_use]
     #[inline]
-    pub fn len(&self) -> usize {
+    pub const fn len(&self) -> usize {
         if self.bit_offset == 0 {
             self.data.len() * 8
         } else {
@@ -174,7 +174,7 @@ impl Bits {
     /// ```
     #[must_use]
     #[inline]
-    pub fn is_empty(&self) -> bool {
+    pub const fn is_empty(&self) -> bool {
         self.data.is_empty()
     }
 
@@ -1238,11 +1238,11 @@ pub fn encode_auto_micro(data: &[u8], ec_level: EcLevel) -> QrResult<Bits> {
         let opt_segments = Optimizer::new(segments.iter().copied(), version).collect::<Vec<_>>();
         let total_len = optimize::total_encoded_len(&opt_segments, version);
         let data_capacity = version.fetch(ec_level, &DATA_LENGTHS);
-        if let Ok(capacity) = data_capacity {
-            if total_len <= capacity {
-                possible_versions.push(version);
-                break;
-            }
+        if let Ok(capacity) = data_capacity
+            && total_len <= capacity
+        {
+            possible_versions.push(version);
+            break;
         }
     }
 

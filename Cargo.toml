@@ -13,7 +13,7 @@
 name = "qrcode2"
 version = "0.17.1"
 edition = "2024"
-rust-version = "1.85.0"
+rust-version = "1.88.0"
 description = "A QR code encoding library"
 documentation = "https://docs.rs/qrcode2"
 repository = "https://github.com/sorairolake/qrcode-rust2"
