@@ -100,8 +100,8 @@ This project is compliant with version 3.3 of the [_REUSE Specification_]. See
 copyright notices of individual files for more details on copyright and
 licensing information.
 
-[ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrcode-rust2/CI.yaml?branch=master&style=for-the-badge&logo=github&label=CI
-[ci-url]: https://github.com/sorairolake/qrcode-rust2/actions?query=branch%3Amaster+workflow%3ACI++
+[ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrcode-rust2/CI.yaml?branch=main&style=for-the-badge&logo=github&label=CI
+[ci-url]: https://github.com/sorairolake/qrcode-rust2/actions?query=branch%3Amain+workflow%3ACI++
 [version-badge]: https://img.shields.io/crates/v/qrcode2?style=for-the-badge&logo=rust
 [version-url]: https://crates.io/crates/qrcode2
 [msrv-badge]: https://img.shields.io/crates/msrv/qrcode2?style=for-the-badge&logo=rust

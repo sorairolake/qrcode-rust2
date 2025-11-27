@@ -18,8 +18,8 @@ Please see the {commit-messages-guide-url}[Commit messages guide] and the
 
 == Submitting a pull request
 
-. Create a working branch from the `master` branch. The branch name should be
-  something other than `master`.
+. Create a working branch from the `main` branch. The branch name should be
+  something other than `main`.
 . Create your patch. If your change is a feature or a bugfix, please add a test
   case if possible. Note that the change must pass the CI.
 . Please update the copyright information if possible. This project is

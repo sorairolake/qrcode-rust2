@@ -18,5 +18,5 @@ Closes #
 - [ ] I have read the [Contribution Guide].
 - [ ] I agree to follow the [Code of Conduct].
 
-[Contribution Guide]: https://github.com/sorairolake/qrcode-rust2/blob/master/CONTRIBUTING.adoc
-[Code of Conduct]: https://github.com/sorairolake/qrcode-rust2/blob/master/CODE_OF_CONDUCT.md
+[Contribution Guide]: https://github.com/sorairolake/qrcode-rust2/blob/main/CONTRIBUTING.adoc
+[Code of Conduct]: https://github.com/sorairolake/qrcode-rust2/blob/main/CODE_OF_CONDUCT.md
