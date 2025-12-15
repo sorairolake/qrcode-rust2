@@ -38,34 +38,28 @@ pub trait Element: Copy {
 }
 
 impl Element for char {
-    #[inline]
     fn default_color(color: Color) -> Self {
         color.select('\u{2588}', ' ')
     }
 
-    #[inline]
     fn str_len(self) -> usize {
         self.len_utf8()
     }
 
-    #[inline]
     fn append_to_string(self, string: &mut String) {
         string.push(self);
     }
 }
 
 impl Element for &str {
-    #[inline]
     fn default_color(color: Color) -> Self {
         color.select("\u{2588}", " ")
     }
 
-    #[inline]
     fn str_len(self) -> usize {
         self.len()
     }
 
-    #[inline]
     fn append_to_string(self, string: &mut String) {
         string.push_str(self);
     }
@@ -85,12 +79,10 @@ impl<P: Element> Pixel for P {
     type Image = String;
     type Canvas = Canvas<Self>;
 
-    #[inline]
     fn default_unit_size() -> (u32, u32) {
         (1, 1)
     }
 
-    #[inline]
     fn default_color(color: Color) -> Self {
         <Self as Element>::default_color(color)
     }

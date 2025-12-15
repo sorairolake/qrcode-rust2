@@ -44,7 +44,6 @@ impl<'a> Pixel for Color<'a> {
     type Image = String;
     type Canvas = Canvas<'a>;
 
-    #[inline]
     fn default_color(color: ModuleColor) -> Self {
         Color(color.select("#000", "#fff"))
     }
@@ -61,7 +60,6 @@ impl<'a> RenderCanvas for Canvas<'a> {
     type Pixel = Color<'a>;
     type Image = String;
 
-    #[inline]
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
         let svg = format!(
             concat!(
@@ -83,18 +81,15 @@ impl<'a> RenderCanvas for Canvas<'a> {
         }
     }
 
-    #[inline]
     fn draw_dark_pixel(&mut self, x: u32, y: u32) {
         self.draw_dark_rect(x, y, 1, 1);
     }
 
-    #[inline]
     fn draw_dark_rect(&mut self, left: u32, top: u32, width: u32, height: u32) {
         write!(self.svg, "M{left} {top}h{width}v{height}h-{width}z")
             .expect("dark rectangle should be drawn");
     }
 
-    #[inline]
     fn into_image(mut self) -> Self::Image {
         self.svg.push_str(r#""/></svg>"#);
         self.svg

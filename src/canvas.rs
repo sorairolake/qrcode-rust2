@@ -51,7 +51,6 @@ pub enum Module {
 }
 
 impl From<Module> for Color {
-    #[inline]
     fn from(module: Module) -> Self {
         match module {
             Module::Empty => Self::Light,
@@ -63,7 +62,6 @@ impl From<Module> for Color {
 impl Module {
     /// Checks whether a module is dark.
     #[must_use]
-    #[inline]
     pub fn is_dark(self) -> bool {
         Color::from(self) == Color::Dark
     }
@@ -97,7 +95,6 @@ impl Module {
     /// );
     /// ```
     #[must_use]
-    #[inline]
     pub fn mask(self, should_invert: bool) -> Self {
         match (self, should_invert) {
             (Self::Empty, true) => Self::Masked(Color::Dark),
@@ -134,7 +131,6 @@ pub struct Canvas {
 impl Canvas {
     /// Constructs a new canvas big enough for a QR code of the given version.
     #[must_use]
-    #[inline]
     pub fn new(version: Version, ec_level: EcLevel) -> Self {
         let (width, height) = (version.width(), version.height());
         let modules = vec![Module::Empty; (width * height).as_usize()];
@@ -196,14 +192,12 @@ impl Canvas {
     /// Obtains a module at the given coordinates. For convenience, negative
     /// coordinates will wrap around.
     #[must_use]
-    #[inline]
     pub fn get(&self, x: i16, y: i16) -> Module {
         self.modules[self.coords_to_index(x, y)]
     }
 
     /// Obtains a mutable module at the given coordinates. For convenience,
     /// negative coordinates will wrap around.
-    #[inline]
     pub fn get_mut(&mut self, x: i16, y: i16) -> &mut Module {
         let index = self.coords_to_index(x, y);
         &mut self.modules[index]
@@ -211,7 +205,6 @@ impl Canvas {
 
     /// Sets the color of a functional module at the given coordinates. For
     /// convenience, negative coordinates will wrap around.
-    #[inline]
     pub fn put(&mut self, x: i16, y: i16, color: Color) {
         *self.get_mut(x, y) = Module::Masked(color);
     }
@@ -301,7 +294,6 @@ impl Canvas {
                 self.put(
                     x + i,
                     y + j,
-                    #[allow(clippy::match_same_arms)]
                     match (i, j) {
                         (4 | -4, _) | (_, 4 | -4) => Color::Light,
                         (3 | -3, _) | (_, 3 | -3) => Color::Dark,

@@ -39,7 +39,6 @@ impl Bits {
     /// let bits = Bits::new(Version::Normal(1));
     /// ```
     #[must_use]
-    #[inline]
     pub const fn new(version: Version) -> Self {
         Self {
             data: Vec::new(),
@@ -131,7 +130,6 @@ impl Bits {
     /// );
     /// ```
     #[must_use]
-    #[inline]
     pub fn into_bytes(self) -> Vec<u8> {
         self.data
     }
@@ -150,7 +148,6 @@ impl Bits {
     /// assert_eq!(bits.len(), 41);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn len(&self) -> usize {
         if self.bit_offset == 0 {
             self.data.len() * 8
@@ -173,7 +170,6 @@ impl Bits {
     /// assert_eq!(bits.is_empty(), false);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn is_empty(&self) -> bool {
         self.data.is_empty()
     }
@@ -195,7 +191,6 @@ impl Bits {
     /// let bits = Bits::new(Version::Normal(1));
     /// assert_eq!(bits.max_len(EcLevel::M), Ok(128));
     /// ```
-    #[inline]
     pub fn max_len(&self, ec_level: EcLevel) -> QrResult<usize> {
         self.version.fetch(ec_level, &DATA_LENGTHS)
     }
@@ -211,7 +206,6 @@ impl Bits {
     /// assert_eq!(bits.version(), Version::Normal(1));
     /// ```
     #[must_use]
-    #[inline]
     pub const fn version(&self) -> Version {
         self.version
     }
@@ -535,7 +529,6 @@ mod numeric_tests {
 /// character into its corresponding base-45 digit.
 ///
 /// The conversion is specified in ISO/IEC 18004:2006, §8.4.3, Table 5.
-#[inline]
 fn alphanumeric_digit(character: u8) -> u16 {
     match character {
         b'0'..=b'9' => u16::from(character - b'0'),
@@ -770,7 +763,6 @@ impl Bits {
     /// bits.push_numeric_data(b"01049123451234591597033130128");
     /// bits.push_alphanumeric_data(b"%10ABC123");
     /// ```
-    #[inline]
     pub fn push_fnc1_first_position(&mut self) -> QrResult<()> {
         self.push_mode_indicator(ExtendedMode::Fnc1First)
     }
@@ -1043,7 +1035,6 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] on overflow.
-    #[inline]
     pub fn push_optimal_data(&mut self, data: &[u8]) -> QrResult<()> {
         let segments = Parser::new(data).optimize(self.version);
         self.push_segments(data, segments)

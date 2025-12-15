@@ -35,7 +35,6 @@ impl Pixel for Color {
     type Image = String;
     type Canvas = Canvas;
 
-    #[inline]
     fn default_color(_color: ModuleColor) -> Self {
         Self
     }
@@ -51,7 +50,6 @@ impl RenderCanvas for Canvas {
     type Pixel = Color;
     type Image = String;
 
-    #[inline]
     fn new(width: u32, height: u32, _dark_pixel: Self::Pixel, _light_pixel: Self::Pixel) -> Self {
         let pic = format!(
             concat!(
@@ -65,18 +63,15 @@ impl RenderCanvas for Canvas {
         Self { pic }
     }
 
-    #[inline]
     fn draw_dark_pixel(&mut self, x: u32, y: u32) {
         self.draw_dark_rect(x, y, 1, 1);
     }
 
-    #[inline]
     fn draw_dark_rect(&mut self, left: u32, top: u32, width: u32, height: u32) {
         writeln!(self.pic, "p({left},{top},{width},{height})")
             .expect("dark rectangle should be drawn");
     }
 
-    #[inline]
     fn into_image(mut self) -> Self::Image {
         self.pic.pop();
         self.pic

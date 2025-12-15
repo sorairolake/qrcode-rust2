@@ -35,12 +35,10 @@ impl Pixel for Dense1x2 {
     type Image = String;
     type Canvas = Canvas1x2;
 
-    #[inline]
     fn default_color(color: Color) -> Self {
         color.select(Self::Dark, Self::Light)
     }
 
-    #[inline]
     fn default_unit_size() -> (u32, u32) {
         (1, 1)
     }
@@ -81,7 +79,6 @@ impl RenderCanvas for Canvas1x2 {
         }
     }
 
-    #[inline]
     fn draw_dark_pixel(&mut self, x: u32, y: u32) {
         self.canvas[(x + y * self.width) as usize] = self.dark_pixel;
     }

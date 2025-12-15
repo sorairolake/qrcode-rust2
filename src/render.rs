@@ -127,14 +127,12 @@ impl<'a, P: Pixel> Renderer<'a, P> {
     }
 
     /// Sets color of a dark module. Default is opaque black.
-    #[inline]
     pub const fn dark_color(&mut self, color: P) -> &mut Self {
         self.dark_color = color;
         self
     }
 
     /// Sets color of a light module. Default is opaque white.
-    #[inline]
     pub const fn light_color(&mut self, color: P) -> &mut Self {
         self.light_color = color;
         self
@@ -145,21 +143,18 @@ impl<'a, P: Pixel> Renderer<'a, P> {
     /// If `Renderer` is constructed using
     /// [`QrCode::render`](crate::QrCode::render), the size of the quiet zone is
     /// 4 for normal QR code, and 2 for Micro QR code and rMQR code.
-    #[inline]
     pub const fn quiet_zone(&mut self, quiet_zone: u32) -> &mut Self {
         self.quiet_zone = quiet_zone;
         self
     }
 
     /// Sets whether to include the quiet zone in the generated image.
-    #[inline]
     pub const fn has_quiet_zone(&mut self, has_quiet_zone: bool) -> &mut Self {
         self.has_quiet_zone = has_quiet_zone;
         self
     }
 
     /// Sets the size of each module in pixels. Default is 8×8.
-    #[inline]
     pub fn module_dimensions(&mut self, width: u32, height: u32) -> &mut Self {
         self.module_size = (cmp::max(width, 1), cmp::max(height, 1));
         self

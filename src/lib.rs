@@ -100,7 +100,6 @@ impl QrCode {
     /// #
     /// let code = QrCode::new(b"Some data").unwrap();
     /// ```
-    #[inline]
     pub fn new(data: impl AsRef<[u8]>) -> QrResult<Self> {
         Self::with_error_correction_level(data, EcLevel::default())
     }
@@ -123,7 +122,6 @@ impl QrCode {
     /// #
     /// let code = QrCode::new_micro(b"Some data").unwrap();
     /// ```
-    #[inline]
     pub fn new_micro(data: impl AsRef<[u8]>) -> QrResult<Self> {
         Self::micro_with_error_correction_level(data, EcLevel::default())
     }
@@ -146,7 +144,6 @@ impl QrCode {
     /// #
     /// let code = QrCode::new_rect_micro(b"Some data").unwrap();
     /// ```
-    #[inline]
     pub fn new_rect_micro(data: impl AsRef<[u8]>) -> QrResult<Self> {
         Self::rect_micro_with_error_correction_level(data, EcLevel::default())
     }
@@ -169,7 +166,6 @@ impl QrCode {
     /// #
     /// let code = QrCode::with_error_correction_level(b"Some data", EcLevel::H).unwrap();
     /// ```
-    #[inline]
     pub fn with_error_correction_level(
         data: impl AsRef<[u8]>,
         ec_level: EcLevel,
@@ -196,7 +192,6 @@ impl QrCode {
     /// #
     /// let code = QrCode::micro_with_error_correction_level(b"Some data", EcLevel::Q).unwrap();
     /// ```
-    #[inline]
     pub fn micro_with_error_correction_level(
         data: impl AsRef<[u8]>,
         ec_level: EcLevel,
@@ -223,7 +218,6 @@ impl QrCode {
     /// #
     /// let code = QrCode::rect_micro_with_error_correction_level(b"Some data", EcLevel::H).unwrap();
     /// ```
-    #[inline]
     pub fn rect_micro_with_error_correction_level(
         data: impl AsRef<[u8]>,
         ec_level: EcLevel,
@@ -325,7 +319,6 @@ impl QrCode {
     /// assert_eq!(code.version(), Version::Normal(1));
     /// ```
     #[must_use]
-    #[inline]
     pub const fn version(&self) -> Version {
         self.version
     }
@@ -341,7 +334,6 @@ impl QrCode {
     /// assert_eq!(code.error_correction_level(), EcLevel::M);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn error_correction_level(&self) -> EcLevel {
         self.ec_level
     }
@@ -359,7 +351,6 @@ impl QrCode {
     /// assert_eq!(code.width(), 27);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn width(&self) -> usize {
         self.width
     }
@@ -377,7 +368,6 @@ impl QrCode {
     /// assert_eq!(code.height(), 13);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn height(&self) -> usize {
         self.height
     }
@@ -396,7 +386,6 @@ impl QrCode {
     /// assert_eq!(code.max_allowed_errors(), 4);
     /// ```
     #[must_use]
-    #[inline]
     pub fn max_allowed_errors(&self) -> usize {
         ec::max_allowed_errors(self.version, self.ec_level).expect("invalid version or ec_level")
     }
@@ -427,14 +416,12 @@ impl QrCode {
 
     /// Converts the QR code to a vector of colors.
     #[must_use]
-    #[inline]
     pub fn to_colors(&self) -> Vec<Color> {
         self.content.clone()
     }
 
     /// Consumes the QR code, returning a vector of colors.
     #[must_use]
-    #[inline]
     pub fn into_colors(self) -> Vec<Color> {
         self.content
     }
@@ -469,7 +456,6 @@ impl QrCode {
     /// # }
     /// ```
     #[must_use]
-    #[inline]
     pub fn render<P: Pixel>(&self) -> Renderer<'_, P> {
         let quiet_zone = if self.version.is_normal() { 4 } else { 2 };
         Renderer::new(&self.content, self.width, self.height, quiet_zone)
@@ -479,7 +465,6 @@ impl QrCode {
 impl Index<(usize, usize)> for QrCode {
     type Output = Color;
 
-    #[inline]
     fn index(&self, (x, y): (usize, usize)) -> &Self::Output {
         let index = y * self.width + x;
         &self.content[index]

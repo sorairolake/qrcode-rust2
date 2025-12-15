@@ -37,7 +37,6 @@ pub enum QrError {
 }
 
 impl fmt::Display for QrError {
-    #[inline]
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::DataTooLong => write!(f, "data too long"),
@@ -77,7 +76,6 @@ impl Color {
     /// assert_eq!(Color::Light.select(1, 0), 0);
     /// assert_eq!(Color::Dark.select("black", "white"), "black");
     /// ```
-    #[inline]
     pub fn select<T>(self, dark: T, light: T) -> T {
         match self {
             Self::Light => light,
@@ -89,7 +87,6 @@ impl Color {
 impl Not for Color {
     type Output = Self;
 
-    #[inline]
     fn not(self) -> Self::Output {
         match self {
             Self::Light => Self::Dark,
@@ -171,7 +168,6 @@ impl Version {
     /// assert_eq!(Version::RectMicro(17, 139).width(), 139);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn width(self) -> i16 {
         match self {
             Self::Normal(v) => v * 4 + 17,
@@ -195,7 +191,6 @@ impl Version {
     /// assert_eq!(Version::RectMicro(17, 139).height(), 17);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn height(self) -> i16 {
         if let Self::RectMicro(h, _) = self {
             h
@@ -253,7 +248,6 @@ impl Version {
     /// assert_eq!(Version::RectMicro(17, 139).mode_bits_count(), 3);
     /// ```
     #[must_use]
-    #[inline]
     pub fn mode_bits_count(self) -> usize {
         match self {
             Self::Normal(_) => 4,
@@ -278,7 +272,6 @@ impl Version {
     /// assert_eq!(Version::RectMicro(7, 43).is_normal(), false);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn is_normal(self) -> bool {
         matches!(self, Self::Normal(v) if v >= 1 && v <= 40)
     }
@@ -299,7 +292,6 @@ impl Version {
     /// assert_eq!(Version::RectMicro(7, 43).is_micro(), false);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn is_micro(self) -> bool {
         matches!(self, Self::Micro(v) if v >= 1 && v <= 4)
     }
@@ -320,7 +312,6 @@ impl Version {
     /// assert_eq!(Version::Micro(1).is_rect_micro(), false);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn is_rect_micro(self) -> bool {
         self.rect_micro_index().is_ok()
     }
@@ -553,7 +544,6 @@ impl Mode {
     /// assert_eq!(Mode::Numeric.data_bits_count(7), 24);
     /// ```
     #[must_use]
-    #[inline]
     pub const fn data_bits_count(self, raw_data_len: usize) -> usize {
         match self {
             Self::Numeric => (raw_data_len * 10).div_ceil(3),
@@ -577,7 +567,6 @@ impl Mode {
     /// assert!(b <= c);
     /// ```
     #[must_use]
-    #[inline]
     pub fn max(self, other: Self) -> Self {
         match self.partial_cmp(&other) {
             Some(Ordering::Greater) => self,
@@ -590,7 +579,6 @@ impl Mode {
 impl PartialOrd for Mode {
     /// Defines a partial ordering between modes. If `self <= other`, then
     /// `other` contains a superset of all characters supported by `self`.
-    #[inline]
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         match (*self, *other) {
             (a, b) if a == b => Some(Ordering::Equal),

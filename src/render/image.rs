@@ -36,7 +36,6 @@ where
     type Image = ImageBuffer<Self, Vec<S>>;
     type Canvas = (Self, Self::Image);
 
-    #[inline]
     fn default_color(color: Color) -> Self {
         let p = color.select(S::zero(), S::max_value());
         Self([p])
@@ -51,7 +50,6 @@ where
     type Image = ImageBuffer<Self, Vec<S>>;
     type Canvas = (Self, Self::Image);
 
-    #[inline]
     fn default_color(color: Color) -> Self {
         let p = color.select(S::zero(), S::max_value());
         Self([p, S::max_value()])
@@ -66,7 +64,6 @@ where
     type Image = ImageBuffer<Self, Vec<S>>;
     type Canvas = (Self, Self::Image);
 
-    #[inline]
     fn default_color(color: Color) -> Self {
         let p = color.select(S::zero(), S::max_value());
         Self([p, p, p])
@@ -81,7 +78,6 @@ where
     type Image = ImageBuffer<Self, Vec<S>>;
     type Canvas = (Self, Self::Image);
 
-    #[inline]
     fn default_color(color: Color) -> Self {
         let p = color.select(S::zero(), S::max_value());
         Self([p, p, p, S::max_value()])
@@ -92,7 +88,6 @@ impl<P: image::Pixel + 'static> Canvas for (P, ImageBuffer<P, Vec<P::Subpixel>>)
     type Pixel = P;
     type Image = ImageBuffer<P, Vec<P::Subpixel>>;
 
-    #[inline]
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
         (
             dark_pixel,
@@ -100,12 +95,10 @@ impl<P: image::Pixel + 'static> Canvas for (P, ImageBuffer<P, Vec<P::Subpixel>>)
         )
     }
 
-    #[inline]
     fn draw_dark_pixel(&mut self, x: u32, y: u32) {
         self.1.put_pixel(x, y, self.0);
     }
 
-    #[inline]
     fn into_image(self) -> Self::Image {
         self.1
     }

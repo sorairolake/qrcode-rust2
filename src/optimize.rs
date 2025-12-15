@@ -132,7 +132,6 @@ impl Parser<'_> {
     /// );
     /// ```
     #[must_use]
-    #[inline]
     pub fn new(data: &[u8]) -> Parser<'_> {
         Parser {
             ecs_iter: EcsIter {
@@ -417,7 +416,6 @@ impl<I: Iterator<Item = Segment>> Optimizer<I> {
     /// Currently this method uses a greedy algorithm by combining segments from
     /// left to right until the new segment is longer than before. This method
     /// does _not_ use Annex J from the ISO standard.
-    #[inline]
     pub fn new(mut segments: I, version: Version) -> Self {
         match segments.next() {
             None => Self {
@@ -445,7 +443,6 @@ impl<I: Iterator<Item = Segment>> Optimizer<I> {
 impl Parser<'_> {
     /// Creates a new `Optimizer` based on this parser.
     #[must_use]
-    #[inline]
     pub fn optimize(self, version: Version) -> Optimizer<Self> {
         Optimizer::new(self, version)
     }
@@ -492,7 +489,6 @@ impl<I: Iterator<Item = Segment>> Iterator for Optimizer<I> {
 
 /// Computes the total encoded length of all segments.
 #[must_use]
-#[inline]
 pub fn total_encoded_len(segments: &[Segment], version: Version) -> usize {
     segments.iter().map(|seg| seg.encoded_len(version)).sum()
 }
