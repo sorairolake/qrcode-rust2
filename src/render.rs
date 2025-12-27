@@ -9,6 +9,7 @@
 
 //! Render a QR code into image.
 
+pub mod braille;
 #[cfg(feature = "eps")]
 pub mod eps;
 #[cfg(feature = "image")]
