@@ -51,8 +51,7 @@ struct Opt {
     background: Color,
 
     /// Input data.
-    #[arg(value_name("STRING"))]
-    input: String,
+    string: String,
 }
 
 #[derive(Clone, Debug, Default, ValueEnum)]
@@ -98,7 +97,7 @@ enum Variant {
 fn main() -> anyhow::Result<()> {
     let opt = Opt::parse();
 
-    let input = opt.input;
+    let input = opt.string;
     let ec_level = opt.error_correction_level.into();
     let code = if let Some(sv) = opt.symbol_version {
         let version = match opt.variant {
