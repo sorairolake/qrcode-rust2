@@ -2563,7 +2563,7 @@ mod draw_codewords_tests {
     fn test_micro_qr_1() {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_all_functional_patterns();
-        c.draw_data(b"\x6e\x5d\xe2", b"\x2b\x63");
+        c.draw_data(b"\x6E\x5D\xE2", b"\x2B\x63");
         assert_eq!(
             c.to_debug_str(),
             concat!(
@@ -3076,8 +3076,8 @@ mod penalty_tests {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::Q);
         c.draw_all_functional_patterns();
         c.draw_data(
-            b"\x20\x5b\x0b\x78\xd1\x72\xdc\x4d\x43\x40\xec\x11\x00",
-            b"\xa8\x48\x16\x52\xd9\x36\x9c\x00\x2e\x0f\xb4\x7a\x10",
+            b"\x20\x5B\x0B\x78\xD1\x72\xDC\x4D\x43\x40\xEC\x11\x00",
+            b"\xA8\x48\x16\x52\xD9\x36\x9C\x00\x2E\x0F\xB4\x7A\x10",
         );
         c.apply_mask(MaskPattern::Checkerboard);
         c

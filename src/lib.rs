@@ -286,7 +286,7 @@ impl QrCode {
     /// #
     /// let mut bits = Bits::new(Version::Normal(1));
     /// bits.push_eci_designator(9);
-    /// bits.push_byte_data(b"\xca\xfe\xe4\xe9\xea\xe1\xf2 QR");
+    /// bits.push_byte_data(b"\xCA\xFE\xE4\xE9\xEA\xE1\xF2 QR");
     /// bits.push_terminator(EcLevel::L);
     /// let qrcode = QrCode::with_bits(bits, EcLevel::L);
     /// ```

@@ -246,7 +246,7 @@ mod parse_tests {
     #[test]
     fn test_parse_shift_jis_example_1() {
         // "あ、AｱÅ"
-        let segs = parse(b"\x82\xa0\x81\x41\x41\xb1\x81\xf0");
+        let segs = parse(b"\x82\xA0\x81\x41\x41\xB1\x81\xF0");
         assert_eq!(
             segs,
             &[
@@ -277,7 +277,7 @@ mod parse_tests {
     #[test]
     fn test_parse_utf_8() {
         // Mojibake?
-        let segs = parse(b"\xe3\x81\x82\xe3\x80\x81A\xef\xbd\xb1\xe2\x84\xab");
+        let segs = parse(b"\xE3\x81\x82\xE3\x80\x81A\xEF\xBD\xB1\xE2\x84\xAB");
         assert_eq!(
             segs,
             &[
@@ -339,7 +339,7 @@ mod parse_tests {
     fn test_not_kanji_2() {
         // Note that it's implementation detail that the byte seq is split into two.
         // Perhaps adjust the test to check for this.
-        let segs = parse(b"\xeb\xc0");
+        let segs = parse(b"\xEB\xC0");
         assert_eq!(
             segs,
             &[
@@ -359,7 +359,7 @@ mod parse_tests {
 
     #[test]
     fn test_not_kanji_3() {
-        let segs = parse(b"\x81\x7f");
+        let segs = parse(b"\x81\x7F");
         assert_eq!(
             segs,
             &[

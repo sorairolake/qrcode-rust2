@@ -52,20 +52,20 @@ mod ec_tests {
 
     #[test]
     fn test_poly_mod_1() {
-        let res = create_error_correction_code(b" [\x0bx\xd1r\xdcMC@\xec\x11\xec\x11\xec\x11", 10);
-        assert_eq!(res, b"\xc4#'w\xeb\xd7\xe7\xe2]\x17");
+        let res = create_error_correction_code(b" [\x0Bx\xD1r\xDCMC@\xEC\x11\xEC\x11\xEC\x11", 10);
+        assert_eq!(res, b"\xC4#'w\xEB\xD7\xE7\xE2]\x17");
     }
 
     #[test]
     fn test_poly_mod_2() {
-        let res = create_error_correction_code(b" [\x0bx\xd1r\xdcMC@\xec\x11\xec", 13);
-        assert_eq!(res, b"\xa8H\x16R\xd96\x9c\x00.\x0f\xb4z\x10");
+        let res = create_error_correction_code(b" [\x0Bx\xD1r\xDCMC@\xEC\x11\xEC", 13);
+        assert_eq!(res, b"\xA8H\x16R\xD96\x9C\x00.\x0F\xB4z\x10");
     }
 
     #[test]
     fn test_poly_mod_3() {
-        let res = create_error_correction_code(b"CUF\x86W&U\xc2w2\x06\x12\x06g&", 18);
-        assert_eq!(res, b"\xd5\xc7\x0b-s\xf7\xf1\xdf\xe5\xf8\x9au\x9aoV\xa1o'");
+        let res = create_error_correction_code(b"CUF\x86W&U\xC2w2\x06\x12\x06g&", 18);
+        assert_eq!(res, b"\xD5\xC7\x0B-s\xF7\xF1\xDF\xE5\xF8\x9Au\x9AoV\xA1o'");
     }
 }
 
@@ -151,11 +151,11 @@ mod construct_codewords_tests {
 
     #[test]
     fn test_add_ec_simple() {
-        let msg = b" [\x0bx\xd1r\xdcMC@\xec\x11\xec\x11\xec\x11";
+        let msg = b" [\x0Bx\xD1r\xDCMC@\xEC\x11\xEC\x11\xEC\x11";
         let (blocks_vec, ec_vec) =
             construct_codewords(msg, Version::Normal(1), EcLevel::M).unwrap();
         assert_eq!(blocks_vec, msg);
-        assert_eq!(ec_vec, b"\xc4#'w\xeb\xd7\xe7\xe2]\x17");
+        assert_eq!(ec_vec, b"\xC4#'w\xEB\xD7\xE7\xE2]\x17");
     }
 
     #[test]

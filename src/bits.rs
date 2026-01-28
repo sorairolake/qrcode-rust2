@@ -348,7 +348,7 @@ impl Bits {
     /// // 9 = ISO-8859-7 (Greek).
     /// bits.push_eci_designator(9);
     /// // ΑΒΓΔΕ
-    /// bits.push_byte_data(b"\xa1\xa2\xa3\xa4\xa5");
+    /// bits.push_byte_data(b"\xA1\xA2\xA3\xA4\xA5");
     /// ```
     pub fn push_eci_designator(&mut self, eci_designator: u32) -> QrResult<()> {
         // assume the common case that eci_designator <= 127.
@@ -634,7 +634,7 @@ mod byte_tests {
     fn test() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(
-            bits.push_byte_data(b"\x12\x34\x56\x78\x9a\xbc\xde\xf0"),
+            bits.push_byte_data(b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0"),
             Ok(())
         );
         assert_eq!(
@@ -708,7 +708,7 @@ mod kanji_tests {
     #[test]
     fn test_iso_18004_example() {
         let mut bits = Bits::new(Version::Normal(1));
-        assert_eq!(bits.push_kanji_data(b"\x93\x5f\xe4\xaa"), Ok(()));
+        assert_eq!(bits.push_kanji_data(b"\x93\x5F\xE4\xAA"), Ok(()));
         assert_eq!(
             bits.into_bytes(),
             [
