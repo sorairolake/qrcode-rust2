@@ -365,7 +365,7 @@ impl Bits {
             16384..=999_999 => {
                 self.push_number(3, 0b110);
                 self.push_number(5, (eci_designator >> 16).as_u16());
-                self.push_number(16, (eci_designator & 0xffff).as_u16());
+                self.push_number(16, (eci_designator & 0xFFFF).as_u16());
             }
             _ => return Err(QrError::InvalidEciDesignator),
         }
@@ -689,12 +689,12 @@ impl Bits {
                 return Err(QrError::InvalidCharacter);
             }
             let cp = u16::from(kanji[0]) * 256 + u16::from(kanji[1]);
-            let bytes = if cp < 0xe040 {
+            let bytes = if cp < 0xE040 {
                 cp - 0x8140
             } else {
-                cp - 0xc140
+                cp - 0xC140
             };
-            let number = (bytes >> 8) * 0xc0 + (bytes & 0xff);
+            let number = (bytes >> 8) * 0xC0 + (bytes & 0xFF);
             self.push_number(13, number);
         }
         Ok(())

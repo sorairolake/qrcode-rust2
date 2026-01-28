@@ -792,24 +792,24 @@ enum ExclCharSet {
     /// second byte of a Shift JIS 2-byte encoding.
     Alpha = 3,
 
-    /// The first byte of a Shift JIS 2-byte encoding, in the range 0x81–0x9f.
+    /// The first byte of a Shift JIS 2-byte encoding, in the range 0x81–0x9F.
     KanjiHi1 = 4,
 
-    /// The first byte of a Shift JIS 2-byte encoding, in the range 0xe0–0xea.
+    /// The first byte of a Shift JIS 2-byte encoding, in the range 0xE0–0xEA.
     KanjiHi2 = 5,
 
-    /// The first byte of a Shift JIS 2-byte encoding, of value 0xeb. This is
+    /// The first byte of a Shift JIS 2-byte encoding, of value 0xEB. This is
     /// different from the other two range that the second byte has a smaller
     /// range.
     KanjiHi3 = 6,
 
-    /// The second byte of a Shift JIS 2-byte encoding, in the range 0x40–0xbf,
-    /// excluding letters (covered by `Alpha`), 0x81–0x9f (covered by
-    /// `KanjiHi1`), and the invalid byte 0x7f.
+    /// The second byte of a Shift JIS 2-byte encoding, in the range 0x40–0xBF,
+    /// excluding letters (covered by `Alpha`), 0x81–0x9F (covered by
+    /// `KanjiHi1`), and the invalid byte 0x7F.
     KanjiLo1 = 7,
 
-    /// The second byte of a Shift JIS 2-byte encoding, in the range 0xc0–0xfc,
-    /// excluding the range 0xe0–0xeb (covered by `KanjiHi2` and `KanjiHi3`).
+    /// The second byte of a Shift JIS 2-byte encoding, in the range 0xC0–0xFC,
+    /// excluding the range 0xE0–0xEB (covered by `KanjiHi2` and `KanjiHi3`).
     /// This half of byte-pair cannot appear as the second byte leaded by
     /// `KanjiHi3`.
     KanjiLo2 = 8,
@@ -822,14 +822,14 @@ impl ExclCharSet {
     /// Determines which character set a byte is in.
     const fn from_u8(c: u8) -> Self {
         match c {
-            0x20 | 0x24 | 0x25 | 0x2a | 0x2b | 0x2d..=0x2f | 0x3a => Self::Symbol,
+            0x20 | 0x24 | 0x25 | 0x2A | 0x2B | 0x2D..=0x2F | 0x3A => Self::Symbol,
             0x30..=0x39 => Self::Numeric,
-            0x41..=0x5a => Self::Alpha,
-            0x81..=0x9f => Self::KanjiHi1,
-            0xe0..=0xea => Self::KanjiHi2,
-            0xeb => Self::KanjiHi3,
-            0x40 | 0x5b..=0x7e | 0x80 | 0xa0..=0xbf => Self::KanjiLo1,
-            0xc0..=0xdf | 0xec..=0xfc => Self::KanjiLo2,
+            0x41..=0x5A => Self::Alpha,
+            0x81..=0x9F => Self::KanjiHi1,
+            0xE0..=0xEA => Self::KanjiHi2,
+            0xEB => Self::KanjiHi3,
+            0x40 | 0x5B..=0x7E | 0x80 | 0xA0..=0xBF => Self::KanjiLo1,
+            0xC0..=0xDF | 0xEC..=0xFC => Self::KanjiLo2,
             _ => Self::Byte,
         }
     }
