@@ -2663,28 +2663,28 @@ mod draw_codewords_tests {
 /// pattern number, we name them according to their shape instead of the number.
 #[derive(Clone, Copy, Debug)]
 pub enum MaskPattern {
-    /// QR code mask pattern `000`.
+    /// QR code mask pattern `0b000`.
     Checkerboard = 0b000,
 
-    /// QR code mask pattern `001`, and Micro QR code mask pattern `00`.
+    /// QR code mask pattern `0b001`, and Micro QR code mask pattern `0b00`.
     HorizontalLines = 0b001,
 
-    /// QR code mask pattern `010`.
+    /// QR code mask pattern `0b010`.
     VerticalLines = 0b010,
 
-    /// QR code mask pattern `011`.
+    /// QR code mask pattern `0b011`.
     DiagonalLines = 0b011,
 
-    /// QR code mask pattern `100`, and Micro QR code mask pattern `01`.
+    /// QR code mask pattern `0b100`, and Micro QR code mask pattern `0b01`.
     LargeCheckerboard = 0b100,
 
-    /// QR code mask pattern `101`.
+    /// QR code mask pattern `0b101`.
     Fields = 0b101,
 
-    /// QR code mask pattern `110`, and Micro QR code mask pattern `10`.
+    /// QR code mask pattern `0b110`, and Micro QR code mask pattern `0b10`.
     Diamonds = 0b110,
 
-    /// QR code mask pattern `111`, and Micro QR code mask pattern `11`.
+    /// QR code mask pattern `0b111`, and Micro QR code mask pattern `0b11`.
     Meadow = 0b111,
 }
 
