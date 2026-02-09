@@ -42,7 +42,7 @@ required-features = ["svg"]
 image = { version = "0.25.9", default-features = false, optional = true }
 
 [dev-dependencies]
-anyhow = "1.0.100"
+anyhow = "1.0.101"
 clap = { version = "4.5.56", features = ["derive"] }
 csscolorparser = "0.8.2"
 image = "0.25.9"
