@@ -119,7 +119,7 @@ impl<P: Element> RenderCanvas for Canvas<P> {
     fn into_image(self) -> Self::Image {
         let mut result = String::with_capacity(self.capacity.as_usize());
         for (i, pixel) in self.buffer.into_iter().enumerate() {
-            if i != 0 && i % self.width == 0 {
+            if i != 0 && i.is_multiple_of(self.width) {
                 result.push('\n');
             }
             pixel.append_to_string(&mut result);
