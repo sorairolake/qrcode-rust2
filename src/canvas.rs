@@ -3215,7 +3215,7 @@ static ALL_PATTERNS_MICRO_QR: [MaskPattern; 4] = [
 static ALL_PATTERNS_RMQR: [MaskPattern; 1] = [MaskPattern::LargeCheckerboard];
 
 impl Canvas {
-    #[allow(clippy::missing_panics_doc)]
+    #[expect(clippy::missing_panics_doc)]
     /// Constructs a new canvas and apply the best masking that gives the lowest
     /// penalty score.
     #[must_use]

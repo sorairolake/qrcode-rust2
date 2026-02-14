@@ -8,13 +8,13 @@ pub trait Truncate {
 }
 
 impl Truncate for u16 {
-    #[allow(clippy::cast_possible_truncation)]
+    #[expect(clippy::cast_possible_truncation)]
     fn truncate_as_u8(self) -> u8 {
         self as u8
     }
 }
 
-#[allow(clippy::wrong_self_convention)]
+#[expect(clippy::wrong_self_convention)]
 pub trait As {
     fn as_i16(self) -> i16;
     fn as_isize(self) -> isize;

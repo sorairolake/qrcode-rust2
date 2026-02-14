@@ -291,7 +291,7 @@ impl Bits {
     ///
     /// Returns [`Err`] if the mode is not supported in the provided version.
     pub fn push_mode_indicator(&mut self, mode: ExtendedMode) -> QrResult<()> {
-        #[allow(clippy::match_same_arms)]
+        #[expect(clippy::match_same_arms)]
         let number = match (self.version, mode) {
             (Version::Micro(1), ExtendedMode::Data(Mode::Numeric)) => return Ok(()),
             (Version::Micro(_), ExtendedMode::Data(Mode::Numeric)) => 0,
@@ -1101,7 +1101,7 @@ mod encode_tests {
 
 // Auto version minimization
 
-#[allow(clippy::missing_panics_doc)]
+#[expect(clippy::missing_panics_doc)]
 /// Automatically determines the minimum QR code version to store the data, and
 /// encode the result.
 ///
