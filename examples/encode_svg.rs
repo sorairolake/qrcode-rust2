@@ -3,6 +3,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+//! An example of encoding a string into a QR code and outputting it as a SVG
+//! image.
+
 use anyhow::Context;
 use clap::{Parser, ValueEnum};
 use csscolorparser::Color;

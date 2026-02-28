@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+//! An example of encoding a string into a QR code and outputting it as PIC.
+
 use anyhow::Context;
 use clap::{Parser, ValueEnum};
 use qrcode2::{EcLevel, QrCode, Version, render::pic::Color};

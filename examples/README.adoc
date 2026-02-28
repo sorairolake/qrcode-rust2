@@ -1,0 +1,33 @@
+// SPDX-FileCopyrightText: 2026 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= Examples
+
+link:encode_eps.rs[]::
+
+  An example of encoding a string into a QR code and outputting it as an EPS
+  image.
+
+link:encode_image.rs[]::
+
+  An example of encoding a string into a QR code and outputting it as a raster
+  image.
+
+link:encode_pic.rs[]::
+
+  An example of encoding a string into a QR code and outputting it as PIC.
+
+link:encode_string.rs[]::
+
+  An example of encoding a string into a QR code and outputting it as a string.
+
+link:encode_svg.rs[]::
+
+  An example of encoding a string into a QR code and outputting it as a SVG
+  image.
+
+link:encode_unicode.rs[]::
+
+  An example of encoding a string into a QR code and outputting it as a UTF-8
+  string.

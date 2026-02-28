@@ -2,6 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+//! An example of encoding a string into a QR code and outputting it as an EPS
+//! image.
+
 use anyhow::Context;
 use clap::{Parser, ValueEnum};
 use csscolorparser::Color;
