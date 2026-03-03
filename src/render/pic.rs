@@ -68,8 +68,7 @@ impl RenderCanvas for Canvas {
     }
 
     fn draw_dark_rect(&mut self, left: u32, top: u32, width: u32, height: u32) {
-        writeln!(self.pic, "p({left},{top},{width},{height})")
-            .expect("dark rectangle should be drawn");
+        writeln!(self.pic, "p({left},{top},{width},{height})").unwrap();
     }
 
     fn into_image(mut self) -> Self::Image {

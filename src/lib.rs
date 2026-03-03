@@ -387,7 +387,7 @@ impl QrCode {
     /// ```
     #[must_use]
     pub fn max_allowed_errors(&self) -> usize {
-        ec::max_allowed_errors(self.version, self.ec_level).expect("invalid version or ec_level")
+        ec::max_allowed_errors(self.version, self.ec_level).unwrap()
     }
 
     /// Checks whether a module at coordinate (x, y) is a functional module or
@@ -398,8 +398,8 @@ impl QrCode {
     /// Panics if `x` or `y` is beyond the size of the QR code.
     #[must_use]
     pub fn is_functional(&self, x: usize, y: usize) -> bool {
-        let x = x.try_into().expect("coordinate is too large for QR code");
-        let y = y.try_into().expect("coordinate is too large for QR code");
+        let x = x.try_into().unwrap();
+        let y = y.try_into().unwrap();
         canvas::is_functional(self.version, self.version.width(), x, y)
     }
 

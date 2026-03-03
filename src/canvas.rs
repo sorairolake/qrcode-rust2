@@ -469,11 +469,7 @@ impl Canvas {
     /// Draws the alignment patterns in rMQR code.
     fn draw_alignment_patterns_rmqr(&mut self) {
         if self.version.is_rect_micro() {
-            let index = self
-                .version
-                .rect_micro_width_index()
-                .expect("the index of width of rMQR code should be valid")
-                + 34;
+            let index = self.version.rect_micro_width_index().unwrap() + 34;
             let x_positons = ALIGNMENT_PATTERN_POSITIONS[index];
             for x in x_positons {
                 self.draw_alignment_pattern_rmqr_at(*x, 1);
@@ -802,11 +798,7 @@ impl Canvas {
             );
         }
 
-        let position_index = self
-            .version
-            .rect_micro_width_index()
-            .expect("the index of width of rMQR code should be valid")
-            + 34;
+        let position_index = self.version.rect_micro_width_index().unwrap() + 34;
         for x in ALIGNMENT_PATTERN_POSITIONS[position_index] {
             self.draw_line(*x, 3, *x, height - 4, Color::Dark, Color::Light);
         }
@@ -1048,10 +1040,7 @@ impl Canvas {
                 );
             }
             Version::RectMicro(..) => {
-                let index = self
-                    .version
-                    .rect_micro_index()
-                    .expect("the index of version of rMQR code should be valid");
+                let index = self.version.rect_micro_index().unwrap();
                 let ec_level = usize::from(self.ec_level != EcLevel::M);
                 let version_info_left = RMQR_VERSION_INFOS_L[index][ec_level];
                 let version_info_right = RMQR_VERSION_INFOS_R[index][ec_level];
@@ -3231,7 +3220,7 @@ impl Canvas {
             c
         })
         .min_by_key(Self::compute_total_penalty_scores)
-        .expect("at least one pattern")
+        .unwrap()
     }
 
     /// Converts the modules into a vector of colors.

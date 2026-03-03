@@ -28,23 +28,23 @@ macro_rules! impl_as {
         #[cfg(debug_assertions)]
         impl As for $ty {
             fn as_i16(self) -> i16 {
-                i16::try_from(self).expect("number should be in the range of `i16`")
+                i16::try_from(self).unwrap()
             }
 
             fn as_isize(self) -> isize {
-                isize::try_from(self).expect("number should be in the range of `isize`")
+                isize::try_from(self).unwrap()
             }
 
             fn as_u16(self) -> u16 {
-                u16::try_from(self).expect("number should be in the range of `u16`")
+                u16::try_from(self).unwrap()
             }
 
             fn as_u32(self) -> u32 {
-                u32::try_from(self).expect("number should be in the range of `u32`")
+                u32::try_from(self).unwrap()
             }
 
             fn as_usize(self) -> usize {
-                usize::try_from(self).expect("number should be in the range of `usize`")
+                usize::try_from(self).unwrap()
             }
         }
 

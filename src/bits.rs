@@ -1125,9 +1125,7 @@ pub fn encode_auto(data: &[u8], ec_level: EcLevel) -> QrResult<Bits> {
     for version in &[Version::Normal(9), Version::Normal(26), Version::Normal(40)] {
         let opt_segments = Optimizer::new(segments.iter().copied(), *version).collect::<Vec<_>>();
         let total_len = optimize::total_encoded_len(&opt_segments, *version);
-        let data_capacity = version
-            .fetch(ec_level, &DATA_LENGTHS)
-            .expect("invalid `DATA_LENGTHS`");
+        let data_capacity = version.fetch(ec_level, &DATA_LENGTHS).unwrap();
         if total_len <= data_capacity {
             let min_version = find_min_version(total_len, ec_level);
             let mut bits = Bits::new(min_version);

@@ -79,7 +79,7 @@ mod ec_tests {
 /// The longest slice must be at the last of `blocks`, and `blocks` must not be
 /// empty.
 fn interleave<T: Copy, V: Deref<Target = [T]>>(blocks: &[V]) -> Vec<T> {
-    let last_block_len = blocks.last().expect("non-empty blocks").len();
+    let last_block_len = blocks.last().unwrap().len();
     let mut res = Vec::with_capacity(last_block_len * blocks.len());
     for i in 0..last_block_len {
         for t in blocks {
