@@ -47,7 +47,7 @@ clap = { version = "4.5.60", features = ["derive"] }
 csscolorparser = "0.8.2"
 image = "0.25.9"
 sha3 = { version = "0.10.8", default-features = false }
-tempfile = "3.26.0"
+tempfile = "3.27.0"
 
 [features]
 default = ["eps", "image", "pic", "std", "svg"]
