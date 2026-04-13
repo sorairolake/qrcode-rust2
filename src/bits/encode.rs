@@ -1,0 +1,106 @@
+// SPDX-FileCopyrightText: 2014 kennytm
+// SPDX-FileCopyrightText: 2024 Michael Spiegel
+// SPDX-FileCopyrightText: 2024 Shun Sakai
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+
+//! Front end.
+
+use super::Bits;
+use crate::{
+    optimize::{Parser, Segment},
+    types::{Mode, QrResult},
+};
+
+impl Bits {
+    /// Pushes a segmented data to the bits, and then terminate it.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Err`] on overflow, or if the segment refers to incorrectly
+    /// encoded byte sequence.
+    pub fn push_segments<I>(&mut self, data: &[u8], segments_iter: I) -> QrResult<()>
+    where
+        I: Iterator<Item = Segment>,
+    {
+        for segment in segments_iter {
+            let slice = &data[segment.begin..segment.end];
+            match segment.mode {
+                Mode::Numeric => self.push_numeric_data(slice),
+                Mode::Alphanumeric => self.push_alphanumeric_data(slice),
+                Mode::Byte => self.push_byte_data(slice),
+                Mode::Kanji => self.push_kanji_data(slice),
+            }?;
+        }
+        Ok(())
+    }
+
+    /// Pushes the data the bits, using the optimal encoding.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Err`] on overflow.
+    pub fn push_optimal_data(&mut self, data: &[u8]) -> QrResult<()> {
+        let segments = Parser::new(data).optimize(self.version);
+        self.push_segments(data, segments)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use alloc::{vec, vec::Vec};
+
+    use super::*;
+    use crate::types::{EcLevel, QrError, Version};
+
+    fn encode(data: &[u8], version: Version, ec_level: EcLevel) -> QrResult<Vec<u8>> {
+        let mut bits = Bits::new(version);
+        bits.push_optimal_data(data)?;
+        bits.push_terminator(ec_level)?;
+        Ok(bits.into_bytes())
+    }
+
+    #[test]
+    fn test_alphanumeric() {
+        let res = encode(b"HELLO WORLD", Version::Normal(1), EcLevel::Q);
+        assert_eq!(
+            res,
+            Ok(vec![
+                0b0010_0000,
+                0b0101_1011,
+                0b0000_1011,
+                0b0111_1000,
+                0b1101_0001,
+                0b0111_0010,
+                0b1101_1100,
+                0b0100_1101,
+                0b0100_0011,
+                0b0100_0000,
+                0b1110_1100,
+                0b0001_0001,
+                0b1110_1100,
+            ])
+        );
+    }
+
+    #[test]
+    fn test_auto_mode_switch() {
+        let res = encode(b"123A", Version::Micro(2), EcLevel::L);
+        assert_eq!(
+            res,
+            Ok(vec![
+                0b0001_1000,
+                0b1111_0111,
+                0b0010_0101,
+                0b0000_0000,
+                0b1110_1100
+            ])
+        );
+    }
+
+    #[test]
+    fn test_too_long() {
+        let res = encode(b">>>>>>>>", Version::Normal(1), EcLevel::H);
+        assert_eq!(res, Err(QrError::DataTooLong));
+    }
+}
