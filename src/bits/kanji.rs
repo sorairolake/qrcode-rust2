@@ -6,7 +6,10 @@
 //! [`Mode::Kanji`] mode.
 
 use super::Bits;
-use crate::types::{Mode, QrError, QrResult};
+use crate::{
+    error::{QrError, QrResult},
+    types::Mode,
+};
 
 impl Bits {
     /// Encodes Shift JIS double-byte data to the bits.

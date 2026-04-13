@@ -13,8 +13,9 @@ use alloc::vec::Vec;
 use super::{Bits, finish::DATA_LENGTHS};
 use crate::{
     cast::As,
+    error::{QrError, QrResult},
     optimize::{self, Optimizer, Parser, Segment},
-    types::{EcLevel, QrError, QrResult, Version},
+    types::{EcLevel, Version},
 };
 
 #[expect(clippy::missing_panics_doc)]

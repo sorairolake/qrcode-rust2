@@ -6,7 +6,7 @@
 //! [`Mode::Byte`] mode.
 
 use super::Bits;
-use crate::types::{Mode, QrResult};
+use crate::{error::QrResult, types::Mode};
 
 impl Bits {
     /// Encodes 8-bit byte data to the bits.
@@ -26,7 +26,7 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{QrError, Version};
+    use crate::{error::QrError, types::Version};
 
     #[test]
     fn test() {

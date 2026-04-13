@@ -7,7 +7,10 @@
 //! Number of allowed errors.
 
 use super::error_correction_sizes::{DATA_BYTES_PER_BLOCK, EC_BYTES_PER_BLOCK};
-use crate::types::{EcLevel, QrResult, Version};
+use crate::{
+    error::QrResult,
+    types::{EcLevel, Version},
+};
 
 /// Computes the maximum allowed number of erratic modules can be introduced to
 /// the QR code, before the data becomes truly corrupted.

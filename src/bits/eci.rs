@@ -8,7 +8,7 @@
 use super::{Bits, mode_indicator::ExtendedMode};
 use crate::{
     cast::As,
-    types::{QrError, QrResult},
+    error::{QrError, QrResult},
 };
 
 impl Bits {

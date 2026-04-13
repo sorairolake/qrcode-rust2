@@ -8,8 +8,9 @@
 
 use super::Bits;
 use crate::{
+    error::QrResult,
     optimize::{Parser, Segment},
-    types::{Mode, QrResult},
+    types::Mode,
 };
 
 impl Bits {
@@ -51,7 +52,10 @@ mod tests {
     use alloc::{vec, vec::Vec};
 
     use super::*;
-    use crate::types::{EcLevel, QrError, Version};
+    use crate::{
+        error::QrError,
+        types::{EcLevel, Version},
+    };
 
     fn encode(data: &[u8], version: Version, ec_level: EcLevel) -> QrResult<Vec<u8>> {
         let mut bits = Bits::new(version);

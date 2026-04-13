@@ -6,7 +6,7 @@
 //! [`Mode::Alphanumeric`] mode.
 
 use super::Bits;
-use crate::types::{Mode, QrResult};
+use crate::{error::QrResult, types::Mode};
 
 /// In QR code [`Mode::Alphanumeric`] mode, a pair of alphanumeric characters
 /// will be encoded as a base-45 integer. `alphanumeric_digit` converts each
@@ -56,7 +56,7 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{QrError, Version};
+    use crate::{error::QrError, types::Version};
 
     #[test]
     fn test_iso_18004_2006_example() {

@@ -6,7 +6,7 @@
 //! [`Mode::Numeric`] mode.
 
 use super::{Bits, mode_indicator::ExtendedMode};
-use crate::types::{Mode, QrResult};
+use crate::{error::QrResult, types::Mode};
 
 impl Bits {
     pub(super) fn push_header(&mut self, mode: Mode, raw_data_len: usize) -> QrResult<()> {
@@ -41,7 +41,7 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{QrError, Version};
+    use crate::{error::QrError, types::Version};
 
     #[test]
     fn test_iso_18004_2006_example_1() {

@@ -54,6 +54,7 @@ pub mod bits;
 pub mod canvas;
 mod cast;
 pub mod ec;
+pub mod error;
 pub mod optimize;
 pub mod render;
 pub mod types;
@@ -64,12 +65,15 @@ use core::ops::Index;
 #[cfg(feature = "image")]
 pub use image;
 
-pub use crate::types::{Color, EcLevel, QrError, QrResult, Version};
 use crate::{
     bits::{Bits, RectMicroStrategy},
     canvas::Canvas,
     cast::As,
     render::{Pixel, Renderer},
+};
+pub use crate::{
+    error::{QrError, QrResult},
+    types::{Color, EcLevel, Version},
 };
 
 /// The encoded QR code symbol.

@@ -11,7 +11,8 @@ use core::cmp;
 use super::Bits;
 use crate::{
     cast::As,
-    types::{EcLevel, QrError, QrResult, Version},
+    error::{QrError, QrResult},
+    types::{EcLevel, Version},
 };
 
 /// This table is copied from ISO/IEC 18004:2006 §6.4.10, Table 7, and ISO/IEC

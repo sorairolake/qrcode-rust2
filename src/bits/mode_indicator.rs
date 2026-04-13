@@ -7,7 +7,10 @@
 //! Mode indicator.
 
 use super::Bits;
-use crate::types::{Mode, QrError, QrResult, Version};
+use crate::{
+    error::{QrError, QrResult},
+    types::{Mode, Version},
+};
 
 /// An "extended" mode indicator, includes all indicators supported by QR code
 /// beyond those bearing data.

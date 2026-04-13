@@ -6,7 +6,7 @@
 //! FNC1 mode.
 
 use super::{Bits, mode_indicator::ExtendedMode};
-use crate::types::QrResult;
+use crate::error::QrResult;
 
 impl Bits {
     /// Encodes an indicator that the following data are formatted according to

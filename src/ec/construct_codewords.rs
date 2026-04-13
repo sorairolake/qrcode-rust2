@@ -13,7 +13,10 @@ use super::{
     error_correction_sizes::{DATA_BYTES_PER_BLOCK, EC_BYTES_PER_BLOCK},
     interleave::interleave,
 };
-use crate::types::{EcLevel, QrResult, Version};
+use crate::{
+    error::QrResult,
+    types::{EcLevel, Version},
+};
 
 /// Constructs data and error correction codewords ready to be put in the QR
 /// code matrix.

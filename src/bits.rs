@@ -27,7 +27,8 @@ pub use self::{
 };
 use crate::{
     cast::{As, Truncate},
-    types::{EcLevel, QrError, QrResult, Version},
+    error::{QrError, QrResult},
+    types::{EcLevel, Version},
 };
 
 /// The `Bits` structure stores the encoded data for a QR code.
