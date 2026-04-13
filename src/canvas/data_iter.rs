@@ -8,7 +8,7 @@
 
 use crate::types::Version;
 
-pub(super) struct DataModuleIter {
+pub struct DataModuleIter {
     x: i16,
     y: i16,
     width: i16,
@@ -17,7 +17,7 @@ pub(super) struct DataModuleIter {
 }
 
 impl DataModuleIter {
-    pub(super) const fn new(version: Version) -> Self {
+    pub const fn new(version: Version) -> Self {
         // In rMQR code, disregarding the bottom and right alignment patterns works
         // well.
         let (width, height) = if let Version::RectMicro(..) = version {

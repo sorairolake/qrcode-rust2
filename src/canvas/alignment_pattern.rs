@@ -242,7 +242,7 @@ mod tests {
 /// center of the alignment patterns. Since the QR code is symmetric, only one
 /// coordinate is needed. rMQR code is symmetrically placed at the top and
 /// bottom, so only one coordinate is needed.
-pub(super) static ALIGNMENT_PATTERN_POSITIONS: [&[i16]; 40] = [
+pub static ALIGNMENT_PATTERN_POSITIONS: [&[i16]; 40] = [
     &[6, 22, 38],
     &[6, 24, 42],
     &[6, 26, 46],
