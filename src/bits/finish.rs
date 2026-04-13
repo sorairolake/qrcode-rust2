@@ -11,7 +11,7 @@ use core::cmp;
 use super::Bits;
 use crate::{
     cast::As,
-    error::{QrError, QrResult},
+    error::{Error, Result},
     types::{EcLevel, Version},
 };
 
@@ -107,7 +107,7 @@ impl Bits {
     /// Returns [`Err`] on overflow, or if it is not valid to use the `ec_level`
     /// for the given version (e.g. [`Version::Micro(1)`](Version::Micro) with
     /// [`EcLevel::H`]).
-    pub fn push_terminator(&mut self, ec_level: EcLevel) -> QrResult<()> {
+    pub fn push_terminator(&mut self, ec_level: EcLevel) -> Result<()> {
         let terminator_size = match self.version {
             Version::Micro(a) => a.as_usize() * 2 + 1,
             Version::RectMicro(..) => 3,
@@ -117,7 +117,7 @@ impl Bits {
         let cur_length = self.len();
         let data_length = self.max_len(ec_level)?;
         if cur_length > data_length {
-            return Err(QrError::DataTooLong);
+            return Err(Error::DataTooLong);
         }
 
         let terminator_size = cmp::min(terminator_size, data_length - cur_length);
@@ -180,7 +180,7 @@ mod tests {
     fn test_too_long() {
         let mut bits = Bits::new(Version::Micro(1));
         assert_eq!(bits.push_numeric_data(b"9999999"), Ok(()));
-        assert_eq!(bits.push_terminator(EcLevel::L), Err(QrError::DataTooLong));
+        assert_eq!(bits.push_terminator(EcLevel::L), Err(Error::DataTooLong));
     }
 
     #[test]

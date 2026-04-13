@@ -9,7 +9,7 @@
 use super::EcLevel;
 use crate::{
     cast::As,
-    error::{QrError, QrResult},
+    error::{Error, Result},
 };
 
 /// In QR code terminology, `Version` means the size of the generated image.
@@ -95,7 +95,7 @@ impl Version {
     /// # Errors
     ///
     /// Returns [`Err`] if the entry compares equal to the default value of `T`.
-    pub fn fetch<T>(self, ec_level: EcLevel, table: &[[T; 4]]) -> QrResult<T>
+    pub fn fetch<T>(self, ec_level: EcLevel, table: &[[T; 4]]) -> Result<T>
     where
         T: Copy + Default + PartialEq,
     {
@@ -118,7 +118,7 @@ impl Version {
             }
             _ => {}
         }
-        Err(QrError::InvalidVersion)
+        Err(Error::InvalidVersion)
     }
 
     /// Returns the number of bits needed to encode the mode indicator.
@@ -202,7 +202,7 @@ impl Version {
     }
 
     /// Gets the index of the version of the rMQR code.
-    pub(crate) const fn rect_micro_index(self) -> QrResult<usize> {
+    pub(crate) const fn rect_micro_index(self) -> Result<usize> {
         match self {
             Self::RectMicro(7, 43) => Ok(0),
             Self::RectMicro(7, 59) => Ok(1),
@@ -236,12 +236,12 @@ impl Version {
             Self::RectMicro(17, 77) => Ok(29),
             Self::RectMicro(17, 99) => Ok(30),
             Self::RectMicro(17, 139) => Ok(31),
-            _ => Err(QrError::InvalidVersion),
+            _ => Err(Error::InvalidVersion),
         }
     }
 
     /// Gets the index in ascending order of width.
-    pub(crate) const fn rect_micro_width_index(self) -> QrResult<usize> {
+    pub(crate) const fn rect_micro_width_index(self) -> Result<usize> {
         match self {
             Self::RectMicro(_, 27) => Ok(0),
             Self::RectMicro(_, 43) => Ok(1),
@@ -249,7 +249,7 @@ impl Version {
             Self::RectMicro(_, 77) => Ok(3),
             Self::RectMicro(_, 99) => Ok(4),
             Self::RectMicro(_, 139) => Ok(5),
-            _ => Err(QrError::InvalidVersion),
+            _ => Err(Error::InvalidVersion),
         }
     }
 

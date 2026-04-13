@@ -7,11 +7,11 @@
 
 //! Error types for this crate.
 
-use core::{error::Error, fmt};
+use core::{error, fmt, result};
 
-/// `QrError` encodes the error encountered when generating a QR code.
+/// `Error` encodes the error encountered when generating a QR code.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub enum QrError {
+pub enum Error {
     /// The data is too long to encode into a QR code for the given version.
     DataTooLong,
 
@@ -30,7 +30,7 @@ pub enum QrError {
     InvalidCharacter,
 }
 
-impl fmt::Display for QrError {
+impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::DataTooLong => write!(f, "data too long"),
@@ -42,7 +42,7 @@ impl fmt::Display for QrError {
     }
 }
 
-impl Error for QrError {}
+impl error::Error for Error {}
 
-/// `QrResult` is a convenient alias for a QR code generation result.
-pub type QrResult<T> = Result<T, QrError>;
+/// `Result` is a convenient alias for a QR code generation result.
+pub type Result<T> = result::Result<T, Error>;

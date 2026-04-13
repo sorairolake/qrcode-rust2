@@ -14,7 +14,7 @@ use super::{
     interleave::interleave,
 };
 use crate::{
-    error::QrResult,
+    error::Result,
     types::{EcLevel, Version},
 };
 
@@ -29,7 +29,7 @@ pub fn construct_codewords(
     rawbits: &[u8],
     version: Version,
     ec_level: EcLevel,
-) -> QrResult<(Vec<u8>, Vec<u8>)> {
+) -> Result<(Vec<u8>, Vec<u8>)> {
     let (block_1_size, block_1_count, block_2_size, block_2_count) =
         version.fetch(ec_level, &DATA_BYTES_PER_BLOCK)?;
 

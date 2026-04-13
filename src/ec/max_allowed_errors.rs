@@ -8,7 +8,7 @@
 
 use super::error_correction_sizes::{DATA_BYTES_PER_BLOCK, EC_BYTES_PER_BLOCK};
 use crate::{
-    error::QrResult,
+    error::Result,
     types::{EcLevel, Version},
 };
 
@@ -35,7 +35,7 @@ use crate::{
 ///     Ok(78)
 /// );
 /// ```
-pub fn max_allowed_errors(version: Version, ec_level: EcLevel) -> QrResult<usize> {
+pub fn max_allowed_errors(version: Version, ec_level: EcLevel) -> Result<usize> {
     let p = match (version, ec_level) {
         (Version::Micro(2) | Version::Normal(1), EcLevel::L) => 3,
         (Version::Micro(_) | Version::Normal(2), EcLevel::L)

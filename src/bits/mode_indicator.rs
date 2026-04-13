@@ -8,7 +8,7 @@
 
 use super::Bits;
 use crate::{
-    error::{QrError, QrResult},
+    error::{Error, Result},
     types::{Mode, Version},
 };
 
@@ -38,7 +38,7 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] if the mode is not supported in the provided version.
-    pub fn push_mode_indicator(&mut self, mode: ExtendedMode) -> QrResult<()> {
+    pub fn push_mode_indicator(&mut self, mode: ExtendedMode) -> Result<()> {
         #[expect(clippy::match_same_arms)]
         let number = match (self.version, mode) {
             (Version::Micro(1), ExtendedMode::Data(Mode::Numeric)) => return Ok(()),
@@ -46,7 +46,7 @@ impl Bits {
             (Version::Micro(_), ExtendedMode::Data(Mode::Alphanumeric)) => 1,
             (Version::Micro(_), ExtendedMode::Data(Mode::Byte)) => 0b10,
             (Version::Micro(_), ExtendedMode::Data(Mode::Kanji)) => 0b11,
-            (Version::Micro(_), _) => return Err(QrError::UnsupportedCharacterSet),
+            (Version::Micro(_), _) => return Err(Error::UnsupportedCharacterSet),
             (Version::RectMicro(..), ExtendedMode::Data(Mode::Numeric)) => 0b001,
             (Version::RectMicro(..), ExtendedMode::Data(Mode::Alphanumeric)) => 0b010,
             (Version::RectMicro(..), ExtendedMode::Data(Mode::Byte)) => 0b011,
@@ -54,7 +54,7 @@ impl Bits {
             (Version::RectMicro(..), ExtendedMode::Eci) => 0b111,
             (Version::RectMicro(..), ExtendedMode::Fnc1First) => 0b101,
             (Version::RectMicro(..), ExtendedMode::Fnc1Second) => 0b110,
-            (Version::RectMicro(..), _) => return Err(QrError::UnsupportedCharacterSet),
+            (Version::RectMicro(..), _) => return Err(Error::UnsupportedCharacterSet),
             (_, ExtendedMode::Data(Mode::Numeric)) => 0b0001,
             (_, ExtendedMode::Data(Mode::Alphanumeric)) => 0b0010,
             (_, ExtendedMode::Data(Mode::Byte)) => 0b0100,
@@ -66,6 +66,6 @@ impl Bits {
         };
         let bits = self.version.mode_bits_count();
         self.push_number_checked(bits, number)
-            .or(Err(QrError::UnsupportedCharacterSet))
+            .or(Err(Error::UnsupportedCharacterSet))
     }
 }

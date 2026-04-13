@@ -9,7 +9,7 @@
 use std::sync::LazyLock;
 
 use qrcode2::{
-    EcLevel, QrCode, QrError, Version,
+    EcLevel, Error, QrCode, Version,
     image::{Luma, Rgb},
 };
 use sha3::{Shake128, digest::ExtendableOutput};
@@ -73,7 +73,7 @@ fn test_qr_v40_ec_l_as_image() {
     }
     {
         let err = QrCode::with_error_correction_level(&*INPUT_DATA, EcLevel::L).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code =
@@ -88,7 +88,7 @@ fn test_qr_v40_ec_l_as_image() {
     }
     {
         let err = QrCode::with_version(&*INPUT_DATA, Version::Normal(40), EcLevel::L).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
 }
 
@@ -106,7 +106,7 @@ fn test_qr_v40_ec_m_as_image() {
     }
     {
         let err = QrCode::new(&INPUT_DATA[..2332]).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code = QrCode::with_error_correction_level(&INPUT_DATA[..2331], EcLevel::M).unwrap();
@@ -120,7 +120,7 @@ fn test_qr_v40_ec_m_as_image() {
     }
     {
         let err = QrCode::with_error_correction_level(&INPUT_DATA[..2332], EcLevel::M).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code =
@@ -136,7 +136,7 @@ fn test_qr_v40_ec_m_as_image() {
     {
         let err =
             QrCode::with_version(&INPUT_DATA[..2332], Version::Normal(40), EcLevel::M).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
 }
 
@@ -154,7 +154,7 @@ fn test_qr_v40_ec_h_as_image() {
     }
     {
         let err = QrCode::with_error_correction_level(&INPUT_DATA[..1274], EcLevel::H).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code =
@@ -170,7 +170,7 @@ fn test_qr_v40_ec_h_as_image() {
     {
         let err =
             QrCode::with_version(&INPUT_DATA[..1274], Version::Normal(40), EcLevel::H).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
 }
 
@@ -190,7 +190,7 @@ fn test_micro_qr_v4_ec_l_as_image() {
     {
         let err =
             QrCode::micro_with_error_correction_level(&INPUT_DATA[..16], EcLevel::L).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code = QrCode::with_version(&INPUT_DATA[..15], Version::Micro(4), EcLevel::L).unwrap();
@@ -205,7 +205,7 @@ fn test_micro_qr_v4_ec_l_as_image() {
     {
         let err =
             QrCode::with_version(&INPUT_DATA[..16], Version::Micro(4), EcLevel::L).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
 }
 
@@ -223,7 +223,7 @@ fn test_micro_qr_v4_ec_m_as_image() {
     }
     {
         let err = QrCode::new_micro(&INPUT_DATA[..14]).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code =
@@ -239,7 +239,7 @@ fn test_micro_qr_v4_ec_m_as_image() {
     {
         let err =
             QrCode::micro_with_error_correction_level(&INPUT_DATA[..14], EcLevel::M).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code = QrCode::with_version(&INPUT_DATA[..13], Version::Micro(4), EcLevel::M).unwrap();
@@ -254,7 +254,7 @@ fn test_micro_qr_v4_ec_m_as_image() {
     {
         let err =
             QrCode::with_version(&INPUT_DATA[..14], Version::Micro(4), EcLevel::M).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
 }
 
@@ -273,7 +273,7 @@ fn test_micro_qr_v4_ec_q_as_image() {
     {
         let err =
             QrCode::micro_with_error_correction_level(&INPUT_DATA[..10], EcLevel::Q).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code = QrCode::with_version(&INPUT_DATA[..9], Version::Micro(4), EcLevel::Q).unwrap();
@@ -288,7 +288,7 @@ fn test_micro_qr_v4_ec_q_as_image() {
     {
         let err =
             QrCode::with_version(&INPUT_DATA[..10], Version::Micro(4), EcLevel::Q).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
 }
 
@@ -306,7 +306,7 @@ fn test_rmqr_vr17x139_ec_m_as_image() {
     }
     {
         let err = QrCode::new_rect_micro(&INPUT_DATA[..151]).unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code =
@@ -322,7 +322,7 @@ fn test_rmqr_vr17x139_ec_m_as_image() {
     {
         let err = QrCode::rect_micro_with_error_correction_level(&INPUT_DATA[..151], EcLevel::M)
             .unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code =
@@ -339,7 +339,7 @@ fn test_rmqr_vr17x139_ec_m_as_image() {
     {
         let err = QrCode::with_version(&INPUT_DATA[..151], Version::RectMicro(17, 139), EcLevel::M)
             .unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
 }
 
@@ -359,7 +359,7 @@ fn test_rmqr_vr17x139_ec_h_as_image() {
     {
         let err = QrCode::rect_micro_with_error_correction_level(&INPUT_DATA[..75], EcLevel::H)
             .unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
     {
         let code = QrCode::with_version(&INPUT_DATA[..74], Version::RectMicro(17, 139), EcLevel::H)
@@ -375,6 +375,6 @@ fn test_rmqr_vr17x139_ec_h_as_image() {
     {
         let err = QrCode::with_version(&INPUT_DATA[..75], Version::RectMicro(17, 139), EcLevel::H)
             .unwrap_err();
-        assert_eq!(err, QrError::DataTooLong);
+        assert_eq!(err, Error::DataTooLong);
     }
 }

@@ -6,7 +6,7 @@
 //! [`Mode::Alphanumeric`] mode.
 
 use super::Bits;
-use crate::{error::QrResult, types::Mode};
+use crate::{error::Result, types::Mode};
 
 /// In QR code [`Mode::Alphanumeric`] mode, a pair of alphanumeric characters
 /// will be encoded as a base-45 integer. `alphanumeric_digit` converts each
@@ -39,7 +39,7 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] on overflow.
-    pub fn push_alphanumeric_data(&mut self, data: &[u8]) -> QrResult<()> {
+    pub fn push_alphanumeric_data(&mut self, data: &[u8]) -> Result<()> {
         self.push_header(Mode::Alphanumeric, data.len())?;
         for chunk in data.chunks(2) {
             let number = chunk
@@ -56,7 +56,7 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{error::QrError, types::Version};
+    use crate::{error::Error, types::Version};
 
     #[test]
     fn test_iso_18004_2006_example() {
@@ -80,7 +80,7 @@ mod tests {
         let mut bits = Bits::new(Version::Micro(1));
         assert_eq!(
             bits.push_alphanumeric_data(b"A"),
-            Err(QrError::UnsupportedCharacterSet)
+            Err(Error::UnsupportedCharacterSet)
         );
     }
 
@@ -89,7 +89,7 @@ mod tests {
         let mut bits = Bits::new(Version::Micro(2));
         assert_eq!(
             bits.push_alphanumeric_data(b"ABCDEFGH"),
-            Err(QrError::DataTooLong)
+            Err(Error::DataTooLong)
         );
     }
 }

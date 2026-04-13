@@ -13,7 +13,7 @@ use alloc::vec::Vec;
 use super::{Bits, finish::DATA_LENGTHS};
 use crate::{
     cast::As,
-    error::{QrError, QrResult},
+    error::{Error, Result},
     optimize::{self, Optimizer, Parser, Segment},
     types::{EcLevel, Version},
 };
@@ -37,7 +37,7 @@ use crate::{
 /// let bits = bits::encode_auto(b"Hello, world!", EcLevel::M).unwrap();
 /// assert_eq!(bits.version(), Version::Normal(1));
 /// ```
-pub fn encode_auto(data: &[u8], ec_level: EcLevel) -> QrResult<Bits> {
+pub fn encode_auto(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
     for version in &[Version::Normal(9), Version::Normal(26), Version::Normal(40)] {
         let opt_segments = Optimizer::new(segments.iter().copied(), *version).collect::<Vec<_>>();
@@ -52,7 +52,7 @@ pub fn encode_auto(data: &[u8], ec_level: EcLevel) -> QrResult<Bits> {
             return Ok(bits);
         }
     }
-    Err(QrError::DataTooLong)
+    Err(Error::DataTooLong)
 }
 
 /// Finds the smallest version (QR code only) that can store N bits of data in
@@ -134,7 +134,7 @@ mod encode_auto_tests {
 /// let bits = bits::encode_auto_micro(b"Hello, world!", EcLevel::M).unwrap();
 /// assert_eq!(bits.version(), Version::Micro(4));
 /// ```
-pub fn encode_auto_micro(data: &[u8], ec_level: EcLevel) -> QrResult<Bits> {
+pub fn encode_auto_micro(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
     let mut possible_versions = Vec::new();
     for version in 1..=4 {
@@ -160,7 +160,7 @@ pub fn encode_auto_micro(data: &[u8], ec_level: EcLevel) -> QrResult<Bits> {
         bits.push_terminator(ec_level)?;
         return Ok(bits);
     }
-    Err(QrError::DataTooLong)
+    Err(Error::DataTooLong)
 }
 
 #[cfg(test)]
@@ -225,7 +225,7 @@ pub fn encode_auto_rect_micro(
     data: &[u8],
     ec_level: EcLevel,
     strategy: RectMicroStrategy,
-) -> QrResult<Bits> {
+) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
     let mut possible_versions = Vec::new();
     for width in Version::RMQR_ALL_WIDTH {
@@ -262,7 +262,7 @@ pub fn encode_auto_rect_micro(
         bits.push_terminator(ec_level)?;
         return Ok(bits);
     }
-    Err(QrError::DataTooLong)
+    Err(Error::DataTooLong)
 }
 
 #[cfg(test)]

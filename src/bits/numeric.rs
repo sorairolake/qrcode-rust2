@@ -6,10 +6,10 @@
 //! [`Mode::Numeric`] mode.
 
 use super::{Bits, mode_indicator::ExtendedMode};
-use crate::{error::QrResult, types::Mode};
+use crate::{error::Result, types::Mode};
 
 impl Bits {
-    pub(super) fn push_header(&mut self, mode: Mode, raw_data_len: usize) -> QrResult<()> {
+    pub(super) fn push_header(&mut self, mode: Mode, raw_data_len: usize) -> Result<()> {
         let length_bits = mode.length_bits_count(self.version);
         self.reserve(length_bits + 4 + mode.data_bits_count(raw_data_len));
         self.push_mode_indicator(ExtendedMode::Data(mode))?;
@@ -24,7 +24,7 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] on overflow.
-    pub fn push_numeric_data(&mut self, data: &[u8]) -> QrResult<()> {
+    pub fn push_numeric_data(&mut self, data: &[u8]) -> Result<()> {
         self.push_header(Mode::Numeric, data.len())?;
         for chunk in data.chunks(3) {
             let number = chunk
@@ -41,7 +41,7 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{error::QrError, types::Version};
+    use crate::{error::Error, types::Version};
 
     #[test]
     fn test_iso_18004_2006_example_1() {
@@ -102,9 +102,6 @@ mod tests {
     #[test]
     fn test_data_too_long_error() {
         let mut bits = Bits::new(Version::Micro(1));
-        assert_eq!(
-            bits.push_numeric_data(b"12345678"),
-            Err(QrError::DataTooLong)
-        );
+        assert_eq!(bits.push_numeric_data(b"12345678"), Err(Error::DataTooLong));
     }
 }

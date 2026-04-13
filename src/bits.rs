@@ -27,7 +27,7 @@ pub use self::{
 };
 use crate::{
     cast::{As, Truncate},
-    error::{QrError, QrResult},
+    error::{Error, Result},
     types::{EcLevel, Version},
 };
 
@@ -104,9 +104,9 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] on overflow.
-    pub fn push_number_checked(&mut self, n: usize, number: usize) -> QrResult<()> {
+    pub fn push_number_checked(&mut self, n: usize, number: usize) -> Result<()> {
         if n > 16 || number >= (1 << n) {
-            Err(QrError::DataTooLong)
+            Err(Error::DataTooLong)
         } else {
             self.push_number(n, number.as_u16());
             Ok(())
@@ -202,7 +202,7 @@ impl Bits {
     /// let bits = Bits::new(Version::Normal(1));
     /// assert_eq!(bits.max_len(EcLevel::M), Ok(128));
     /// ```
-    pub fn max_len(&self, ec_level: EcLevel) -> QrResult<usize> {
+    pub fn max_len(&self, ec_level: EcLevel) -> Result<usize> {
         self.version.fetch(ec_level, &DATA_LENGTHS)
     }
 

@@ -8,7 +8,7 @@
 use super::{Bits, mode_indicator::ExtendedMode};
 use crate::{
     cast::As,
-    error::{QrError, QrResult},
+    error::{Error, Result},
 };
 
 impl Bits {
@@ -37,7 +37,7 @@ impl Bits {
     /// // ΑΒΓΔΕ
     /// bits.push_byte_data(b"\xA1\xA2\xA3\xA4\xA5");
     /// ```
-    pub fn push_eci_designator(&mut self, eci_designator: u32) -> QrResult<()> {
+    pub fn push_eci_designator(&mut self, eci_designator: u32) -> Result<()> {
         // assume the common case that eci_designator <= 127.
         self.reserve(12);
         self.push_mode_indicator(ExtendedMode::Eci)?;
@@ -54,7 +54,7 @@ impl Bits {
                 self.push_number(5, (eci_designator >> 16).as_u16());
                 self.push_number(16, (eci_designator & 0xFFFF).as_u16());
             }
-            _ => return Err(QrError::InvalidEciDesignator),
+            _ => return Err(Error::InvalidEciDesignator),
         }
         Ok(())
     }
@@ -94,7 +94,7 @@ mod tests {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(
             bits.push_eci_designator(1_000_000),
-            Err(QrError::InvalidEciDesignator)
+            Err(Error::InvalidEciDesignator)
         );
     }
 
@@ -103,7 +103,7 @@ mod tests {
         let mut bits = Bits::new(Version::Micro(4));
         assert_eq!(
             bits.push_eci_designator(9),
-            Err(QrError::UnsupportedCharacterSet)
+            Err(Error::UnsupportedCharacterSet)
         );
     }
 }

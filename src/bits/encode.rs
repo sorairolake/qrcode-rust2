@@ -8,7 +8,7 @@
 
 use super::Bits;
 use crate::{
-    error::QrResult,
+    error::Result,
     optimize::{Parser, Segment},
     types::Mode,
 };
@@ -20,7 +20,7 @@ impl Bits {
     ///
     /// Returns [`Err`] on overflow, or if the segment refers to incorrectly
     /// encoded byte sequence.
-    pub fn push_segments<I>(&mut self, data: &[u8], segments_iter: I) -> QrResult<()>
+    pub fn push_segments<I>(&mut self, data: &[u8], segments_iter: I) -> Result<()>
     where
         I: Iterator<Item = Segment>,
     {
@@ -41,7 +41,7 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] on overflow.
-    pub fn push_optimal_data(&mut self, data: &[u8]) -> QrResult<()> {
+    pub fn push_optimal_data(&mut self, data: &[u8]) -> Result<()> {
         let segments = Parser::new(data).optimize(self.version);
         self.push_segments(data, segments)
     }
@@ -53,11 +53,11 @@ mod tests {
 
     use super::*;
     use crate::{
-        error::QrError,
+        error::Error,
         types::{EcLevel, Version},
     };
 
-    fn encode(data: &[u8], version: Version, ec_level: EcLevel) -> QrResult<Vec<u8>> {
+    fn encode(data: &[u8], version: Version, ec_level: EcLevel) -> Result<Vec<u8>> {
         let mut bits = Bits::new(version);
         bits.push_optimal_data(data)?;
         bits.push_terminator(ec_level)?;
@@ -105,6 +105,6 @@ mod tests {
     #[test]
     fn test_too_long() {
         let res = encode(b">>>>>>>>", Version::Normal(1), EcLevel::H);
-        assert_eq!(res, Err(QrError::DataTooLong));
+        assert_eq!(res, Err(Error::DataTooLong));
     }
 }

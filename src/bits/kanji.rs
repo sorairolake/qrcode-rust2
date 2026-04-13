@@ -7,7 +7,7 @@
 
 use super::Bits;
 use crate::{
-    error::{QrError, QrResult},
+    error::{Error, Result},
     types::Mode,
 };
 
@@ -18,11 +18,11 @@ impl Bits {
     ///
     /// Returns [`Err`] on overflow, or if the data is not Shift JIS double-byte
     /// data (e.g. if the length of data is not an even number).
-    pub fn push_kanji_data(&mut self, data: &[u8]) -> QrResult<()> {
+    pub fn push_kanji_data(&mut self, data: &[u8]) -> Result<()> {
         self.push_header(Mode::Kanji, data.len() / 2)?;
         for kanji in data.chunks(2) {
             if kanji.len() != 2 {
-                return Err(QrError::InvalidCharacter);
+                return Err(Error::InvalidCharacter);
             }
             let cp = u16::from(kanji[0]) * 256 + u16::from(kanji[1]);
             let bytes = if cp < 0xE040 {
@@ -63,7 +63,7 @@ mod tests {
         let mut bits = Bits::new(Version::Micro(2));
         assert_eq!(
             bits.push_kanji_data(b"?"),
-            Err(QrError::UnsupportedCharacterSet)
+            Err(Error::UnsupportedCharacterSet)
         );
     }
 
@@ -72,7 +72,7 @@ mod tests {
         let mut bits = Bits::new(Version::Micro(3));
         assert_eq!(
             bits.push_kanji_data(b"\x93_\x93_\x93_\x93_\x93_\x93_\x93_\x93_"),
-            Err(QrError::DataTooLong)
+            Err(Error::DataTooLong)
         );
     }
 }

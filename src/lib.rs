@@ -72,7 +72,7 @@ use crate::{
     render::{Pixel, Renderer},
 };
 pub use crate::{
-    error::{QrError, QrResult},
+    error::{Error, Result},
     types::{Color, EcLevel, Version},
 };
 
@@ -104,7 +104,7 @@ impl QrCode {
     /// #
     /// let code = QrCode::new(b"Some data").unwrap();
     /// ```
-    pub fn new(data: impl AsRef<[u8]>) -> QrResult<Self> {
+    pub fn new(data: impl AsRef<[u8]>) -> Result<Self> {
         Self::with_error_correction_level(data, EcLevel::default())
     }
 
@@ -126,7 +126,7 @@ impl QrCode {
     /// #
     /// let code = QrCode::new_micro(b"Some data").unwrap();
     /// ```
-    pub fn new_micro(data: impl AsRef<[u8]>) -> QrResult<Self> {
+    pub fn new_micro(data: impl AsRef<[u8]>) -> Result<Self> {
         Self::micro_with_error_correction_level(data, EcLevel::default())
     }
 
@@ -148,7 +148,7 @@ impl QrCode {
     /// #
     /// let code = QrCode::new_rect_micro(b"Some data").unwrap();
     /// ```
-    pub fn new_rect_micro(data: impl AsRef<[u8]>) -> QrResult<Self> {
+    pub fn new_rect_micro(data: impl AsRef<[u8]>) -> Result<Self> {
         Self::rect_micro_with_error_correction_level(data, EcLevel::default())
     }
 
@@ -170,10 +170,7 @@ impl QrCode {
     /// #
     /// let code = QrCode::with_error_correction_level(b"Some data", EcLevel::H).unwrap();
     /// ```
-    pub fn with_error_correction_level(
-        data: impl AsRef<[u8]>,
-        ec_level: EcLevel,
-    ) -> QrResult<Self> {
+    pub fn with_error_correction_level(data: impl AsRef<[u8]>, ec_level: EcLevel) -> Result<Self> {
         let bits = bits::encode_auto(data.as_ref(), ec_level)?;
         Self::with_bits(bits, ec_level)
     }
@@ -199,7 +196,7 @@ impl QrCode {
     pub fn micro_with_error_correction_level(
         data: impl AsRef<[u8]>,
         ec_level: EcLevel,
-    ) -> QrResult<Self> {
+    ) -> Result<Self> {
         let bits = bits::encode_auto_micro(data.as_ref(), ec_level)?;
         Self::with_bits(bits, ec_level)
     }
@@ -225,7 +222,7 @@ impl QrCode {
     pub fn rect_micro_with_error_correction_level(
         data: impl AsRef<[u8]>,
         ec_level: EcLevel,
-    ) -> QrResult<Self> {
+    ) -> Result<Self> {
         let bits = bits::encode_auto_rect_micro(data.as_ref(), ec_level, RectMicroStrategy::Area)?;
         Self::with_bits(bits, ec_level)
     }
@@ -259,7 +256,7 @@ impl QrCode {
         data: impl AsRef<[u8]>,
         version: Version,
         ec_level: EcLevel,
-    ) -> QrResult<Self> {
+    ) -> Result<Self> {
         let mut bits = Bits::new(version);
         bits.push_optimal_data(data.as_ref())?;
         bits.push_terminator(ec_level)?;
@@ -294,7 +291,7 @@ impl QrCode {
     /// bits.push_terminator(EcLevel::L);
     /// let qrcode = QrCode::with_bits(bits, EcLevel::L);
     /// ```
-    pub fn with_bits(bits: Bits, ec_level: EcLevel) -> QrResult<Self> {
+    pub fn with_bits(bits: Bits, ec_level: EcLevel) -> Result<Self> {
         let version = bits.version();
         let data = bits.into_bytes();
         let (encoded_data, ec_data) = ec::construct_codewords(&data, version, ec_level)?;

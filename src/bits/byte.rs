@@ -6,7 +6,7 @@
 //! [`Mode::Byte`] mode.
 
 use super::Bits;
-use crate::{error::QrResult, types::Mode};
+use crate::{error::Result, types::Mode};
 
 impl Bits {
     /// Encodes 8-bit byte data to the bits.
@@ -14,7 +14,7 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] on overflow.
-    pub fn push_byte_data(&mut self, data: &[u8]) -> QrResult<()> {
+    pub fn push_byte_data(&mut self, data: &[u8]) -> Result<()> {
         self.push_header(Mode::Byte, data.len())?;
         for b in data {
             self.push_number(8, u16::from(*b));
@@ -26,7 +26,7 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{error::QrError, types::Version};
+    use crate::{error::Error, types::Version};
 
     #[test]
     fn test() {
@@ -57,7 +57,7 @@ mod tests {
         let mut bits = Bits::new(Version::Micro(2));
         assert_eq!(
             bits.push_byte_data(b"?"),
-            Err(QrError::UnsupportedCharacterSet)
+            Err(Error::UnsupportedCharacterSet)
         );
     }
 
@@ -66,7 +66,7 @@ mod tests {
         let mut bits = Bits::new(Version::Micro(3));
         assert_eq!(
             bits.push_byte_data(b"0123456701234567"),
-            Err(QrError::DataTooLong)
+            Err(Error::DataTooLong)
         );
     }
 }
