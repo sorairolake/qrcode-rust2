@@ -1,0 +1,98 @@
+// SPDX-FileCopyrightText: 2014 kennytm
+// SPDX-FileCopyrightText: 2024 Michael Spiegel
+// SPDX-FileCopyrightText: 2025 Shun Sakai
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+
+//! QR code error correction.
+
+use alloc::vec::Vec;
+
+use super::{error_correction_sizes, interleave};
+use crate::types::{EcLevel, QrResult, Version};
+
+/// Constructs data and error correction codewords ready to be put in the QR
+/// code matrix.
+///
+/// # Errors
+///
+/// Returns [`Err`] if it is not valid to use the `ec_level` for the given
+/// version (e.g. [`Version::Micro(1)`](Version::Micro) with [`EcLevel::H`]).
+pub fn construct_codewords(
+    rawbits: &[u8],
+    version: Version,
+    ec_level: EcLevel,
+) -> QrResult<(Vec<u8>, Vec<u8>)> {
+    let (block_1_size, block_1_count, block_2_size, block_2_count) =
+        version.fetch(ec_level, &error_correction_sizes::DATA_BYTES_PER_BLOCK)?;
+
+    let blocks_count = block_1_count + block_2_count;
+    let block_1_end = block_1_size * block_1_count;
+    let total_size = block_1_end + block_2_size * block_2_count;
+
+    debug_assert_eq!(rawbits.len(), total_size);
+
+    // Divide the data into blocks.
+    let mut blocks = Vec::with_capacity(blocks_count);
+    blocks.extend(rawbits[..block_1_end].chunks(block_1_size));
+    if block_2_size > 0 {
+        blocks.extend(rawbits[block_1_end..].chunks(block_2_size));
+    }
+
+    // Generate EC codes.
+    let ec_bytes = version.fetch(ec_level, &error_correction_sizes::EC_BYTES_PER_BLOCK)?;
+    let ec_codes = blocks
+        .iter()
+        .map(|block| super::create_error_correction_code(block, ec_bytes))
+        .collect::<Vec<Vec<u8>>>();
+
+    let blocks_vec = interleave::interleave(&blocks);
+    let ec_vec = interleave::interleave(&ec_codes);
+
+    Ok((blocks_vec, ec_vec))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_add_ec_simple() {
+        let msg = b" [\x0Bx\xD1r\xDCMC@\xEC\x11\xEC\x11\xEC\x11";
+        let (blocks_vec, ec_vec) =
+            construct_codewords(msg, Version::Normal(1), EcLevel::M).unwrap();
+        assert_eq!(blocks_vec, msg);
+        assert_eq!(ec_vec, b"\xC4#'w\xEB\xD7\xE7\xE2]\x17");
+    }
+
+    #[test]
+    fn test_add_ec_complex() {
+        let msg = [
+            0x43, 0x55, 0x46, 0x86, 0x57, 0x26, 0x55, 0xC2, 0x77, 0x32, 0x06, 0x12, 0x06, 0x67,
+            0x26, 0xF6, 0xF6, 0x42, 0x07, 0x76, 0x86, 0xF2, 0x07, 0x26, 0x56, 0x16, 0xC6, 0xC7,
+            0x92, 0x06, 0xB6, 0xE6, 0xF7, 0x77, 0x32, 0x07, 0x76, 0x86, 0x57, 0x26, 0x52, 0x06,
+            0x86, 0x97, 0x32, 0x07, 0x46, 0xF7, 0x76, 0x56, 0xC2, 0x06, 0x97, 0x32, 0x10, 0xEC,
+            0x11, 0xEC, 0x11, 0xEC, 0x11, 0xEC,
+        ];
+        let expected_blocks = [
+            0x43, 0xF6, 0xB6, 0x46, 0x55, 0xF6, 0xE6, 0xF7, 0x46, 0x42, 0xF7, 0x76, 0x86, 0x07,
+            0x77, 0x56, 0x57, 0x76, 0x32, 0xC2, 0x26, 0x86, 0x07, 0x06, 0x55, 0xF2, 0x76, 0x97,
+            0xC2, 0x07, 0x86, 0x32, 0x77, 0x26, 0x57, 0x10, 0x32, 0x56, 0x26, 0xEC, 0x06, 0x16,
+            0x52, 0x11, 0x12, 0xC6, 0x06, 0xEC, 0x06, 0xC7, 0x86, 0x11, 0x67, 0x92, 0x97, 0xEC,
+            0x26, 0x06, 0x32, 0x11, 0x07, 0xEC,
+        ];
+        let expected_ec = [
+            0xD5, 0x57, 0x94, 0xEB, 0xC7, 0xCC, 0x74, 0x9F, 0x0B, 0x60, 0xB1, 0x05, 0x2D, 0x3C,
+            0xD4, 0xAD, 0x73, 0xCA, 0x4C, 0x18, 0xF7, 0xB6, 0x85, 0x93, 0xF1, 0x7C, 0x4B, 0x3B,
+            0xDF, 0x9D, 0xF2, 0x21, 0xE5, 0xC8, 0xEE, 0x6A, 0xF8, 0x86, 0x4C, 0x28, 0x9A, 0x1B,
+            0xC3, 0xFF, 0x75, 0x81, 0xE6, 0xAC, 0x9A, 0xD1, 0xBD, 0x52, 0x6F, 0x11, 0x0A, 0x02,
+            0x56, 0xA3, 0x6C, 0x83, 0xA1, 0xA3, 0xF0, 0x20, 0x6F, 0x78, 0xC0, 0xB2, 0x27, 0x85,
+            0x8D, 0xEC,
+        ];
+
+        let (blocks_vec, ec_vec) =
+            construct_codewords(&msg, Version::Normal(5), EcLevel::Q).unwrap();
+        assert_eq!(blocks_vec, expected_blocks);
+        assert_eq!(ec_vec, expected_ec);
+    }
+}
