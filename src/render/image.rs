@@ -105,7 +105,7 @@ impl<P: image::Pixel + 'static> Canvas for (P, ImageBuffer<P, Vec<P::Subpixel>>)
 }
 
 #[cfg(test)]
-mod render_tests {
+mod tests {
     use super::*;
     use crate::render::Renderer;
 

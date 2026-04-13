@@ -6,7 +6,7 @@
 
 //! Number of allowed errors.
 
-use super::error_correction_sizes;
+use super::error_correction_sizes::{DATA_BYTES_PER_BLOCK, EC_BYTES_PER_BLOCK};
 use crate::types::{EcLevel, QrResult, Version};
 
 /// Computes the maximum allowed number of erratic modules can be introduced to
@@ -41,10 +41,8 @@ pub fn max_allowed_errors(version: Version, ec_level: EcLevel) -> QrResult<usize
         _ => 0,
     };
 
-    let ec_bytes_per_block =
-        version.fetch(ec_level, &error_correction_sizes::EC_BYTES_PER_BLOCK)?;
-    let (_, count1, _, count2) =
-        version.fetch(ec_level, &error_correction_sizes::DATA_BYTES_PER_BLOCK)?;
+    let ec_bytes_per_block = version.fetch(ec_level, &EC_BYTES_PER_BLOCK)?;
+    let (_, count1, _, count2) = version.fetch(ec_level, &DATA_BYTES_PER_BLOCK)?;
     let ec_bytes = (count1 + count2) * ec_bytes_per_block;
 
     Ok((ec_bytes - p) / 2)

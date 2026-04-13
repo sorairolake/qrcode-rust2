@@ -7,7 +7,7 @@
 
 //! Timing patterns.
 
-use super::{Canvas, alignment_pattern};
+use super::{Canvas, alignment_pattern::ALIGNMENT_PATTERN_POSITIONS};
 use crate::types::{Color, Version};
 
 impl Canvas {
@@ -89,7 +89,7 @@ impl Canvas {
         }
 
         let position_index = self.version.rect_micro_width_index().unwrap() + 34;
-        for x in alignment_pattern::ALIGNMENT_PATTERN_POSITIONS[position_index] {
+        for x in ALIGNMENT_PATTERN_POSITIONS[position_index] {
             self.draw_line(*x, 3, *x, height - 4, Color::Dark, Color::Light);
         }
     }

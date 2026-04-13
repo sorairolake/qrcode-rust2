@@ -8,7 +8,11 @@
 
 use alloc::vec::Vec;
 
-use super::{error_correction_sizes, interleave};
+use super::{
+    create_error_correction_code,
+    error_correction_sizes::{DATA_BYTES_PER_BLOCK, EC_BYTES_PER_BLOCK},
+    interleave::interleave,
+};
 use crate::types::{EcLevel, QrResult, Version};
 
 /// Constructs data and error correction codewords ready to be put in the QR
@@ -24,7 +28,7 @@ pub fn construct_codewords(
     ec_level: EcLevel,
 ) -> QrResult<(Vec<u8>, Vec<u8>)> {
     let (block_1_size, block_1_count, block_2_size, block_2_count) =
-        version.fetch(ec_level, &error_correction_sizes::DATA_BYTES_PER_BLOCK)?;
+        version.fetch(ec_level, &DATA_BYTES_PER_BLOCK)?;
 
     let blocks_count = block_1_count + block_2_count;
     let block_1_end = block_1_size * block_1_count;
@@ -40,14 +44,14 @@ pub fn construct_codewords(
     }
 
     // Generate EC codes.
-    let ec_bytes = version.fetch(ec_level, &error_correction_sizes::EC_BYTES_PER_BLOCK)?;
+    let ec_bytes = version.fetch(ec_level, &EC_BYTES_PER_BLOCK)?;
     let ec_codes = blocks
         .iter()
-        .map(|block| super::create_error_correction_code(block, ec_bytes))
+        .map(|block| create_error_correction_code(block, ec_bytes))
         .collect::<Vec<Vec<u8>>>();
 
-    let blocks_vec = interleave::interleave(&blocks);
-    let ec_vec = interleave::interleave(&ec_codes);
+    let blocks_vec = interleave(&blocks);
+    let ec_vec = interleave(&ec_codes);
 
     Ok((blocks_vec, ec_vec))
 }

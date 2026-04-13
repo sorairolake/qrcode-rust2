@@ -10,7 +10,7 @@ use core::slice::Iter;
 
 use super::{
     Segment,
-    internal::{self, Action, ExclCharSet, State},
+    internal::{Action, ExclCharSet, STATE_TRANSITION, State},
 };
 use crate::types::Mode;
 
@@ -126,8 +126,7 @@ impl Iterator for Parser<'_> {
 
         loop {
             let (i, ecs) = self.ecs_iter.next()?;
-            let (next_state, action) =
-                internal::STATE_TRANSITION[self.state as usize + ecs as usize];
+            let (next_state, action) = STATE_TRANSITION[self.state as usize + ecs as usize];
             self.state = next_state;
 
             let old_begin = self.begin;

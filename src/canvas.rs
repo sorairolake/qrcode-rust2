@@ -32,6 +32,7 @@ mod finder_pattern;
 mod mask;
 mod module;
 mod penalty;
+mod select_mask;
 mod timing_pattern;
 mod version_info;
 
