@@ -24,8 +24,6 @@ use core::cmp;
 
 use crate::{cast::As, types::Color};
 
-// Pixel trait
-
 /// Abstraction of an image pixel.
 pub trait Pixel: Copy + Sized {
     /// Type of the finalized image.
@@ -72,8 +70,6 @@ pub trait Canvas: Sized {
     /// Finalizes the canvas to a real image.
     fn into_image(self) -> Self::Image;
 }
-
-// Renderer
 
 /// A QR code renderer. This is a builder type which converts a bool-vector into
 /// an image.
