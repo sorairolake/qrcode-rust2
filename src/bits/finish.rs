@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Finish.
+//! Implementation of features related to the terminator.
 
 use core::cmp;
 

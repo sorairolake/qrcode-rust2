@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Finder patterns.
+//! Implementation of features related to the finder patterns.
 
 use super::Canvas;
 use crate::types::{Color, Version};

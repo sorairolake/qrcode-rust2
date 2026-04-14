@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! [`Mode::Alphanumeric`] mode.
+//! Implementation of features related to the [`Mode::Alphanumeric`] mode.
 
 use super::Bits;
 use crate::{error::Result, types::Mode};

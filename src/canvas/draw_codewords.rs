@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Data placement.
+//! Implementation of features related to the data placement.
 
 use super::{Canvas, Module, data_iter::DataModuleIter};
 use crate::types::{Color, EcLevel, Version};

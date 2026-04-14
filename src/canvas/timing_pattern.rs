@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Timing patterns.
+//! Implementation of features related to the timing patterns.
 
 use super::{Canvas, alignment_pattern::ALIGNMENT_PATTERN_POSITIONS};
 use crate::types::{Color, Version};

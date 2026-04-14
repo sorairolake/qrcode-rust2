@@ -3,7 +3,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Corner finder patterns for rMQR code.
+//! Implementation of features related to the corner finder patterns for rMQR
+//! code.
 
 use super::Canvas;
 use crate::types::Color;

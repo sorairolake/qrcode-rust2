@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Color.
+//! Implementation of [`Color`].
 
 use core::ops::Not;
 

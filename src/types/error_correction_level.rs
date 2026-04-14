@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Error correction level.
+//! Implementation of [`EcLevel`].
 
 /// The error correction level. It allows the original information be recovered
 /// even if parts of the code is damaged.

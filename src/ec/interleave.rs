@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Interleave support.
+//! Interleaving of codeword blocks.
 
 use alloc::vec::Vec;
 use core::ops::Deref;

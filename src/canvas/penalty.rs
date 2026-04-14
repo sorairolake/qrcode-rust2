@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Penalty score.
+//! Implementation of features related to the penalty score.
 
 use alloc::boxed::Box;
 use core::{cmp, iter};

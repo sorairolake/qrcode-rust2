@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Number of allowed errors.
+//! Computation of error correction capacity.
 
 use super::error_correction_sizes::{DATA_BYTES_PER_BLOCK, EC_BYTES_PER_BLOCK};
 use crate::{

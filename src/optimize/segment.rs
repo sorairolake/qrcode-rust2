@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Segment.
+//! Implementation of [`Segment`].
 
 use crate::types::{Mode, Version};
 

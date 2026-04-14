@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Alignment patterns.
+//! Implementation of features related to the alignment patterns.
 
 use super::{Canvas, Module};
 use crate::{

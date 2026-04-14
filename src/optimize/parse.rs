@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Parser.
+//! Implementation of [`Parser`].
 
 use core::slice::Iter;
 
@@ -14,15 +14,7 @@ use super::{
 };
 use crate::types::Mode;
 
-/// This iterator is basically equivalent to
-///
-/// ```ignore
-/// data.map(|c| ExclCharSet::from_u8(*c))
-///     .chain(Some(ExclCharSet::End).move_iter())
-///     .enumerate()
-/// ```
-///
-/// But the type is too hard to write, thus the new type.
+/// An iterator over the items of an [`ExclCharSet`].
 #[derive(Debug)]
 struct EcsIter<I> {
     base: I,

@@ -4,7 +4,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Format info & Version info.
+//! Implementation of features related to the format information and the version
+//! information.
 
 use super::Canvas;
 use crate::{

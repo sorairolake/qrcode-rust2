@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Masking.
+//! Implementation of features related to the mask patterns.
 
 use super::Canvas;
 use crate::types::{EcLevel, Version};

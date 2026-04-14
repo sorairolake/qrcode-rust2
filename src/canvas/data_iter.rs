@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Data placement iterator.
+//! Implementation of [`DataModuleIter`].
 
 use crate::types::Version;
 

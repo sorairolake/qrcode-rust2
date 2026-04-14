@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! QR code error correction.
+//! Constructs interleaved data and error correction codewords.
 
 use alloc::vec::Vec;
 

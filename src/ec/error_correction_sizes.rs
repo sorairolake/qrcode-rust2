@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Tables for error correction sizes.
+//! Tables for the number of error correction and data codewords.
 
 /// `EC_BYTES_PER_BLOCK` provides the number of codewords (bytes) used for error
 /// correction per block in each version.

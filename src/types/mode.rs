@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Mode indicator.
+//! Implementation of [`Mode`].
 
 use core::cmp::Ordering;
 

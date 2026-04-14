@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! ECI.
+//! Implementation of features related to ECI.
 
 use super::{Bits, mode_indicator::ExtendedMode};
 use crate::{

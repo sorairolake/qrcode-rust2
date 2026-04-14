@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Version.
+//! Implementation of [`Version`].
 
 use super::EcLevel;
 use crate::{

@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Mode indicator.
+//! Implementation of features related to the mode indicator.
 
 use super::Bits;
 use crate::{

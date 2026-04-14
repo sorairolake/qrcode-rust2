@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! [`Mode::Kanji`] mode.
+//! Implementation of features related to the [`Mode::Kanji`] mode.
 
 use super::Bits;
 use crate::{

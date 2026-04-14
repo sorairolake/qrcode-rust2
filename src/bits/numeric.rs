@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! [`Mode::Numeric`] mode.
+//! Implementation of features related to the [`Mode::Numeric`] mode.
 
 use super::{Bits, mode_indicator::ExtendedMode};
 use crate::{error::Result, types::Mode};

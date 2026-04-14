@@ -5,7 +5,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Select mask with lowest penalty score.
+//! Select mask with the lowest penalty score.
 
 use alloc::vec::Vec;
 

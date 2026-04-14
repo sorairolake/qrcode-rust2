@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+//! Utilities for casting primitive integer types.
+
 pub trait Truncate {
     fn truncate_as_u8(self) -> u8;
 }

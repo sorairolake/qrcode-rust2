@@ -6,7 +6,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Auto version minimization.
+//! Encode the data into [`Bits`] with auto version minimization.
 
 use alloc::vec::Vec;
 

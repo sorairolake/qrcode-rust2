@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! FNC1 mode.
+//! Implementation of features related to the FNC1 mode.
 
 use super::{Bits, mode_indicator::ExtendedMode};
 use crate::error::Result;

@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-//! Front end.
+//! Encode the data into [`Bits`].
 
 use super::Bits;
 use crate::{
