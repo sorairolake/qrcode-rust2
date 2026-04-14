@@ -23,24 +23,24 @@
 //! let colors = c.into_colors();
 //! ```
 
-mod alignment_pattern;
-mod all_functional_patterns;
-mod corner_finder_pattern;
-mod data_iter;
-mod draw_codewords;
-mod finder_pattern;
+mod alignment;
+mod corner_finder;
+mod data_module_iter;
+mod finder;
+mod functional;
+mod info;
 mod mask;
 mod module;
+mod optimize;
 mod penalty;
-mod select_mask;
-mod timing_pattern;
-mod version_info;
+mod placement;
+mod timing;
 
 #[cfg(test)]
 use alloc::string::String;
 use alloc::{vec, vec::Vec};
 
-pub use self::{all_functional_patterns::is_functional, mask::MaskPattern, module::Module};
+pub use self::{functional::is_functional, mask::MaskPattern, module::Module};
 use crate::{
     cast::As,
     types::{Color, EcLevel, Version},

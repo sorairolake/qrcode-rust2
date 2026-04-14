@@ -10,7 +10,7 @@
 
 use alloc::vec::Vec;
 
-use super::{Bits, finish::DATA_LENGTHS};
+use super::{Bits, terminator::DATA_LENGTHS};
 use crate::{
     cast::As,
     error::{Error, Result},

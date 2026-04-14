@@ -7,7 +7,7 @@
 
 //! All functional patterns before data placement.
 
-use super::{Canvas, alignment_pattern::ALIGNMENT_PATTERN_POSITIONS};
+use super::{Canvas, alignment::ALIGNMENT_PATTERN_POSITIONS};
 use crate::{cast::As, types::Version};
 
 impl Canvas {

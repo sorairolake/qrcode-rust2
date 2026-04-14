@@ -10,10 +10,10 @@
 //! Find the optimal data mode sequence to encode a piece of data.
 
 mod internal;
-mod parse;
+mod parser;
 mod segment;
 
-pub use self::{parse::Parser, segment::Segment};
+pub use self::{parser::Parser, segment::Segment};
 use crate::types::{Mode, Version};
 
 /// QR code data optimizer.

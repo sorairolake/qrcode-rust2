@@ -6,16 +6,16 @@
 
 //! The `ec` module applies the Reed-Solomon error correction codes.
 
+mod capacity;
 mod construct_codewords;
 mod error_correction_sizes;
 mod gf256;
 mod interleave;
-mod max_allowed_errors;
 
 use alloc::vec::Vec;
 
 use self::gf256::{EXP_TABLE, GENERATOR_POLYNOMIALS, LOG_TABLE};
-pub use self::{construct_codewords::construct_codewords, max_allowed_errors::max_allowed_errors};
+pub use self::{capacity::max_allowed_errors, construct_codewords::construct_codewords};
 
 /// Creates the error correction code in N bytes.
 ///

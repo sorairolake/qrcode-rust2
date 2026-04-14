@@ -6,8 +6,8 @@
 //! a QR code.
 
 mod color;
-mod error_correction_level;
+mod ec_level;
 mod mode;
 mod version;
 
-pub use self::{color::Color, error_correction_level::EcLevel, mode::Mode, version::Version};
+pub use self::{color::Color, ec_level::EcLevel, mode::Mode, version::Version};

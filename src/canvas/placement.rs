@@ -7,7 +7,7 @@
 
 //! Implementation of features related to the data placement.
 
-use super::{Canvas, Module, data_iter::DataModuleIter};
+use super::{Canvas, Module, data_module_iter::DataModuleIter};
 use crate::types::{Color, EcLevel, Version};
 
 impl Canvas {

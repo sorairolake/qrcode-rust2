@@ -8,21 +8,21 @@
 //! The `bits` module encodes binary data into raw bits used in a QR code.
 
 mod alphanumeric;
+mod auto;
 mod byte;
 mod eci;
 mod encode;
-mod encode_auto;
-mod finish;
 mod fnc1;
 mod kanji;
 mod mode_indicator;
 mod numeric;
+mod terminator;
 
 use alloc::vec::Vec;
 
-use self::finish::DATA_LENGTHS;
+use self::terminator::DATA_LENGTHS;
 pub use self::{
-    encode_auto::{RectMicroStrategy, encode_auto, encode_auto_micro, encode_auto_rect_micro},
+    auto::{RectMicroStrategy, encode_auto, encode_auto_micro, encode_auto_rect_micro},
     mode_indicator::ExtendedMode,
 };
 use crate::{

@@ -7,7 +7,7 @@
 
 //! Implementation of features related to the timing patterns.
 
-use super::{Canvas, alignment_pattern::ALIGNMENT_PATTERN_POSITIONS};
+use super::{Canvas, alignment::ALIGNMENT_PATTERN_POSITIONS};
 use crate::types::{Color, Version};
 
 impl Canvas {
