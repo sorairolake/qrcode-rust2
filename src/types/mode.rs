@@ -145,33 +145,6 @@ impl PartialOrd for Mode {
     }
 }
 
-#[cfg(test)]
-mod mode_tests {
-    use super::*;
-
-    #[test]
-    fn test_mode_order() {
-        assert!(Mode::Numeric < Mode::Alphanumeric);
-        assert!(Mode::Byte > Mode::Kanji);
-        assert!(!(Mode::Numeric < Mode::Kanji));
-        assert!(!(Mode::Numeric >= Mode::Kanji));
-    }
-
-    #[test]
-    fn test_max() {
-        assert_eq!(Mode::Byte.max(Mode::Kanji), Mode::Byte);
-        assert_eq!(Mode::Numeric.max(Mode::Alphanumeric), Mode::Alphanumeric);
-        assert_eq!(
-            Mode::Alphanumeric.max(Mode::Alphanumeric),
-            Mode::Alphanumeric
-        );
-        assert_eq!(Mode::Numeric.max(Mode::Kanji), Mode::Byte);
-        assert_eq!(Mode::Kanji.max(Mode::Numeric), Mode::Byte);
-        assert_eq!(Mode::Alphanumeric.max(Mode::Numeric), Mode::Alphanumeric);
-        assert_eq!(Mode::Kanji.max(Mode::Kanji), Mode::Kanji);
-    }
-}
-
 /// The number of bits needed to encode the length of the data.
 ///
 /// [Numeric, Alphanumeric, Byte, Kanji]
@@ -241,3 +214,30 @@ static RMQR_LENGTH_BITS_COUNT: [[usize; 4]; 32] = [
     // R17x139
     [9, 8, 8, 7],
 ];
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_mode_order() {
+        assert!(Mode::Numeric < Mode::Alphanumeric);
+        assert!(Mode::Byte > Mode::Kanji);
+        assert!(!(Mode::Numeric < Mode::Kanji));
+        assert!(!(Mode::Numeric >= Mode::Kanji));
+    }
+
+    #[test]
+    fn test_max() {
+        assert_eq!(Mode::Byte.max(Mode::Kanji), Mode::Byte);
+        assert_eq!(Mode::Numeric.max(Mode::Alphanumeric), Mode::Alphanumeric);
+        assert_eq!(
+            Mode::Alphanumeric.max(Mode::Alphanumeric),
+            Mode::Alphanumeric
+        );
+        assert_eq!(Mode::Numeric.max(Mode::Kanji), Mode::Byte);
+        assert_eq!(Mode::Kanji.max(Mode::Numeric), Mode::Byte);
+        assert_eq!(Mode::Alphanumeric.max(Mode::Numeric), Mode::Alphanumeric);
+        assert_eq!(Mode::Kanji.max(Mode::Kanji), Mode::Kanji);
+    }
+}

@@ -111,10 +111,10 @@ fn main() -> anyhow::Result<()> {
     }
     .context("could not construct a QR code")?;
 
-    let (foreground, background) = (
-        eps::Color(opt.foreground.to_array().map(f64::from)[..3].try_into()?),
-        eps::Color(opt.background.to_array().map(f64::from)[..3].try_into()?),
-    );
+    let [foreground, background] = [opt.foreground, opt.background].map(|c| {
+        let [red, green, blue, _] = c.to_array().map(f64::from);
+        eps::Color::new(red, green, blue).unwrap()
+    });
     let image = code
         .render()
         .dark_color(foreground)

@@ -112,8 +112,8 @@ fn main() -> anyhow::Result<()> {
     }
     .context("could not construct a QR code")?;
 
-    let (foreground, background) = (opt.foreground.to_css_hex(), opt.background.to_css_hex());
-    let (foreground, background) = (svg::Color(&foreground), svg::Color(&background));
+    let [foreground, background] = [opt.foreground, opt.background].map(|c| c.to_css_hex());
+    let [foreground, background] = [&foreground, &background].map(|c| svg::Color::new(c).unwrap());
     let image = code
         .render()
         .dark_color(foreground)

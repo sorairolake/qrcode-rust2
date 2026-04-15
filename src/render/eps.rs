@@ -24,22 +24,50 @@ use crate::{
     types::Color as ModuleColor,
 };
 
-/// An EPS color (`[R, G, B]`).
-///
-/// <div class="warning">
-///
-/// Each value must be in the range of 0.0 to 1.0.
-///
-/// </div>
+/// An EPS color.
 #[derive(Clone, Copy, Debug, Default, PartialEq, PartialOrd)]
-pub struct Color(pub [f64; 3]);
+pub struct Color {
+    red: f64,
+    green: f64,
+    blue: f64,
+}
+
+impl Color {
+    /// Creates a new `Color` with the given RGB values, returning [`None`] if
+    /// any of the values are not between 0.0 and 1.0.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use qrcode2::render::eps::Color;
+    /// #
+    /// assert!(Color::new(0.0, 0.0, 0.0).is_some());
+    /// assert!(Color::new(0.0, 0.5, 1.0).is_some());
+    ///
+    /// assert!(Color::new(1.1, 0.0, 0.0).is_none());
+    /// assert!(Color::new(0.0, -0.1, 0.0).is_none());
+    /// assert!(Color::new(0.0, 0.0, f64::NAN).is_none());
+    /// ```
+    #[must_use]
+    pub fn new(red: f64, green: f64, blue: f64) -> Option<Self> {
+        if [red, green, blue]
+            .into_iter()
+            .all(|c| (0.0..=1.0).contains(&c))
+        {
+            Some(Self { red, green, blue })
+        } else {
+            None
+        }
+    }
+}
 
 impl Pixel for Color {
     type Image = String;
     type Canvas = Canvas;
 
     fn default_color(color: ModuleColor) -> Self {
-        Self(color.select(Default::default(), [1.0; 3]))
+        let [red, green, blue] = color.select(Default::default(), [1.0; 3]);
+        Self::new(red, green, blue).unwrap()
     }
 }
 
@@ -69,12 +97,12 @@ impl RenderCanvas for Canvas {
             ),
             w = width,
             h = height,
-            fgr = dark_pixel.0[0],
-            fgg = dark_pixel.0[1],
-            fgb = dark_pixel.0[2],
-            bgr = light_pixel.0[0],
-            bgg = light_pixel.0[1],
-            bgb = light_pixel.0[2]
+            fgr = dark_pixel.red,
+            fgg = dark_pixel.green,
+            fgb = dark_pixel.blue,
+            bgr = light_pixel.red,
+            bgg = light_pixel.green,
+            bgb = light_pixel.blue
         );
         Self { eps, height }
     }
@@ -91,5 +119,37 @@ impl RenderCanvas for Canvas {
     fn into_image(mut self) -> Self::Image {
         self.eps.push_str("%%EOF");
         self.eps
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_color_new() {
+        assert!(Color::new(0.0, 0.0, 0.0).is_some());
+        assert!(Color::new(1.0, 1.0, 1.0).is_some());
+        assert!(Color::new(0.0, 0.5, 1.0).is_some());
+
+        assert!(Color::new(1.1, 0.5, 0.5).is_none());
+        assert!(Color::new(0.5, 1.1, 0.5).is_none());
+        assert!(Color::new(0.5, 0.5, 1.1).is_none());
+
+        assert!(Color::new(-0.1, 0.5, 0.5).is_none());
+        assert!(Color::new(0.5, -0.1, 0.5).is_none());
+        assert!(Color::new(0.5, 0.5, -0.1).is_none());
+
+        assert!(Color::new(f64::NAN, 0.5, 0.5).is_none());
+        assert!(Color::new(0.5, f64::NAN, 0.5).is_none());
+        assert!(Color::new(0.5, 0.5, f64::NAN).is_none());
+
+        assert!(Color::new(f64::INFINITY, 0.5, 0.5).is_none());
+        assert!(Color::new(0.5, f64::INFINITY, 0.5).is_none());
+        assert!(Color::new(0.5, 0.5, f64::INFINITY).is_none());
+
+        assert!(Color::new(f64::NEG_INFINITY, 0.5, 0.5).is_none());
+        assert!(Color::new(0.5, f64::NEG_INFINITY, 0.5).is_none());
+        assert!(Color::new(0.5, 0.5, f64::NEG_INFINITY).is_none());
     }
 }

@@ -39,6 +39,9 @@ name = "encode_svg"
 required-features = ["svg"]
 
 [dependencies]
+csscolorparser = { version = "0.8.3", default-features = false, features = [
+  "named-colors",
+], optional = true }
 image = { version = "0.25.10", default-features = false, optional = true }
 
 [dev-dependencies]
@@ -54,8 +57,8 @@ default = ["eps", "image", "pic", "std", "svg"]
 eps = []
 image = ["dep:image", "std"]
 pic = []
-std = []
-svg = []
+std = ["csscolorparser?/std"]
+svg = ["dep:csscolorparser"]
 
 [lints.clippy]
 cargo = { level = "warn", priority = -1 }

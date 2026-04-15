@@ -62,6 +62,8 @@ pub mod types;
 use alloc::{string::String, vec::Vec};
 use core::ops::Index;
 
+#[cfg(feature = "svg")]
+pub use csscolorparser;
 #[cfg(feature = "image")]
 pub use image;
 

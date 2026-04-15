@@ -20,8 +20,8 @@ fn test_annex_i_micro_qr_as_eps() {
     let image = code
         .render()
         .min_dimensions(200, 200)
-        .dark_color(Color([0.5, 0.0, 0.0]))
-        .light_color(Color([1.0, 1.0, 0.5]))
+        .dark_color(Color::new(0.5, 0.0, 0.0).unwrap())
+        .light_color(Color::new(1.0, 1.0, 0.5).unwrap())
         .build();
     let expected = include_str!("data/test_annex_i_micro_qr_as_eps.eps");
     assert_eq!(&image, expected);

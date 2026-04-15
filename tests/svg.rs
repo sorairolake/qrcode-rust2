@@ -21,8 +21,8 @@ fn test_annex_i_micro_qr_as_svg() {
     let image = code
         .render()
         .min_dimensions(200, 200)
-        .dark_color(Color("#800000"))
-        .light_color(Color("#ffff80"))
+        .dark_color(Color::new("#800000").unwrap())
+        .light_color(Color::new("#ffff80").unwrap())
         .build();
     let expected = include_str!("data/test_annex_i_micro_qr_as_svg.svg");
     assert_eq!(&image, expected);

@@ -261,7 +261,7 @@ impl Version {
 }
 
 #[cfg(test)]
-mod version_tests {
+mod tests {
     use super::*;
 
     #[test]

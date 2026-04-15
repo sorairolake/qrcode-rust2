@@ -16,11 +16,19 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 == {compare-url}/v0.17.2\...HEAD[Unreleased]
 
+=== Added
+
+* Add `eps::Color::new` ({pull-request-url}/120[#120])
+* Add `svg::Color::new` ({pull-request-url}/120[#120])
+* Re-export `csscolorparser` crate ({pull-request-url}/120[#120])
+
 === Changed
 
 * Move `QrError` and `QrResult` to `error` module ({pull-request-url}/114[#114])
 * Rename `QrError` to `Error` ({pull-request-url}/115[#115])
 * Rename `QrResult` to `Result` ({pull-request-url}/115[#115])
+* Change `eps::Color` field to private ({pull-request-url}/120[#120])
+* Change `svg::Color` field to private ({pull-request-url}/120[#120])
 
 == {compare-url}/v0.17.1\...v0.17.2[0.17.2] - 2026-01-30
 

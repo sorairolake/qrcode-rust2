@@ -118,10 +118,7 @@ fn main() -> anyhow::Result<()> {
     }
     .context("could not construct a QR code")?;
 
-    let (foreground, background) = (
-        opt.foreground.to_rgba8().into(),
-        opt.background.to_rgba8().into(),
-    );
+    let [foreground, background] = [opt.foreground, opt.background].map(|c| c.to_rgba8().into());
     let image = code
         .render::<Rgba<u8>>()
         .dark_color(foreground)

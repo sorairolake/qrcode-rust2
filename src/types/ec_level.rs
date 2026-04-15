@@ -24,7 +24,7 @@ pub enum EcLevel {
 }
 
 #[cfg(test)]
-mod ec_level_tests {
+mod tests {
     use super::*;
 
     #[test]

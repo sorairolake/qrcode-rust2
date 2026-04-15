@@ -112,10 +112,8 @@ impl Canvas {
             for x in 0..width {
                 res.push(match self.get(x, y) {
                     Module::Empty => '?',
-                    Module::Masked(Color::Light) => '.',
-                    Module::Masked(Color::Dark) => '#',
-                    Module::Unmasked(Color::Light) => '.',
-                    Module::Unmasked(Color::Dark) => '#',
+                    Module::Masked(Color::Light) | Module::Unmasked(Color::Light) => '.',
+                    Module::Masked(Color::Dark) | Module::Unmasked(Color::Dark) => '#',
                 });
             }
         }
