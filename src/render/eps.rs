@@ -27,9 +27,9 @@ use crate::{
 /// An EPS color.
 #[derive(Clone, Copy, Debug, Default, PartialEq, PartialOrd)]
 pub struct Color {
-    red: f64,
-    green: f64,
-    blue: f64,
+    red: f32,
+    green: f32,
+    blue: f32,
 }
 
 impl Color {
@@ -46,10 +46,10 @@ impl Color {
     ///
     /// assert!(Color::new(1.1, 0.0, 0.0).is_none());
     /// assert!(Color::new(0.0, -0.1, 0.0).is_none());
-    /// assert!(Color::new(0.0, 0.0, f64::NAN).is_none());
+    /// assert!(Color::new(0.0, 0.0, f32::NAN).is_none());
     /// ```
     #[must_use]
-    pub fn new(red: f64, green: f64, blue: f64) -> Option<Self> {
+    pub fn new(red: f32, green: f32, blue: f32) -> Option<Self> {
         if [red, green, blue]
             .into_iter()
             .all(|c| (0.0..=1.0).contains(&c))
@@ -112,7 +112,11 @@ impl RenderCanvas for Canvas {
     }
 
     fn draw_dark_rect(&mut self, left: u32, top: u32, width: u32, height: u32) {
-        let bottom = self.height - top;
+        let bottom = self
+            .height
+            .checked_sub(top)
+            .and_then(|y| y.checked_sub(height))
+            .unwrap();
         writeln!(self.eps, "{left} {bottom} {width} {height} rectfill").unwrap();
     }
 
@@ -140,16 +144,16 @@ mod tests {
         assert!(Color::new(0.5, -0.1, 0.5).is_none());
         assert!(Color::new(0.5, 0.5, -0.1).is_none());
 
-        assert!(Color::new(f64::NAN, 0.5, 0.5).is_none());
-        assert!(Color::new(0.5, f64::NAN, 0.5).is_none());
-        assert!(Color::new(0.5, 0.5, f64::NAN).is_none());
+        assert!(Color::new(f32::NAN, 0.5, 0.5).is_none());
+        assert!(Color::new(0.5, f32::NAN, 0.5).is_none());
+        assert!(Color::new(0.5, 0.5, f32::NAN).is_none());
 
-        assert!(Color::new(f64::INFINITY, 0.5, 0.5).is_none());
-        assert!(Color::new(0.5, f64::INFINITY, 0.5).is_none());
-        assert!(Color::new(0.5, 0.5, f64::INFINITY).is_none());
+        assert!(Color::new(f32::INFINITY, 0.5, 0.5).is_none());
+        assert!(Color::new(0.5, f32::INFINITY, 0.5).is_none());
+        assert!(Color::new(0.5, 0.5, f32::INFINITY).is_none());
 
-        assert!(Color::new(f64::NEG_INFINITY, 0.5, 0.5).is_none());
-        assert!(Color::new(0.5, f64::NEG_INFINITY, 0.5).is_none());
-        assert!(Color::new(0.5, 0.5, f64::NEG_INFINITY).is_none());
+        assert!(Color::new(f32::NEG_INFINITY, 0.5, 0.5).is_none());
+        assert!(Color::new(0.5, f32::NEG_INFINITY, 0.5).is_none());
+        assert!(Color::new(0.5, 0.5, f32::NEG_INFINITY).is_none());
     }
 }

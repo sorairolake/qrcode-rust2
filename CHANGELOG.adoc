@@ -29,6 +29,11 @@ project adheres to https://semver.org/[Semantic Versioning].
 * Rename `QrResult` to `Result` ({pull-request-url}/115[#115])
 * Change `eps::Color` field to private ({pull-request-url}/120[#120])
 * Change `svg::Color` field to private ({pull-request-url}/120[#120])
+* Use `f32` instead of `f64` for `eps::Color` ({pull-request-url}/121[#121])
+
+=== Fixed
+
+* Fix vertical positioning logic in `eps::Canvas` ({pull-request-url}/121[#121])
 
 == {compare-url}/v0.17.1\...v0.17.2[0.17.2] - 2026-01-30
 
