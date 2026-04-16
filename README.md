@@ -67,6 +67,40 @@ This supports `no_std` mode. Disables the `default` feature to enable this.
 
 See the [documentation][docs-url] for more details.
 
+## Examples
+
+Please see the [examples] directory for examples of using this library.
+
+### QR code
+
+```sh
+cargo run --example encode_svg -- -l h "QR code" > qr_code.svg
+```
+
+Generates this image:
+
+![QR code](assets/qr_code.svg)
+
+### Micro QR code
+
+```sh
+cargo run --example encode_svg -- --variant micro "QR code" > micro_qr_code.svg
+```
+
+Generates this image:
+
+![Micro QR code](assets/micro_qr_code.svg)
+
+### rMQR code
+
+```sh
+cargo run --example encode_svg -- --variant rmqr "QR code" > rmqr_code.svg
+```
+
+Generates this image:
+
+![rMQR code](assets/rmqr_code.svg)
+
 ## Minimum supported Rust version
 
 The minimum supported Rust version (MSRV) of this library is v1.88.0.
@@ -118,6 +152,7 @@ licensing information.
 [`image`]: https://crates.io/crates/image
 [PIC]: https://en.wikipedia.org/wiki/PIC_(markup_language)
 [SVG]: https://www.w3.org/Graphics/SVG/
+[examples]: examples
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc
 [`qrqrpar`]: https://crates.io/crates/qrqrpar
