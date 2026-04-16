@@ -17,9 +17,12 @@
 
 use alloc::{string::String, vec, vec::Vec};
 
-use crate::render::{Canvas as RenderCanvas, Color, Pixel};
+use crate::{
+    cast::As,
+    render::{Canvas as RenderCanvas, Color, Pixel},
+};
 
-const CODEPAGE: [&str; 4] = [" ", "\u{2584}", "\u{2580}", "\u{2588}"];
+const CODEPAGE: [char; 4] = [' ', '\u{2584}', '\u{2580}', '\u{2588}'];
 
 /// An image pixel for UTF-8 rendering.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -52,7 +55,7 @@ impl Dense1x2 {
         }
     }
 
-    fn parse_2_bits(sym: u8) -> &'static str {
+    fn parse_2_bits(sym: u8) -> char {
         CODEPAGE[usize::from(sym)]
     }
 }
@@ -70,7 +73,7 @@ impl RenderCanvas for Canvas1x2 {
     type Image = String;
 
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
-        let canvas = vec![light_pixel.value(); (width * height) as usize];
+        let canvas = vec![light_pixel.value(); (width * height).as_usize()];
         let dark_pixel = dark_pixel.value();
         Self {
             canvas,
@@ -80,37 +83,37 @@ impl RenderCanvas for Canvas1x2 {
     }
 
     fn draw_dark_pixel(&mut self, x: u32, y: u32) {
-        self.canvas[(x + y * self.width) as usize] = self.dark_pixel;
+        self.canvas[(x + y * self.width).as_usize()] = self.dark_pixel;
     }
 
     fn into_image(self) -> Self::Image {
-        self.canvas
-            // Chopping array into 1-line sized fragments
-            .chunks_exact(self.width as usize)
-            .collect::<Vec<&[u8]>>()
-            // And then glueing every 2 lines.
-            .chunks(2)
-            .map(|rows| {
-                {
-                    // Then zipping those 2 lines together into a single 2-bit number list.
-                    if rows.len() == 2 {
-                        rows[0]
-                            .iter()
-                            .zip(rows[1])
-                            .map(|(top, bot)| top * 2 + bot)
-                            .collect::<Vec<u8>>()
-                    } else {
-                        rows[0].iter().map(|top| top * 2).collect::<Vec<u8>>()
-                    }
-                }
-                .into_iter()
+        let width = self.width.as_usize();
+        let mut result = String::new();
+
+        // Chopping the array into 2-line chunks.
+        let mut iter = self.canvas.chunks(width * 2).peekable();
+
+        while let Some(chunk) = iter.next() {
+            let top_row = chunk.get(..width).unwrap_or(chunk);
+            let bottom_row = chunk.get(width..);
+
+            // Zipping those 2 lines together into 2-bit values.
+            for (x, top) in top_row.iter().enumerate() {
+                let bottom = bottom_row
+                    .and_then(|r| r.get(x))
+                    .copied()
+                    .unwrap_or_default();
+                let bits = (top << 1) | bottom;
+
                 // Mapping those 2-bit numbers to corresponding pixels.
-                .map(Dense1x2::parse_2_bits)
-                .collect::<Vec<&str>>()
-                .concat()
-            })
-            .collect::<Vec<String>>()
-            .join("\n")
+                result.push(Dense1x2::parse_2_bits(bits));
+            }
+            if iter.peek().is_some() {
+                result.push('\n');
+            }
+        }
+
+        result
     }
 }
 

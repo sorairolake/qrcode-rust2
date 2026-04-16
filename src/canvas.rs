@@ -86,7 +86,7 @@ impl Canvas {
     #[cfg(test)]
     fn to_debug_str(&self) -> String {
         let width = self.width;
-        let mut res = String::with_capacity((width * (width + 1)) as usize);
+        let mut res = String::with_capacity((width * (width + 1)).as_usize());
         for y in 0..self.height {
             res.push('\n');
             for x in 0..width {
@@ -106,7 +106,7 @@ impl Canvas {
     #[cfg(test)]
     fn to_debug_str_mask_same(&self) -> String {
         let width = self.width;
-        let mut res = String::with_capacity((width * (width + 1)) as usize);
+        let mut res = String::with_capacity((width * (width + 1)).as_usize());
         for y in 0..self.height {
             res.push('\n');
             for x in 0..width {
