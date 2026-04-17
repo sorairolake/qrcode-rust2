@@ -39,10 +39,13 @@ name = "encode_svg"
 required-features = ["svg"]
 
 [dependencies]
-csscolorparser = { version = "0.8.3", default-features = false, features = [
-  "named-colors",
-], optional = true }
 image = { version = "0.25.10", default-features = false, optional = true }
+
+[dependencies.csscolorparser]
+version = "0.8.3"
+default-features = false
+features = ["named-colors"]
+optional = true
 
 [dev-dependencies]
 anyhow = "1.0.102"
