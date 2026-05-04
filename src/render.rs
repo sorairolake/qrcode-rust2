@@ -104,7 +104,10 @@ impl<'a, P: Pixel> Renderer<'a, P> {
         vertical_modules_count: usize,
         quiet_zone: u32,
     ) -> Self {
-        assert!(horizontal_modules_count * vertical_modules_count == content.len());
+        assert_eq!(
+            horizontal_modules_count * vertical_modules_count,
+            content.len()
+        );
         let horizontal_modules_count = horizontal_modules_count.as_u32();
         let vertical_modules_count = vertical_modules_count.as_u32();
         let module_size = P::default_unit_size();

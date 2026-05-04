@@ -32,7 +32,7 @@ impl Canvas {
 /// module.
 #[must_use]
 pub fn is_functional(version: Version, width: i16, x: i16, y: i16) -> bool {
-    debug_assert!(width == version.width());
+    debug_assert_eq!(width, version.width());
 
     let x = if x < 0 { x + width } else { x };
     let y = if y < 0 { y + width } else { y };
