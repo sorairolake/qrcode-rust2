@@ -221,10 +221,37 @@ mod tests {
 
     #[test]
     fn mode_order() {
+        assert_eq!(
+            Mode::Numeric.partial_cmp(&Mode::Numeric).unwrap(),
+            Ordering::Equal
+        );
+        assert_eq!(
+            Mode::Alphanumeric.partial_cmp(&Mode::Alphanumeric).unwrap(),
+            Ordering::Equal
+        );
+        assert_eq!(
+            Mode::Byte.partial_cmp(&Mode::Byte).unwrap(),
+            Ordering::Equal
+        );
+        assert_eq!(
+            Mode::Kanji.partial_cmp(&Mode::Kanji).unwrap(),
+            Ordering::Equal
+        );
+
         assert!(Mode::Numeric < Mode::Alphanumeric);
+        assert!(Mode::Numeric < Mode::Byte);
+        assert!(Mode::Alphanumeric < Mode::Byte);
+        assert!(Mode::Kanji < Mode::Byte);
+
+        assert!(Mode::Alphanumeric > Mode::Numeric);
+        assert!(Mode::Byte > Mode::Numeric);
+        assert!(Mode::Byte > Mode::Alphanumeric);
         assert!(Mode::Byte > Mode::Kanji);
-        assert!(!(Mode::Numeric < Mode::Kanji));
-        assert!(!(Mode::Numeric >= Mode::Kanji));
+
+        assert!(Mode::Numeric.partial_cmp(&Mode::Kanji).is_none());
+        assert!(Mode::Alphanumeric.partial_cmp(&Mode::Kanji).is_none());
+        assert!(Mode::Kanji.partial_cmp(&Mode::Numeric).is_none());
+        assert!(Mode::Kanji.partial_cmp(&Mode::Alphanumeric).is_none());
     }
 
     #[test]
