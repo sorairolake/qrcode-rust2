@@ -58,7 +58,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_micro_qr_1() {
+    fn micro_qr_1() {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_all_functional_patterns();
         c.draw_data(b"\x6E\x5D\xE2", b"\x2B\x63");
@@ -82,7 +82,7 @@ mod tests {
     }
 
     #[test]
-    fn test_qr_2() {
+    fn qr_2() {
         let mut c = Canvas::new(Version::Normal(2), EcLevel::L);
         c.draw_all_functional_patterns();
         c.draw_data(
@@ -128,7 +128,7 @@ mod tests {
     }
 
     #[test]
-    fn test_rmqr() {
+    fn rmqr() {
         let mut c = Canvas::new(Version::RectMicro(7, 77), EcLevel::M);
         c.draw_all_functional_patterns();
         c.draw_data(

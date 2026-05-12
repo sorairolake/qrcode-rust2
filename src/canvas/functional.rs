@@ -79,7 +79,7 @@ mod tests {
     use crate::types::EcLevel;
 
     #[test]
-    fn test_all_functional_patterns_qr() {
+    fn all_functional_patterns_qr() {
         let mut c = Canvas::new(Version::Normal(2), EcLevel::L);
         c.draw_all_functional_patterns();
         assert_eq!(
@@ -116,7 +116,7 @@ mod tests {
     }
 
     #[test]
-    fn test_all_functional_patterns_micro_qr() {
+    fn all_functional_patterns_micro_qr() {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_all_functional_patterns();
         assert_eq!(
@@ -139,7 +139,7 @@ mod tests {
     }
 
     #[test]
-    fn test_is_functional_qr_1() {
+    fn is_functional_qr_1() {
         let version = Version::Normal(1);
         assert!(is_functional(version, version.width(), 0, 0));
         assert!(is_functional(version, version.width(), 10, 6));
@@ -153,7 +153,7 @@ mod tests {
     }
 
     #[test]
-    fn test_is_functional_qr_3() {
+    fn is_functional_qr_3() {
         let version = Version::Normal(3);
         assert!(is_functional(version, version.width(), 0, 0));
         assert!(!is_functional(version, version.width(), 25, 24));
@@ -164,7 +164,7 @@ mod tests {
     }
 
     #[test]
-    fn test_is_functional_qr_7() {
+    fn is_functional_qr_7() {
         let version = Version::Normal(7);
         assert!(is_functional(version, version.width(), 21, 4));
         assert!(is_functional(version, version.width(), 7, 21));
@@ -177,7 +177,7 @@ mod tests {
     }
 
     #[test]
-    fn test_is_functional_micro() {
+    fn is_functional_micro() {
         let version = Version::Micro(1);
         assert!(is_functional(version, version.width(), 8, 0));
         assert!(is_functional(version, version.width(), 10, 0));

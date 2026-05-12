@@ -66,21 +66,21 @@ mod tests {
     use crate::types::Version;
 
     #[test]
-    fn test_9() {
+    fn push_eci_designator_9() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(bits.push_eci_designator(9), Ok(()));
         assert_eq!(bits.into_bytes(), [0b0111_0000, 0b1001_0000]);
     }
 
     #[test]
-    fn test_899() {
+    fn push_eci_designator_899() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(bits.push_eci_designator(899), Ok(()));
         assert_eq!(bits.into_bytes(), [0b0111_1000, 0b0011_1000, 0b0011_0000]);
     }
 
     #[test]
-    fn test_999_999() {
+    fn push_eci_designator_999_999() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(bits.push_eci_designator(999_999), Ok(()));
         assert_eq!(
@@ -90,7 +90,7 @@ mod tests {
     }
 
     #[test]
-    fn test_invalid_designator() {
+    fn invalid_designator() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(
             bits.push_eci_designator(1_000_000),
@@ -99,7 +99,7 @@ mod tests {
     }
 
     #[test]
-    fn test_unsupported_character_set() {
+    fn unsupported_character_set() {
         let mut bits = Bits::new(Version::Micro(4));
         assert_eq!(
             bits.push_eci_designator(9),

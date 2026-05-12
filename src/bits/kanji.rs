@@ -43,7 +43,7 @@ mod tests {
     use crate::types::Version;
 
     #[test]
-    fn test_iso_18004_example() {
+    fn iso_18004_example() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(bits.push_kanji_data(b"\x93\x5F\xE4\xAA"), Ok(()));
         assert_eq!(
@@ -59,7 +59,7 @@ mod tests {
     }
 
     #[test]
-    fn test_micro_qr_unsupported() {
+    fn micro_qr_unsupported() {
         let mut bits = Bits::new(Version::Micro(2));
         assert_eq!(
             bits.push_kanji_data(b"?"),
@@ -68,7 +68,7 @@ mod tests {
     }
 
     #[test]
-    fn test_data_too_long() {
+    fn data_too_long() {
         let mut bits = Bits::new(Version::Micro(3));
         assert_eq!(
             bits.push_kanji_data(b"\x93_\x93_\x93_\x93_\x93_\x93_\x93_\x93_"),

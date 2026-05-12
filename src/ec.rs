@@ -54,19 +54,19 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_poly_mod_1() {
+    fn poly_mod_1() {
         let res = create_error_correction_code(b" [\x0Bx\xD1r\xDCMC@\xEC\x11\xEC\x11\xEC\x11", 10);
         assert_eq!(res, b"\xC4#'w\xEB\xD7\xE7\xE2]\x17");
     }
 
     #[test]
-    fn test_poly_mod_2() {
+    fn poly_mod_2() {
         let res = create_error_correction_code(b" [\x0Bx\xD1r\xDCMC@\xEC\x11\xEC", 13);
         assert_eq!(res, b"\xA8H\x16R\xD96\x9C\x00.\x0F\xB4z\x10");
     }
 
     #[test]
-    fn test_poly_mod_3() {
+    fn poly_mod_3() {
         let res = create_error_correction_code(b"CUF\x86W&U\xC2w2\x06\x12\x06g&", 18);
         assert_eq!(res, b"\xD5\xC7\x0B-s\xF7\xF1\xDF\xE5\xF8\x9Au\x9AoV\xA1o'");
     }

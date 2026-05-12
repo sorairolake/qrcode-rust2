@@ -115,7 +115,7 @@ mod tests {
 
     use super::*;
 
-    fn test_optimization_result(given: &[Segment], expected: &[Segment], version: Version) {
+    fn optimization_result(given: &[Segment], expected: &[Segment], version: Version) {
         let prev_len = total_encoded_len(given, version);
         let opt_segs = Optimizer::new(given.iter().copied(), version).collect::<Vec<_>>();
         let new_len = total_encoded_len(&opt_segs, version);
@@ -130,8 +130,8 @@ mod tests {
     }
 
     #[test]
-    fn test_example_1() {
-        test_optimization_result(
+    fn example_1() {
+        optimization_result(
             &[
                 Segment {
                     mode: Mode::Alphanumeric,
@@ -166,8 +166,8 @@ mod tests {
     }
 
     #[test]
-    fn test_example_2() {
-        test_optimization_result(
+    fn example_2() {
+        optimization_result(
             &[
                 Segment {
                     mode: Mode::Numeric,
@@ -212,8 +212,8 @@ mod tests {
     }
 
     #[test]
-    fn test_example_3() {
-        test_optimization_result(
+    fn example_3() {
+        optimization_result(
             &[
                 Segment {
                     mode: Mode::Kanji,
@@ -246,8 +246,8 @@ mod tests {
     }
 
     #[test]
-    fn test_example_4() {
-        test_optimization_result(
+    fn example_4() {
+        optimization_result(
             &[
                 Segment {
                     mode: Mode::Kanji,
@@ -277,8 +277,8 @@ mod tests {
     }
 
     #[test]
-    fn test_example_5() {
-        test_optimization_result(
+    fn example_5() {
+        optimization_result(
             &[
                 Segment {
                     mode: Mode::Kanji,
@@ -308,8 +308,8 @@ mod tests {
     }
 
     #[test]
-    fn test_annex_j_guideline_1a() {
-        test_optimization_result(
+    fn annex_j_guideline_1a() {
+        optimization_result(
             &[
                 Segment {
                     mode: Mode::Numeric,
@@ -339,8 +339,8 @@ mod tests {
     }
 
     #[test]
-    fn test_annex_j_guideline_1b() {
-        test_optimization_result(
+    fn annex_j_guideline_1b() {
+        optimization_result(
             &[
                 Segment {
                     mode: Mode::Numeric,
@@ -363,8 +363,8 @@ mod tests {
     }
 
     #[test]
-    fn test_annex_j_guideline_1c() {
-        test_optimization_result(
+    fn annex_j_guideline_1c() {
+        optimization_result(
             &[
                 Segment {
                     mode: Mode::Numeric,

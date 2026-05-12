@@ -28,7 +28,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_default() {
+    fn default_works() {
         assert_eq!(EcLevel::default(), EcLevel::M);
     }
 }

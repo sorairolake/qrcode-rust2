@@ -160,7 +160,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_apply_mask_qr() {
+    fn apply_mask_qr() {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_all_functional_patterns();
         c.apply_mask(MaskPattern::Checkerboard);
@@ -195,7 +195,7 @@ mod tests {
     }
 
     #[test]
-    fn test_draw_format_info_patterns_qr() {
+    fn draw_format_info_patterns_qr() {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_format_info_patterns(MaskPattern::LargeCheckerboard);
         assert_eq!(
@@ -228,7 +228,7 @@ mod tests {
     }
 
     #[test]
-    fn test_draw_format_info_patterns_micro_qr() {
+    fn draw_format_info_patterns_micro_qr() {
         let mut c = Canvas::new(Version::Micro(2), EcLevel::L);
         c.draw_format_info_patterns(MaskPattern::LargeCheckerboard);
         assert_eq!(

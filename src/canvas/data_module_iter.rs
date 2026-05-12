@@ -86,7 +86,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_qr() {
+    fn qr() {
         let res = DataModuleIter::new(Version::Normal(1)).collect::<Vec<(i16, i16)>>();
         assert_eq!(
             res,
@@ -516,7 +516,7 @@ mod tests {
     }
 
     #[test]
-    fn test_micro_qr() {
+    fn micro_qr() {
         let res = DataModuleIter::new(Version::Micro(1)).collect::<Vec<(i16, i16)>>();
         assert_eq!(
             res,
@@ -636,7 +636,7 @@ mod tests {
     }
 
     #[test]
-    fn test_micro_qr_2() {
+    fn micro_qr_2() {
         let res = DataModuleIter::new(Version::Micro(2)).collect::<Vec<(i16, i16)>>();
         assert_eq!(
             res,

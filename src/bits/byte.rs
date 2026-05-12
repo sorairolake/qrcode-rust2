@@ -29,7 +29,7 @@ mod tests {
     use crate::{error::Error, types::Version};
 
     #[test]
-    fn test() {
+    fn push_byte_data() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(
             bits.push_byte_data(b"\x12\x34\x56\x78\x9A\xBC\xDE\xF0"),
@@ -53,7 +53,7 @@ mod tests {
     }
 
     #[test]
-    fn test_micro_qr_unsupported() {
+    fn micro_qr_unsupported() {
         let mut bits = Bits::new(Version::Micro(2));
         assert_eq!(
             bits.push_byte_data(b"?"),
@@ -62,7 +62,7 @@ mod tests {
     }
 
     #[test]
-    fn test_data_too_long() {
+    fn data_too_long() {
         let mut bits = Bits::new(Version::Micro(3));
         assert_eq!(
             bits.push_byte_data(b"0123456701234567"),

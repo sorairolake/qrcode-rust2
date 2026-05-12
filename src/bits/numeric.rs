@@ -44,7 +44,7 @@ mod tests {
     use crate::{error::Error, types::Version};
 
     #[test]
-    fn test_iso_18004_2006_example_1() {
+    fn iso_18004_2006_example_1() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(bits.push_numeric_data(b"01234567"), Ok(()));
         assert_eq!(
@@ -61,7 +61,7 @@ mod tests {
     }
 
     #[test]
-    fn test_iso_18004_2000_example_2() {
+    fn iso_18004_2000_example_2() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(bits.push_numeric_data(b"0123456789012345"), Ok(()));
         assert_eq!(
@@ -81,7 +81,7 @@ mod tests {
     }
 
     #[test]
-    fn test_iso_18004_2006_example_2() {
+    fn iso_18004_2006_example_2() {
         let mut bits = Bits::new(Version::Micro(3));
         assert_eq!(bits.push_numeric_data(b"0123456789012345"), Ok(()));
         assert_eq!(
@@ -100,7 +100,7 @@ mod tests {
     }
 
     #[test]
-    fn test_data_too_long_error() {
+    fn data_too_long_error() {
         let mut bits = Bits::new(Version::Micro(1));
         assert_eq!(bits.push_numeric_data(b"12345678"), Err(Error::DataTooLong));
     }

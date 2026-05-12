@@ -265,7 +265,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_width() {
+    fn width() {
         assert_eq!(Version::Normal(1).width(), 21);
         assert_eq!(Version::Normal(40).width(), 177);
         assert_eq!(Version::Micro(1).width(), 11);
@@ -276,7 +276,7 @@ mod tests {
     }
 
     #[test]
-    fn test_height() {
+    fn height() {
         assert_eq!(Version::Normal(1).height(), 21);
         assert_eq!(Version::Normal(40).height(), 177);
         assert_eq!(Version::Micro(1).height(), 11);
@@ -287,7 +287,7 @@ mod tests {
     }
 
     #[test]
-    fn test_mode_bits_count() {
+    fn mode_bits_count() {
         assert_eq!(Version::Normal(1).mode_bits_count(), 4);
         for version in 1..=4 {
             assert_eq!(
@@ -299,7 +299,7 @@ mod tests {
     }
 
     #[test]
-    fn test_is_normal() {
+    fn is_normal() {
         for version in 1..=40 {
             assert!(Version::Normal(version).is_normal());
         }
@@ -311,7 +311,7 @@ mod tests {
     }
 
     #[test]
-    fn test_is_micro() {
+    fn is_micro() {
         for version in 1..=4 {
             assert!(Version::Micro(version).is_micro());
         }
@@ -323,7 +323,7 @@ mod tests {
     }
 
     #[test]
-    fn test_is_rect_micro() {
+    fn is_rect_micro() {
         for width in Version::RMQR_ALL_WIDTH {
             for height in Version::RMQR_ALL_HEIGHT {
                 if width == 27 && (height != 11 && height != 13) {

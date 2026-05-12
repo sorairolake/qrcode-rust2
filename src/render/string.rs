@@ -134,7 +134,7 @@ mod tests {
     use crate::render::Renderer;
 
     #[test]
-    fn test_render_to_string() {
+    fn render_to_string() {
         let colors = &[Color::Dark, Color::Light, Color::Light, Color::Dark];
         let image: String = Renderer::<char>::new(colors, 2, 2, 1).build();
         assert_eq!(

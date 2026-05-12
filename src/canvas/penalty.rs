@@ -228,33 +228,33 @@ mod tests {
     }
 
     #[test]
-    fn test_penalty_score_adjacent() {
+    fn penalty_score_adjacent() {
         let c = create_test_canvas();
         assert_eq!(c.compute_adjacent_penalty_score(true), 88);
         assert_eq!(c.compute_adjacent_penalty_score(false), 92);
     }
 
     #[test]
-    fn test_penalty_score_block() {
+    fn penalty_score_block() {
         let c = create_test_canvas();
         assert_eq!(c.compute_block_penalty_score(), 90);
     }
 
     #[test]
-    fn test_penalty_score_finder() {
+    fn penalty_score_finder() {
         let c = create_test_canvas();
         assert_eq!(c.compute_finder_penalty_score(true), 0);
         assert_eq!(c.compute_finder_penalty_score(false), 40);
     }
 
     #[test]
-    fn test_penalty_score_balance() {
+    fn penalty_score_balance() {
         let c = create_test_canvas();
         assert_eq!(c.compute_balance_penalty_score(), 2);
     }
 
     #[test]
-    fn test_penalty_score_light_sides() {
+    fn penalty_score_light_sides() {
         static HORIZONTAL_SIDE: [Color; 17] = [
             Color::Dark,
             Color::Light,

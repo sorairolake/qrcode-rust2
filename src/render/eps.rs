@@ -131,7 +131,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_color_new() {
+    fn color_new() {
         assert!(Color::new(0.0, 0.0, 0.0).is_some());
         assert!(Color::new(1.0, 1.0, 1.0).is_some());
         assert!(Color::new(0.0, 0.5, 1.0).is_some());

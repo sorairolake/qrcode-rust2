@@ -87,7 +87,7 @@ mod encode_auto_tests {
     use super::*;
 
     #[test]
-    fn test_find_min_version() {
+    fn find_min_version_works() {
         assert_eq!(find_min_version(60, EcLevel::L), Version::Normal(1));
         assert_eq!(find_min_version(200, EcLevel::L), Version::Normal(2));
         assert_eq!(find_min_version(200, EcLevel::H), Version::Normal(3));
@@ -98,19 +98,19 @@ mod encode_auto_tests {
     }
 
     #[test]
-    fn test_alpha_q() {
+    fn alpha_q() {
         let bits = encode_auto(b"HELLO WORLD", EcLevel::Q).unwrap();
         assert_eq!(bits.version(), Version::Normal(1));
     }
 
     #[test]
-    fn test_alpha_h() {
+    fn alpha_h() {
         let bits = encode_auto(b"HELLO WORLD", EcLevel::H).unwrap();
         assert_eq!(bits.version(), Version::Normal(2));
     }
 
     #[test]
-    fn test_mixed() {
+    fn mixed() {
         let bits = encode_auto(b"This is a mixed data test. 1234567890", EcLevel::H).unwrap();
         assert_eq!(bits.version(), Version::Normal(4));
     }
@@ -168,19 +168,19 @@ mod encode_auto_micro_tests {
     use super::*;
 
     #[test]
-    fn test_alpha_l() {
+    fn alpha_l() {
         let bits = encode_auto_micro(b"HELLO WORLD", EcLevel::L).unwrap();
         assert_eq!(bits.version(), Version::Micro(3));
     }
 
     #[test]
-    fn test_alpha_q() {
+    fn alpha_q() {
         let bits = encode_auto_micro(b"HELLO WORLD", EcLevel::Q).unwrap();
         assert_eq!(bits.version(), Version::Micro(4));
     }
 
     #[test]
-    fn test_mixed() {
+    fn mixed() {
         let bits = encode_auto_micro(b"Mixed. 1234567890", EcLevel::M).unwrap();
         assert_eq!(bits.version(), Version::Micro(4));
     }
@@ -270,49 +270,49 @@ mod encode_auto_rect_micro_tests {
     use super::*;
 
     #[test]
-    fn test_alpha_m_width() {
+    fn alpha_m_width() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::M, RectMicroStrategy::Width).unwrap();
         assert_eq!(bits.version(), Version::RectMicro(13, 27));
     }
 
     #[test]
-    fn test_alpha_m_height() {
+    fn alpha_m_height() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::M, RectMicroStrategy::Height).unwrap();
         assert_eq!(bits.version(), Version::RectMicro(7, 59));
     }
 
     #[test]
-    fn test_alpha_m_area() {
+    fn alpha_m_area() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::M, RectMicroStrategy::Area).unwrap();
         assert_eq!(bits.version(), Version::RectMicro(13, 27));
     }
 
     #[test]
-    fn test_alpha_h_width() {
+    fn alpha_h_width() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::H, RectMicroStrategy::Width).unwrap();
         assert_eq!(bits.version(), Version::RectMicro(11, 43));
     }
 
     #[test]
-    fn test_alpha_h_height() {
+    fn alpha_h_height() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::H, RectMicroStrategy::Height).unwrap();
         assert_eq!(bits.version(), Version::RectMicro(7, 77));
     }
 
     #[test]
-    fn test_alpha_h_area() {
+    fn alpha_h_area() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::H, RectMicroStrategy::Area).unwrap();
         assert_eq!(bits.version(), Version::RectMicro(11, 43));
     }
 
     #[test]
-    fn test_mixed_width() {
+    fn mixed_width() {
         let bits = encode_auto_rect_micro(
             b"This is a mixed data test. 1234567890",
             EcLevel::H,
@@ -323,7 +323,7 @@ mod encode_auto_rect_micro_tests {
     }
 
     #[test]
-    fn test_mixed_height() {
+    fn mixed_height() {
         let bits = encode_auto_rect_micro(
             b"This is a mixed data test. 1234567890",
             EcLevel::H,
@@ -334,7 +334,7 @@ mod encode_auto_rect_micro_tests {
     }
 
     #[test]
-    fn test_mixed_area() {
+    fn mixed_area() {
         let bits = encode_auto_rect_micro(
             b"This is a mixed data test. 1234567890",
             EcLevel::H,

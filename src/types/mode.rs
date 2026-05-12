@@ -220,7 +220,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_mode_order() {
+    fn mode_order() {
         assert!(Mode::Numeric < Mode::Alphanumeric);
         assert!(Mode::Byte > Mode::Kanji);
         assert!(!(Mode::Numeric < Mode::Kanji));
@@ -228,7 +228,7 @@ mod tests {
     }
 
     #[test]
-    fn test_max() {
+    fn max() {
         assert_eq!(Mode::Byte.max(Mode::Kanji), Mode::Byte);
         assert_eq!(Mode::Numeric.max(Mode::Alphanumeric), Mode::Alphanumeric);
         assert_eq!(

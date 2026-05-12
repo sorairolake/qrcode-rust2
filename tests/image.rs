@@ -21,7 +21,7 @@ static INPUT_DATA: LazyLock<Vec<u8>> = LazyLock::new(|| {
 });
 
 #[test]
-fn test_annex_i_qr_as_image() {
+fn annex_i_qr_as_image() {
     let code = QrCode::with_version(b"01234567", Version::Normal(1), EcLevel::M).unwrap();
     let image = code.render::<Luma<u8>>().build();
     let expected = image::load_from_memory(include_bytes!("data/test_annex_i_qr_as_image.png"))
@@ -32,7 +32,7 @@ fn test_annex_i_qr_as_image() {
 }
 
 #[test]
-fn test_annex_i_micro_qr_as_image() {
+fn annex_i_micro_qr_as_image() {
     let code = QrCode::with_version(b"01234567", Version::Micro(2), EcLevel::L).unwrap();
     let image = code
         .render()
@@ -49,7 +49,7 @@ fn test_annex_i_micro_qr_as_image() {
 }
 
 #[test]
-fn test_annex_i_rmqr_as_image() {
+fn annex_i_rmqr_as_image() {
     let code = QrCode::with_version(b"0123456", Version::RectMicro(11, 27), EcLevel::H).unwrap();
     let image = code.render::<Luma<u8>>().build();
     let expected = image::load_from_memory(include_bytes!("data/test_annex_i_rmqr_as_image.png"))
@@ -60,7 +60,7 @@ fn test_annex_i_rmqr_as_image() {
 }
 
 #[test]
-fn test_qr_v40_ec_l_as_image() {
+fn qr_v40_ec_l_as_image() {
     {
         let code = QrCode::with_error_correction_level(&INPUT_DATA[..2953], EcLevel::L).unwrap();
         let image = code.render::<Luma<u8>>().build();
@@ -93,7 +93,7 @@ fn test_qr_v40_ec_l_as_image() {
 }
 
 #[test]
-fn test_qr_v40_ec_m_as_image() {
+fn qr_v40_ec_m_as_image() {
     {
         let code = QrCode::new(&INPUT_DATA[..2331]).unwrap();
         let image = code.render::<Luma<u8>>().build();
@@ -141,7 +141,7 @@ fn test_qr_v40_ec_m_as_image() {
 }
 
 #[test]
-fn test_qr_v40_ec_h_as_image() {
+fn qr_v40_ec_h_as_image() {
     {
         let code = QrCode::with_error_correction_level(&INPUT_DATA[..1273], EcLevel::H).unwrap();
         let image = code.render::<Luma<u8>>().build();
@@ -175,7 +175,7 @@ fn test_qr_v40_ec_h_as_image() {
 }
 
 #[test]
-fn test_micro_qr_v4_ec_l_as_image() {
+fn micro_qr_v4_ec_l_as_image() {
     {
         let code =
             QrCode::micro_with_error_correction_level(&INPUT_DATA[..15], EcLevel::L).unwrap();
@@ -210,7 +210,7 @@ fn test_micro_qr_v4_ec_l_as_image() {
 }
 
 #[test]
-fn test_micro_qr_v4_ec_m_as_image() {
+fn micro_qr_v4_ec_m_as_image() {
     {
         let code = QrCode::new_micro(&INPUT_DATA[..13]).unwrap();
         let image = code.render::<Luma<u8>>().build();
@@ -259,7 +259,7 @@ fn test_micro_qr_v4_ec_m_as_image() {
 }
 
 #[test]
-fn test_micro_qr_v4_ec_q_as_image() {
+fn micro_qr_v4_ec_q_as_image() {
     {
         let code = QrCode::micro_with_error_correction_level(&INPUT_DATA[..9], EcLevel::Q).unwrap();
         let image = code.render::<Luma<u8>>().build();
@@ -293,7 +293,7 @@ fn test_micro_qr_v4_ec_q_as_image() {
 }
 
 #[test]
-fn test_rmqr_vr17x139_ec_m_as_image() {
+fn rmqr_vr17x139_ec_m_as_image() {
     {
         let code = QrCode::new_rect_micro(&INPUT_DATA[..150]).unwrap();
         let image = code.render::<Luma<u8>>().build();
@@ -344,7 +344,7 @@ fn test_rmqr_vr17x139_ec_m_as_image() {
 }
 
 #[test]
-fn test_rmqr_vr17x139_ec_h_as_image() {
+fn rmqr_vr17x139_ec_h_as_image() {
     {
         let code =
             QrCode::rect_micro_with_error_correction_level(&INPUT_DATA[..74], EcLevel::H).unwrap();

@@ -110,7 +110,7 @@ mod tests {
     use crate::render::Renderer;
 
     #[test]
-    fn test_render_luma8_unsized() {
+    fn render_luma8_unsized() {
         let image = Renderer::<Luma<u8>>::new(
             &[
                 Color::Light,
@@ -140,7 +140,7 @@ mod tests {
     }
 
     #[test]
-    fn test_render_rgba_unsized() {
+    fn render_rgba_unsized() {
         let image = Renderer::<Rgba<u8>>::new(
             &[Color::Light, Color::Dark, Color::Dark, Color::Dark],
             2,
@@ -161,7 +161,7 @@ mod tests {
     }
 
     #[test]
-    fn test_render_resized_min() {
+    fn render_resized_min() {
         let image = Renderer::<Luma<u8>>::new(
             &[Color::Dark, Color::Light, Color::Light, Color::Dark],
             2,
@@ -187,7 +187,7 @@ mod tests {
     }
 
     #[test]
-    fn test_render_resized_max() {
+    fn render_resized_max() {
         let image = Renderer::<Luma<u8>>::new(
             &[Color::Dark, Color::Light, Color::Light, Color::Dark],
             2,

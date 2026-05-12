@@ -227,7 +227,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_push_number() {
+    fn push_number() {
         let mut bits = Bits::new(Version::Normal(1));
 
         // 0:0 .. 0:3

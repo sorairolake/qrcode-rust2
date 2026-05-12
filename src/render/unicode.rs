@@ -123,7 +123,7 @@ mod tests {
     use crate::{EcLevel, QrCode, Version, render::Renderer};
 
     #[test]
-    fn test_render_to_utf8_string() {
+    fn render_to_utf8_string() {
         let colors = &[Color::Dark, Color::Light, Color::Light, Color::Dark];
         let image: String = Renderer::<Dense1x2>::new(colors, 2, 2, 1).build();
 

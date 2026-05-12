@@ -56,7 +56,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_low_versions() {
+    fn low_versions() {
         assert_eq!(
             max_allowed_errors(Version::Normal(1), EcLevel::L).unwrap(),
             2
@@ -199,7 +199,7 @@ mod tests {
     }
 
     #[test]
-    fn test_high_versions() {
+    fn high_versions() {
         assert_eq!(
             max_allowed_errors(Version::Normal(40), EcLevel::L).unwrap(),
             375

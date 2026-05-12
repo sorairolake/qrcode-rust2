@@ -122,7 +122,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_color_new() {
+    fn color_new() {
         assert!(Color::new("brown").is_ok());
 
         assert!(Color::new("#a52a2a").is_ok());

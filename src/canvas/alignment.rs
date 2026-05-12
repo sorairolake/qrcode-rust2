@@ -138,7 +138,7 @@ mod tests {
     use crate::types::EcLevel;
 
     #[test]
-    fn test_draw_alignment_patterns_1() {
+    fn draw_alignment_patterns_1() {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_finder_patterns();
         c.draw_alignment_patterns();
@@ -172,7 +172,7 @@ mod tests {
     }
 
     #[test]
-    fn test_draw_alignment_patterns_3() {
+    fn draw_alignment_patterns_3() {
         let mut c = Canvas::new(Version::Normal(3), EcLevel::L);
         c.draw_finder_patterns();
         c.draw_alignment_patterns();
@@ -214,7 +214,7 @@ mod tests {
     }
 
     #[test]
-    fn test_draw_alignment_patterns_7() {
+    fn draw_alignment_patterns_7() {
         let mut c = Canvas::new(Version::Normal(7), EcLevel::L);
         c.draw_finder_patterns();
         c.draw_alignment_patterns();
@@ -272,7 +272,7 @@ mod tests {
     }
 
     #[test]
-    fn test_draw_alignment_patterns_rmqr_7x77() {
+    fn draw_alignment_patterns_rmqr_7x77() {
         let mut c = Canvas::new(Version::RectMicro(7, 77), EcLevel::L);
         c.draw_finder_patterns();
         c.draw_alignment_patterns_rmqr();

@@ -412,7 +412,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_draw_number() {
+    fn draw_number() {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_number(
             0b1010_1101,
@@ -441,7 +441,7 @@ mod tests {
     }
 
     #[test]
-    fn test_draw_version_info_1() {
+    fn draw_version_info_1() {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_version_info_patterns();
         assert_eq!(
@@ -474,7 +474,7 @@ mod tests {
     }
 
     #[test]
-    fn test_draw_version_info_7() {
+    fn draw_version_info_7() {
         let mut c = Canvas::new(Version::Normal(7), EcLevel::L);
         c.draw_version_info_patterns();
 
@@ -532,7 +532,7 @@ mod tests {
     }
 
     #[test]
-    fn test_draw_reserved_format_info_patterns_qr() {
+    fn draw_reserved_format_info_patterns_qr() {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_reserved_format_info_patterns();
         assert_eq!(
@@ -565,7 +565,7 @@ mod tests {
     }
 
     #[test]
-    fn test_draw_reserved_format_info_patterns_micro_qr() {
+    fn draw_reserved_format_info_patterns_micro_qr() {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_reserved_format_info_patterns();
         assert_eq!(

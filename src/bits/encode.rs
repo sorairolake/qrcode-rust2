@@ -65,7 +65,7 @@ mod tests {
     }
 
     #[test]
-    fn test_alphanumeric() {
+    fn alphanumeric() {
         let res = encode(b"HELLO WORLD", Version::Normal(1), EcLevel::Q);
         assert_eq!(
             res,
@@ -88,7 +88,7 @@ mod tests {
     }
 
     #[test]
-    fn test_auto_mode_switch() {
+    fn auto_mode_switch() {
         let res = encode(b"123A", Version::Micro(2), EcLevel::L);
         assert_eq!(
             res,
@@ -103,7 +103,7 @@ mod tests {
     }
 
     #[test]
-    fn test_too_long() {
+    fn too_long() {
         let res = encode(b">>>>>>>>", Version::Normal(1), EcLevel::H);
         assert_eq!(res, Err(Error::DataTooLong));
     }

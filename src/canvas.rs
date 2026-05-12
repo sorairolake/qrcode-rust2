@@ -152,7 +152,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_index() {
+    fn index() {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
 
         assert_eq!(c.get(0, 4), Module::Empty);
@@ -167,7 +167,7 @@ mod tests {
     }
 
     #[test]
-    fn test_debug_str() {
+    fn debug_str() {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
 
         for i in 3_i16..20 {

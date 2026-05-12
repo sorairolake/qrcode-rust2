@@ -70,7 +70,7 @@ mod tests {
     use crate::types::EcLevel;
 
     #[test]
-    fn test_qr() {
+    fn qr() {
         let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
         c.draw_finder_patterns();
         assert_eq!(
@@ -103,7 +103,7 @@ mod tests {
     }
 
     #[test]
-    fn test_micro_qr() {
+    fn micro_qr() {
         let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
         c.draw_finder_patterns();
         assert_eq!(
@@ -126,7 +126,7 @@ mod tests {
     }
 
     #[test]
-    fn test_rmqr() {
+    fn rmqr() {
         let mut c = Canvas::new(Version::RectMicro(7, 43), EcLevel::M);
         c.draw_finder_patterns();
         assert_eq!(

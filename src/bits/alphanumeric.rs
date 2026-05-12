@@ -59,7 +59,7 @@ mod tests {
     use crate::{error::Error, types::Version};
 
     #[test]
-    fn test_iso_18004_2006_example() {
+    fn iso_18004_2006_example() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(bits.push_alphanumeric_data(b"AC-42"), Ok(()));
         assert_eq!(
@@ -76,7 +76,7 @@ mod tests {
     }
 
     #[test]
-    fn test_micro_qr_unsupported() {
+    fn micro_qr_unsupported() {
         let mut bits = Bits::new(Version::Micro(1));
         assert_eq!(
             bits.push_alphanumeric_data(b"A"),
@@ -85,7 +85,7 @@ mod tests {
     }
 
     #[test]
-    fn test_data_too_long() {
+    fn data_too_long() {
         let mut bits = Bits::new(Version::Micro(2));
         assert_eq!(
             bits.push_alphanumeric_data(b"ABCDEFGH"),

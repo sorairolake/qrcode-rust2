@@ -152,7 +152,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_hello_world() {
+    fn hello_world() {
         let mut bits = Bits::new(Version::Normal(1));
         assert_eq!(bits.push_alphanumeric_data(b"HELLO WORLD"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::Q), Ok(()));
@@ -177,14 +177,14 @@ mod tests {
     }
 
     #[test]
-    fn test_too_long() {
+    fn too_long() {
         let mut bits = Bits::new(Version::Micro(1));
         assert_eq!(bits.push_numeric_data(b"9999999"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Err(Error::DataTooLong));
     }
 
     #[test]
-    fn test_no_terminator() {
+    fn no_terminator() {
         let mut bits = Bits::new(Version::Micro(1));
         assert_eq!(bits.push_numeric_data(b"99999"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Ok(()));
@@ -192,7 +192,7 @@ mod tests {
     }
 
     #[test]
-    fn test_no_padding() {
+    fn no_padding() {
         let mut bits = Bits::new(Version::Micro(1));
         assert_eq!(bits.push_numeric_data(b"9999"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Ok(()));
@@ -200,7 +200,7 @@ mod tests {
     }
 
     #[test]
-    fn test_micro_version_1_half_byte_padding() {
+    fn micro_version_1_half_byte_padding() {
         let mut bits = Bits::new(Version::Micro(1));
         assert_eq!(bits.push_numeric_data(b"999"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Ok(()));
@@ -208,7 +208,7 @@ mod tests {
     }
 
     #[test]
-    fn test_micro_version_1_full_byte_padding() {
+    fn micro_version_1_full_byte_padding() {
         let mut bits = Bits::new(Version::Micro(1));
         assert_eq!(bits.push_numeric_data(b""), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Ok(()));

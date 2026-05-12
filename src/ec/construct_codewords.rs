@@ -64,7 +64,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_add_ec_simple() {
+    fn add_ec_simple() {
         let msg = b" [\x0Bx\xD1r\xDCMC@\xEC\x11\xEC\x11\xEC\x11";
         let (blocks_vec, ec_vec) =
             construct_codewords(msg, Version::Normal(1), EcLevel::M).unwrap();
@@ -73,7 +73,7 @@ mod tests {
     }
 
     #[test]
-    fn test_add_ec_complex() {
+    fn add_ec_complex() {
         let msg = [
             0x43, 0x55, 0x46, 0x86, 0x57, 0x26, 0x55, 0xC2, 0x77, 0x32, 0x06, 0x12, 0x06, 0x67,
             0x26, 0xF6, 0xF6, 0x42, 0x07, 0x76, 0x86, 0xF2, 0x07, 0x26, 0x56, 0x16, 0xC6, 0xC7,

@@ -34,7 +34,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_interleave() {
+    fn interleave_works() {
         let res = interleave(&[&b"1234"[..], b"5678", b"abcdef", b"ghijkl"]);
         assert_eq!(res, b"15ag26bh37ci48djekfl");
     }
