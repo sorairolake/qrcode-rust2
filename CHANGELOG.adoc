@@ -16,6 +16,11 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 == {compare-url}/v0.18.0\...HEAD[Unreleased]
 
+=== Changed
+
+* Compute globally optimal mode segmentation (ISO/IEC 18004 Annex J) instead of
+  the previous greedy heuristic ({pull-request-url}/YYY[#YYY])
+
 === Fixed
 
 * Fix suboptimal mode segmentation that could reject or needlessly upsize
