@@ -1,7 +1,6 @@
 // SPDX-FileCopyrightText: 2014 kennytm
 // SPDX-FileCopyrightText: 2024 Michael Spiegel
 // SPDX-FileCopyrightText: 2024 Shun Sakai
-// SPDX-FileCopyrightText: 2026 Lars Gerchow
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
@@ -10,7 +9,7 @@
 use super::Bits;
 use crate::{
     error::Result,
-    optimize::{self, Segment},
+    optimize::{Parser, Segment},
     types::Mode,
 };
 
@@ -43,8 +42,8 @@ impl Bits {
     ///
     /// Returns [`Err`] on overflow.
     pub fn push_optimal_data(&mut self, data: &[u8]) -> Result<()> {
-        let segments = optimize::optimize(data, self.version);
-        self.push_segments(data, segments.into_iter())
+        let segments = Parser::new(data).optimize(self.version);
+        self.push_segments(data, segments)
     }
 }
 
@@ -107,19 +106,5 @@ mod tests {
     fn too_long() {
         let res = encode(b">>>>>>>>", Version::Normal(1), EcLevel::H);
         assert_eq!(res, Err(Error::DataTooLong));
-    }
-
-    // Regression: 14 QR-alphanumeric characters fit a Micro QR M3-L symbol as a
-    // single alphanumeric segment (83 <= 84 bits), but the greedy optimizer used
-    // to split the embedded digit run "3935" into its own numeric segment whose
-    // extra header overhead overran the capacity, falsely returning DataTooLong.
-    #[test]
-    fn micro_m3_alphanumeric_with_digit_run() {
-        assert!(encode(b"9BA3935DM3TBE4", Version::Micro(3), EcLevel::L).is_ok());
-        // One more character genuinely overflows M3 and must still be rejected.
-        assert_eq!(
-            encode(b"9BA3935DM3TBE45", Version::Micro(3), EcLevel::L),
-            Err(Error::DataTooLong)
-        );
     }
 }

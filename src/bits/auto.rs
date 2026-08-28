@@ -3,7 +3,6 @@
 // SPDX-FileCopyrightText: 2023 Nakanishi
 // SPDX-FileCopyrightText: 2024 Michael Spiegel
 // SPDX-FileCopyrightText: 2024 Shun Sakai
-// SPDX-FileCopyrightText: 2026 Lars Gerchow
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
@@ -15,7 +14,7 @@ use super::{Bits, terminator::DATA_LENGTHS};
 use crate::{
     cast::As,
     error::{Error, Result},
-    optimize::{self, Parser, Segment},
+    optimize::{self, Optimizer, Parser, Segment},
     types::{EcLevel, Version},
 };
 
@@ -41,7 +40,7 @@ use crate::{
 pub fn encode_auto(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
     for version in &[Version::Normal(9), Version::Normal(26), Version::Normal(40)] {
-        let opt_segments = optimize::optimize_segments(&segments, *version);
+        let opt_segments = Optimizer::new(segments.iter().copied(), *version).collect::<Vec<_>>();
         let total_len = optimize::total_encoded_len(&opt_segments, *version);
         let data_capacity = version.fetch(ec_level, &DATA_LENGTHS).unwrap();
         if total_len <= data_capacity {
@@ -140,7 +139,7 @@ pub fn encode_auto_micro(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     let mut possible_versions = Vec::new();
     for version in 1..=4 {
         let version = Version::Micro(version);
-        let opt_segments = optimize::optimize_segments(&segments, version);
+        let opt_segments = Optimizer::new(segments.iter().copied(), version).collect::<Vec<_>>();
         let total_len = optimize::total_encoded_len(&opt_segments, version);
         let data_capacity = version.fetch(ec_level, &DATA_LENGTHS);
         if let Ok(capacity) = data_capacity
@@ -155,7 +154,7 @@ pub fn encode_auto_micro(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
 
     if let Some(version) = min_version {
         let mut bits = Bits::new(*version);
-        let opt_segments = optimize::optimize_segments(&segments, *version);
+        let opt_segments = Optimizer::new(segments.iter().copied(), *version).collect::<Vec<_>>();
         bits.reserve(optimize::total_encoded_len(&opt_segments, *version));
         bits.push_segments(data, opt_segments.into_iter())?;
         bits.push_terminator(ec_level)?;
@@ -235,7 +234,8 @@ pub fn encode_auto_rect_micro(
             if !version.is_rect_micro() {
                 continue;
             }
-            let opt_segments = optimize::optimize_segments(&segments, version);
+            let opt_segments =
+                Optimizer::new(segments.iter().copied(), version).collect::<Vec<_>>();
             let total_len = optimize::total_encoded_len(&opt_segments, version);
             let data_capacity = version.fetch(ec_level, &DATA_LENGTHS)?;
             if total_len <= data_capacity {
@@ -256,7 +256,7 @@ pub fn encode_auto_rect_micro(
 
     if let Some(version) = min_version {
         let mut bits = Bits::new(*version);
-        let opt_segments = optimize::optimize_segments(&segments, *version);
+        let opt_segments = Optimizer::new(segments.iter().copied(), *version).collect::<Vec<_>>();
         bits.reserve(optimize::total_encoded_len(&opt_segments, *version));
         bits.push_segments(data, opt_segments.into_iter())?;
         bits.push_terminator(ec_level)?;
