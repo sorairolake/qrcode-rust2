@@ -12,7 +12,7 @@ use qrcode2::{
     EcLevel, Error, QrCode, Version,
     image::{Luma, Rgb},
 };
-use sha3::{Shake128, digest::ExtendableOutput};
+use shake::{Shake128, ExtendableOutput};
 
 static INPUT_DATA: LazyLock<Vec<u8>> = LazyLock::new(|| {
     let mut buf = vec![u8::default(); 2954];
