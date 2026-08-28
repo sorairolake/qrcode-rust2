@@ -4,7 +4,6 @@
 // SPDX-FileCopyrightText: 2023 Nakanishi
 // SPDX-FileCopyrightText: 2024 Michael Spiegel
 // SPDX-FileCopyrightText: 2024 Shun Sakai
-// SPDX-FileCopyrightText: 2026 Lars Gerchow
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
@@ -13,8 +12,6 @@
 mod internal;
 mod parser;
 mod segment;
-
-use alloc::{vec, vec::Vec};
 
 pub use self::{parser::Parser, segment::Segment};
 use crate::types::{Mode, Version};
@@ -110,49 +107,6 @@ impl<I: Iterator<Item = Segment>> Iterator for Optimizer<I> {
 #[must_use]
 pub fn total_encoded_len(segments: &[Segment], version: Version) -> usize {
     segments.iter().map(|seg| seg.encoded_len(version)).sum()
-}
-
-/// Returns the optimized segmentation of `data` for the given `version`,
-/// guaranteed never to be larger than the trivial single-mode encoding.
-///
-/// The [`Optimizer`] is a greedy left-to-right merger and is _not_ globally
-/// optimal (it does not implement ISO/IEC 18004 Annex J). For low-capacity
-/// Micro QR symbols a locally cheaper split can keep a numeric run separate
-/// whose extra per-segment mode and character-count indicators push the total
-/// over the symbol capacity, even though encoding the whole payload as a single
-/// alphanumeric (or byte) segment would fit. To avoid producing an encoding
-/// strictly worse than the single-mode baseline, this compares the greedy
-/// result against one segment spanning the whole payload in the lowest common
-/// mode and returns whichever is smaller.
-#[must_use]
-pub fn optimize(data: &[u8], version: Version) -> Vec<Segment> {
-    optimize_segments(&Parser::new(data).collect::<Vec<_>>(), version)
-}
-
-/// Optimizes already-parsed `segments` for the given `version`, clamping the
-/// greedy result to the single-mode baseline (see [`optimize`]).
-///
-/// Callers that try several candidate versions can parse once and reuse the
-/// `segments` slice across calls.
-#[must_use]
-pub(crate) fn optimize_segments(segments: &[Segment], version: Version) -> Vec<Segment> {
-    let greedy = Optimizer::new(segments.iter().copied(), version).collect::<Vec<_>>();
-
-    // Single-mode baseline: one segment over the whole payload in the lowest
-    // common mode that can encode every character. `Mode::max` falls back to
-    // `Byte`, which can encode any data, so the baseline is always valid.
-    if let Some(mode) = segments.iter().map(|seg| seg.mode).reduce(Mode::max) {
-        let single = Segment {
-            mode,
-            begin: segments[0].begin,
-            end: segments[segments.len() - 1].end,
-        };
-        if single.encoded_len(version) < total_encoded_len(&greedy, version) {
-            return vec![single];
-        }
-    }
-
-    greedy
 }
 
 #[cfg(test)]
@@ -430,36 +384,5 @@ mod tests {
             }],
             Version::Micro(3),
         );
-    }
-
-    // Regression: the greedy optimizer can split a mixed numeric/alphanumeric
-    // payload into segments whose combined header overhead exceeds the symbol
-    // capacity, even though a single alphanumeric segment fits. `optimize` must
-    // clamp to that single-mode baseline. "9BA3935DM3TBE4" is 14 QR-alphanumeric
-    // characters: greedy yields 89 bits (> M3-L's 84), one segment yields 83.
-    #[test]
-    fn single_mode_baseline_micro_qr() {
-        let data = b"9BA3935DM3TBE4";
-        let version = Version::Micro(3);
-
-        // Greedy alone overruns the M3-L 84-bit capacity.
-        let greedy = Optimizer::new(
-            Parser::new(data).collect::<Vec<_>>().iter().copied(),
-            version,
-        )
-        .collect::<Vec<_>>();
-        assert!(total_encoded_len(&greedy, version) > 84);
-
-        // The clamped optimizer collapses to a single alphanumeric segment.
-        let opt = optimize(data, version);
-        assert_eq!(
-            opt,
-            [Segment {
-                mode: Mode::Alphanumeric,
-                begin: 0,
-                end: 14,
-            }]
-        );
-        assert!(total_encoded_len(&opt, version) <= 84);
     }
 }
