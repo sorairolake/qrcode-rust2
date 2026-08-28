@@ -34,7 +34,7 @@ fn bench_greedy(b: &mut Bencher, data: &[u8]) {
     });
 }
 
-// --- Optimal DP, worst-case alternating input (k == n) -----------------------
+// Optimal DP, worst-case alternating input (k == n)
 
 #[bench]
 fn dp_alternating_64(b: &mut Bencher) {
@@ -61,7 +61,7 @@ fn dp_alternating_1024(b: &mut Bencher) {
     bench_dp(b, &alternating(1024));
 }
 
-// --- Greedy, same inputs (linear baseline for comparison) --------------------
+// Greedy, same inputs (linear baseline for comparison)
 
 #[bench]
 fn greedy_alternating_256(b: &mut Bencher) {
@@ -73,7 +73,7 @@ fn greedy_alternating_1024(b: &mut Bencher) {
     bench_greedy(b, &alternating(1024));
 }
 
-// --- Realistic few-run inputs (k tiny): DP cost should be ~flat in n ---------
+// Realistic few-run inputs (k tiny): DP cost should be ~flat in n
 
 #[bench]
 fn dp_numeric_1000(b: &mut Bencher) {
