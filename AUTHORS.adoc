@@ -26,6 +26,7 @@
 * https://github.com/jbg[Jasper Bryant-Greene]
 * https://github.com/ivanceras[Jovansonlee Cesar]
 * Kyle Clemens
+* https://github.com/gerchowl[Lars Gerchow]
 * https://github.com/flosse[Markus Kohlhase]
 * https://github.com/mspiegel[Michael Spiegel]
 * https://github.com/RCasatta[Riccardo Casatta]
