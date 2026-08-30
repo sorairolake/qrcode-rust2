@@ -60,11 +60,11 @@ impl Parser<'_> {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{
-    /// #     optimize::{Parser, Segment},
-    /// #     types::Mode,
-    /// # };
-    /// #
+    /// use qrcode2::{
+    ///     optimize::{Parser, Segment},
+    ///     types::Mode,
+    /// };
+    ///
     /// let parse_res = Parser::new(b"ABC123abcd").collect::<Vec<Segment>>();
     /// assert_eq!(
     ///     parse_res,
