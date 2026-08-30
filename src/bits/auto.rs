@@ -33,8 +33,8 @@ use crate::{
 /// # Examples
 ///
 /// ```
-/// # use qrcode2::{EcLevel, Version, bits};
-/// #
+/// use qrcode2::{EcLevel, Version, bits};
+///
 /// let bits = bits::encode_auto(b"Hello, world!", EcLevel::M).unwrap();
 /// assert_eq!(bits.version(), Version::Normal(1));
 /// ```
@@ -130,8 +130,8 @@ mod encode_auto_tests {
 /// # Examples
 ///
 /// ```
-/// # use qrcode2::{EcLevel, Version, bits};
-/// #
+/// use qrcode2::{EcLevel, Version, bits};
+///
 /// let bits = bits::encode_auto_micro(b"Hello, world!", EcLevel::M).unwrap();
 /// assert_eq!(bits.version(), Version::Micro(4));
 /// ```
@@ -213,11 +213,11 @@ pub enum RectMicroStrategy {
 /// # Examples
 ///
 /// ```
-/// # use qrcode2::{
-/// #     EcLevel, Version,
-/// #     bits::{self, RectMicroStrategy},
-/// # };
-/// #
+/// use qrcode2::{
+///     EcLevel, Version,
+///     bits::{self, RectMicroStrategy},
+/// };
+///
 /// let bits = bits::encode_auto_rect_micro(b"Hello, world!", EcLevel::M, RectMicroStrategy::Area)
 ///     .unwrap();
 /// assert_eq!(bits.version(), Version::RectMicro(11, 43));

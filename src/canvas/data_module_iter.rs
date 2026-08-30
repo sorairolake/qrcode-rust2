@@ -18,8 +18,8 @@ pub struct DataModuleIter {
 
 impl DataModuleIter {
     pub const fn new(version: Version) -> Self {
-        // In rMQR code, disregarding the bottom and right alignment patterns works
-        // well.
+        // In rMQR code, disregarding the bottom and right alignment patterns
+        // works well.
         let (width, height) = if let Version::RectMicro(..) = version {
             (version.width() - 1, version.height() - 1)
         } else {

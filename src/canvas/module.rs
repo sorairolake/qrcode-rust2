@@ -42,8 +42,8 @@ impl Module {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{Color, canvas::Module};
-    /// #
+    /// use qrcode2::{Color, canvas::Module};
+    ///
     /// assert_eq!(
     ///     Module::Unmasked(Color::Light).mask(true),
     ///     Module::Masked(Color::Dark)

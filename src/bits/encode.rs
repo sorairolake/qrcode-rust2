@@ -110,9 +110,10 @@ mod tests {
     }
 
     // Regression: 14 QR-alphanumeric characters fit a Micro QR M3-L symbol as a
-    // single alphanumeric segment (83 <= 84 bits), but the greedy optimizer used
-    // to split the embedded digit run "3935" into its own numeric segment whose
-    // extra header overhead overran the capacity, falsely returning DataTooLong.
+    // single alphanumeric segment (83 <= 84 bits), but the greedy optimizer
+    // used to split the embedded digit run "3935" into its own numeric
+    // segment whose extra header overhead overran the capacity, falsely
+    // returning DataTooLong.
     #[test]
     fn micro_m3_alphanumeric_with_digit_run() {
         assert!(encode(b"9BA3935DM3TBE4", Version::Micro(3), EcLevel::L).is_ok());

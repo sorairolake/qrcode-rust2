@@ -60,11 +60,11 @@ impl Parser<'_> {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{
-    /// #     optimize::{Parser, Segment},
-    /// #     types::Mode,
-    /// # };
-    /// #
+    /// use qrcode2::{
+    ///     optimize::{Parser, Segment},
+    ///     types::Mode,
+    /// };
+    ///
     /// let parse_res = Parser::new(b"ABC123abcd").collect::<Vec<Segment>>();
     /// assert_eq!(
     ///     parse_res,
@@ -293,8 +293,8 @@ mod tests {
 
     #[test]
     fn not_kanji_2() {
-        // Note that it's implementation detail that the byte seq is split into two.
-        // Perhaps adjust the test to check for this.
+        // Note that it's implementation detail that the byte seq is split into
+        // two. Perhaps adjust the test to check for this.
         let segs = parse(b"\xEB\xC0");
         assert_eq!(
             segs,

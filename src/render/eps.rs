@@ -39,8 +39,8 @@ impl Color {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::render::eps::Color;
-    /// #
+    /// use qrcode2::render::eps::Color;
+    ///
     /// assert!(Color::new(0.0, 0.0, 0.0).is_some());
     /// assert!(Color::new(0.0, 0.5, 1.0).is_some());
     ///

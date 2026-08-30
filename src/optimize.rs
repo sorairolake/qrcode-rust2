@@ -148,17 +148,18 @@ pub(crate) fn optimize_segments(segments: &[Segment], version: Version) -> Vec<S
     }
 
     // `dp[b]` = minimum total encoded bits for the first `b` runs; `back[b]` =
-    // (start run, segment mode) of the last segment on the cheapest path to `b`.
+    // (start run, segment mode) of the last segment on the cheapest path to
+    // `b`.
     let mut dp = vec![usize::MAX; runs + 1];
     let mut back = vec![(0_usize, Mode::Numeric); runs + 1];
     dp[0] = 0;
 
     for b in 1..=runs {
         // Extend a single segment leftwards over runs `[a, b)`, tracking the
-        // lowest common mode that can encode every run in the span. Seed from an
-        // actual run mode (not `Mode::Numeric`): `Mode::max` falls back to `Byte`
-        // for incomparable modes, so seeding with `Numeric` would misclassify a
-        // pure-Kanji span as `Byte`.
+        // lowest common mode that can encode every run in the span. Seed from
+        // an actual run mode (not `Mode::Numeric`): `Mode::max` falls
+        // back to `Byte` for incomparable modes, so seeding with
+        // `Numeric` would misclassify a pure-Kanji span as `Byte`.
         let mut mode = segments[b - 1].mode;
         for a in (0..b).rev() {
             mode = mode.max(segments[a].mode);
@@ -513,8 +514,8 @@ mod tests {
             return 0;
         }
         let mut best = usize::MAX;
-        // Bit `i` set => a segment boundary after run `i` (run `runs - 1` always
-        // ends a segment).
+        // Bit `i` set => a segment boundary after run `i` (run `runs - 1`
+        // always ends a segment).
         for mask in 0..(1u32 << (runs - 1)) {
             let mut total = 0;
             let mut start = 0;
@@ -580,12 +581,14 @@ mod tests {
         }
     }
 
-    // The DP strictly improves on greedy (scattered short digit runs) and on the
-    // single-mode encoding (a long numeric run worth isolating), each in a case
-    // where the other is already optimal — confirming it is not just one of them.
+    // The DP strictly improves on greedy (scattered short digit runs) and on
+    // the single-mode encoding (a long numeric run worth isolating), each
+    // in a case where the other is already optimal — confirming it is not
+    // just one of them.
     #[test]
     fn dp_beats_greedy_and_single_mode() {
-        // Greedy over-splits and overruns; the optimum is one alphanumeric segment.
+        // Greedy over-splits and overruns; the optimum is one alphanumeric
+        // segment.
         let data = b"9BA3935DM3TBE4";
         let version = Version::Micro(3);
         let parsed = Parser::new(data).collect::<Vec<_>>();
@@ -595,7 +598,8 @@ mod tests {
                 < total_encoded_len(&greedy, version)
         );
 
-        // A long numeric run: the single alphanumeric segment is far from optimal.
+        // A long numeric run: the single alphanumeric segment is far from
+        // optimal.
         let data = b"AB000000000000000000CD";
         let version = Version::Normal(1);
         let parsed = Parser::new(data).collect::<Vec<_>>();

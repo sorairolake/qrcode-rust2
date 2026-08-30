@@ -23,8 +23,8 @@ use crate::{
 /// # Examples
 ///
 /// ```
-/// # use qrcode2::{EcLevel, Version, ec};
-/// #
+/// use qrcode2::{EcLevel, Version, ec};
+///
 /// assert_eq!(
 ///     ec::max_allowed_errors(Version::Normal(40), EcLevel::M),
 ///     Ok(686)

@@ -39,8 +39,8 @@ impl Mode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{Version, types::Mode};
-    /// #
+    /// use qrcode2::{Version, types::Mode};
+    ///
     /// assert_eq!(Mode::Numeric.length_bits_count(Version::Normal(1)), 10);
     /// ```
     #[must_use]
@@ -95,8 +95,8 @@ impl Mode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::types::Mode;
-    /// #
+    /// use qrcode2::types::Mode;
+    ///
     /// assert_eq!(Mode::Numeric.data_bits_count(7), 24);
     /// ```
     #[must_use]
@@ -114,8 +114,8 @@ impl Mode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::types::Mode;
-    /// #
+    /// use qrcode2::types::Mode;
+    ///
     /// let a = Mode::Numeric;
     /// let b = Mode::Kanji;
     /// let c = a.max(b);
