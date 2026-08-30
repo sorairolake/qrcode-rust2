@@ -103,8 +103,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::QrCode;
-    /// #
+    /// use qrcode2::QrCode;
+    ///
     /// let code = QrCode::new(b"Some data").unwrap();
     /// ```
     pub fn new(data: impl AsRef<[u8]>) -> Result<Self> {
@@ -125,8 +125,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::QrCode;
-    /// #
+    /// use qrcode2::QrCode;
+    ///
     /// let code = QrCode::new_micro(b"Some data").unwrap();
     /// ```
     pub fn new_micro(data: impl AsRef<[u8]>) -> Result<Self> {
@@ -147,8 +147,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::QrCode;
-    /// #
+    /// use qrcode2::QrCode;
+    ///
     /// let code = QrCode::new_rect_micro(b"Some data").unwrap();
     /// ```
     pub fn new_rect_micro(data: impl AsRef<[u8]>) -> Result<Self> {
@@ -169,8 +169,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{EcLevel, QrCode};
-    /// #
+    /// use qrcode2::{EcLevel, QrCode};
+    ///
     /// let code = QrCode::with_error_correction_level(b"Some data", EcLevel::H).unwrap();
     /// ```
     pub fn with_error_correction_level(data: impl AsRef<[u8]>, ec_level: EcLevel) -> Result<Self> {
@@ -192,8 +192,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{EcLevel, QrCode};
-    /// #
+    /// use qrcode2::{EcLevel, QrCode};
+    ///
     /// let code = QrCode::micro_with_error_correction_level(b"Some data", EcLevel::Q).unwrap();
     /// ```
     pub fn micro_with_error_correction_level(
@@ -218,8 +218,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{EcLevel, QrCode};
-    /// #
+    /// use qrcode2::{EcLevel, QrCode};
+    ///
     /// let code = QrCode::rect_micro_with_error_correction_level(b"Some data", EcLevel::H).unwrap();
     /// ```
     pub fn rect_micro_with_error_correction_level(
@@ -242,16 +242,16 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{EcLevel, QrCode, Version};
-    /// #
+    /// use qrcode2::{EcLevel, QrCode, Version};
+    ///
     /// let code = QrCode::with_version(b"Some data", Version::Normal(5), EcLevel::M).unwrap();
     /// ```
     ///
     /// This method can also be used to generate Micro QR code or rMQR code.
     ///
     /// ```
-    /// # use qrcode2::{EcLevel, QrCode, Version};
-    /// #
+    /// use qrcode2::{EcLevel, QrCode, Version};
+    ///
     /// let micro_code = QrCode::with_version(b"123", Version::Micro(1), EcLevel::L).unwrap();
     /// let rmqr_code = QrCode::with_version(b"456", Version::RectMicro(7, 43), EcLevel::M).unwrap();
     /// ```
@@ -286,8 +286,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{EcLevel, QrCode, Version, bits::Bits};
-    /// #
+    /// use qrcode2::{EcLevel, QrCode, Version, bits::Bits};
+    ///
     /// let mut bits = Bits::new(Version::Normal(1));
     /// bits.push_eci_designator(9);
     /// bits.push_byte_data(b"\xCA\xFE\xE4\xE9\xEA\xE1\xF2 QR");
@@ -317,8 +317,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{QrCode, Version};
-    /// #
+    /// use qrcode2::{QrCode, Version};
+    ///
     /// let code = QrCode::new(b"Some data").unwrap();
     /// assert_eq!(code.version(), Version::Normal(1));
     /// ```
@@ -332,8 +332,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{EcLevel, QrCode};
-    /// #
+    /// use qrcode2::{EcLevel, QrCode};
+    ///
     /// let code = QrCode::new(b"Some data").unwrap();
     /// assert_eq!(code.error_correction_level(), EcLevel::M);
     /// ```
@@ -349,8 +349,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::QrCode;
-    /// #
+    /// use qrcode2::QrCode;
+    ///
     /// let code = QrCode::new_rect_micro(b"Some data").unwrap();
     /// assert_eq!(code.width(), 27);
     /// ```
@@ -366,8 +366,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::QrCode;
-    /// #
+    /// use qrcode2::QrCode;
+    ///
     /// let code = QrCode::new_rect_micro(b"Some data").unwrap();
     /// assert_eq!(code.height(), 13);
     /// ```
@@ -384,8 +384,8 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::QrCode;
-    /// #
+    /// use qrcode2::QrCode;
+    ///
     /// let code = QrCode::new(b"Some data").unwrap();
     /// assert_eq!(code.max_allowed_errors(), 4);
     /// ```
@@ -439,11 +439,11 @@ impl QrCode {
     /// ```
     /// # #[cfg(feature = "image")]
     /// # {
-    /// # use qrcode2::{
-    /// #     QrCode,
-    /// #     image::{Rgb, imageops},
-    /// # };
-    /// #
+    /// use qrcode2::{
+    ///     QrCode,
+    ///     image::{Rgb, imageops},
+    /// };
+    ///
     /// let mut image = QrCode::new(b"hello")
     ///     .unwrap()
     ///     .render::<Rgb<u8>>()
