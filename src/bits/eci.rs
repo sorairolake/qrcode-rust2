@@ -29,8 +29,8 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{Version, bits::Bits};
-    /// #
+    /// use qrcode2::{Version, bits::Bits};
+    ///
     /// let mut bits = Bits::new(Version::Normal(1));
     /// // 9 = ISO-8859-7 (Greek).
     /// bits.push_eci_designator(9);
