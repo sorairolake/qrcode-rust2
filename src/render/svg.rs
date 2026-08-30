@@ -45,8 +45,8 @@ impl<'a> Color<'a> {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::render::svg::Color;
-    /// #
+    /// use qrcode2::render::svg::Color;
+    ///
     /// assert!(Color::new("brown").is_ok());
     /// assert!(Color::new("#111").is_ok());
     ///
