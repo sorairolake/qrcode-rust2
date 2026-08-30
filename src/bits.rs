@@ -45,8 +45,8 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{Version, bits::Bits};
-    /// #
+    /// use qrcode2::{Version, bits::Bits};
+    ///
     /// let bits = Bits::new(Version::Normal(1));
     /// ```
     #[must_use]
@@ -124,8 +124,8 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{Version, bits::Bits};
-    /// #
+    /// use qrcode2::{Version, bits::Bits};
+    ///
     /// let mut bits = Bits::new(Version::Normal(1));
     /// bits.push_numeric_data(b"01234567");
     /// assert_eq!(
@@ -150,8 +150,8 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{Version, bits::Bits};
-    /// #
+    /// use qrcode2::{Version, bits::Bits};
+    ///
     /// let mut bits = Bits::new(Version::Normal(1));
     /// assert_eq!(bits.len(), 0);
     ///
@@ -172,8 +172,8 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{Version, bits::Bits};
-    /// #
+    /// use qrcode2::{Version, bits::Bits};
+    ///
     /// let mut bits = Bits::new(Version::Normal(1));
     /// assert_eq!(bits.is_empty(), true);
     ///
@@ -197,8 +197,8 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{EcLevel, Version, bits::Bits};
-    /// #
+    /// use qrcode2::{EcLevel, Version, bits::Bits};
+    ///
     /// let bits = Bits::new(Version::Normal(1));
     /// assert_eq!(bits.max_len(EcLevel::M), Ok(128));
     /// ```
@@ -211,8 +211,8 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::{Version, bits::Bits};
-    /// #
+    /// use qrcode2::{Version, bits::Bits};
+    ///
     /// let bits = Bits::new(Version::Normal(1));
     /// assert_eq!(bits.version(), Version::Normal(1));
     /// ```
