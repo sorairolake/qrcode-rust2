@@ -24,8 +24,8 @@ impl Color {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::Color;
-    /// #
+    /// use qrcode2::Color;
+    ///
     /// assert_eq!(Color::Light.select(1, 0), 0);
     /// assert_eq!(Color::Dark.select("black", "white"), "black");
     /// ```
