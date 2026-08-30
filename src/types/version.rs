@@ -46,8 +46,8 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::Version;
-    /// #
+    /// use qrcode2::Version;
+    ///
     /// assert_eq!(Version::Normal(40).width(), 177);
     /// assert_eq!(Version::Micro(4).width(), 17);
     /// assert_eq!(Version::RectMicro(17, 139).width(), 139);
@@ -69,8 +69,8 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::Version;
-    /// #
+    /// use qrcode2::Version;
+    ///
     /// assert_eq!(Version::Normal(40).height(), 177);
     /// assert_eq!(Version::Micro(4).height(), 17);
     /// assert_eq!(Version::RectMicro(17, 139).height(), 17);
@@ -126,8 +126,8 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::Version;
-    /// #
+    /// use qrcode2::Version;
+    ///
     /// assert_eq!(Version::Normal(40).mode_bits_count(), 4);
     /// assert_eq!(Version::Micro(4).mode_bits_count(), 3);
     /// assert_eq!(Version::RectMicro(17, 139).mode_bits_count(), 3);
@@ -146,8 +146,8 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::Version;
-    /// #
+    /// use qrcode2::Version;
+    ///
     /// assert_eq!(Version::Normal(1).is_normal(), true);
     /// assert_eq!(Version::Normal(40).is_normal(), true);
     /// // Invalid normal QR code version.
@@ -166,8 +166,8 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::Version;
-    /// #
+    /// use qrcode2::Version;
+    ///
     /// assert_eq!(Version::Micro(1).is_micro(), true);
     /// assert_eq!(Version::Micro(4).is_micro(), true);
     /// // Invalid Micro QR code version.
@@ -186,8 +186,8 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// # use qrcode2::Version;
-    /// #
+    /// use qrcode2::Version;
+    ///
     /// assert_eq!(Version::RectMicro(7, 43).is_rect_micro(), true);
     /// assert_eq!(Version::RectMicro(17, 139).is_rect_micro(), true);
     /// // Invalid rMQR code version.
