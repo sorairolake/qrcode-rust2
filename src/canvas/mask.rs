@@ -14,28 +14,28 @@ use crate::types::{EcLevel, Version};
 #[derive(Clone, Copy, Debug)]
 pub enum MaskPattern {
     /// QR code mask pattern `0b000`.
-    Checkerboard = 0b000,
+    Checkerboard,
 
     /// QR code mask pattern `0b001`, and Micro QR code mask pattern `0b00`.
-    HorizontalLines = 0b001,
+    HorizontalLines,
 
     /// QR code mask pattern `0b010`.
-    VerticalLines = 0b010,
+    VerticalLines,
 
     /// QR code mask pattern `0b011`.
-    DiagonalLines = 0b011,
+    DiagonalLines,
 
     /// QR code mask pattern `0b100`, and Micro QR code mask pattern `0b01`.
-    LargeCheckerboard = 0b100,
+    LargeCheckerboard,
 
     /// QR code mask pattern `0b101`.
-    Fields = 0b101,
+    Fields,
 
     /// QR code mask pattern `0b110`, and Micro QR code mask pattern `0b10`.
-    Diamonds = 0b110,
+    Diamonds,
 
     /// QR code mask pattern `0b111`, and Micro QR code mask pattern `0b11`.
-    Meadow = 0b111,
+    Meadow,
 }
 
 mod mask_functions {
@@ -158,6 +158,18 @@ static FORMAT_INFOS_MICRO_QR: [u16; 32] = [
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn mask_pattern() {
+        assert_eq!(MaskPattern::Checkerboard as u8, 0b000);
+        assert_eq!(MaskPattern::HorizontalLines as u8, 0b001);
+        assert_eq!(MaskPattern::VerticalLines as u8, 0b010);
+        assert_eq!(MaskPattern::DiagonalLines as u8, 0b011);
+        assert_eq!(MaskPattern::LargeCheckerboard as u8, 0b100);
+        assert_eq!(MaskPattern::Fields as u8, 0b101);
+        assert_eq!(MaskPattern::Diamonds as u8, 0b110);
+        assert_eq!(MaskPattern::Meadow as u8, 0b111);
+    }
 
     #[test]
     fn apply_mask_qr() {
