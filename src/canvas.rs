@@ -12,11 +12,11 @@
 //!
 //! ```
 //! use qrcode2::{
-//!     EcLevel, Version,
+//!     EcLevel, NormalVersion, Version,
 //!     canvas::{Canvas, MaskPattern},
 //! };
 //!
-//! let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+//! let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
 //! c.draw_all_functional_patterns();
 //! c.draw_data(b"data_here", b"ec_code_here");
 //! c.apply_mask(MaskPattern::Checkerboard);
@@ -150,10 +150,11 @@ impl Canvas {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::NormalVersion;
 
     #[test]
     fn index() {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
 
         assert_eq!(c.get(0, 4), Module::Empty);
         assert_eq!(c.get(-1, -7), Module::Empty);
@@ -168,7 +169,7 @@ mod tests {
 
     #[test]
     fn debug_str() {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
 
         for i in 3_i16..20 {
             for j in 3_i16..20 {
