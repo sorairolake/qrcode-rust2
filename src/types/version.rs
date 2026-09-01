@@ -23,13 +23,13 @@ use crate::{
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Version {
     /// A normal QR code version.
-    Normal(i16),
+    Normal(NormalVersion),
 
     /// A Micro QR code version.
-    Micro(i16),
+    Micro(MicroVersion),
 
     /// A rMQR code version.
-    RectMicro(i16, i16),
+    RectMicro(RectMicroVersion),
 }
 
 impl Version {
@@ -48,7 +48,7 @@ impl Version {
     /// assert_eq!(Version::RectMicro(17, 139).width(), 139);
     /// ```
     #[must_use]
-    pub const fn width(self) -> i16 {
+    pub const fn width(self) -> u8 {
         match self {
             Self::Normal(v) => v * 4 + 17,
             Self::Micro(v) => v * 2 + 9,
@@ -71,7 +71,7 @@ impl Version {
     /// assert_eq!(Version::RectMicro(17, 139).height(), 17);
     /// ```
     #[must_use]
-    pub const fn height(self) -> i16 {
+    pub const fn height(self) -> u8 {
         if let Self::RectMicro(h, _) = self {
             h
         } else {
@@ -153,7 +153,7 @@ impl Version {
     /// ```
     #[must_use]
     pub const fn is_normal(self) -> bool {
-        matches!(self, Self::Normal(v) if v >= 1 && v <= 40)
+        matches!(self, Self::Normal(_))
     }
 
     /// Checks whether is version refers to a Micro QR code.
@@ -173,7 +173,7 @@ impl Version {
     /// ```
     #[must_use]
     pub const fn is_micro(self) -> bool {
-        matches!(self, Self::Micro(v) if v >= 1 && v <= 4)
+        matches!(self, Self::Micro(_))
     }
 
     /// Checks whether is version refers to a rMQR code.
@@ -193,66 +193,97 @@ impl Version {
     /// ```
     #[must_use]
     pub const fn is_rect_micro(self) -> bool {
-        self.rect_micro_index().is_ok()
+        matches!(self, Self::RectMicro(_))
     }
 
     /// Gets the index of the version of the rMQR code.
     pub(crate) const fn rect_micro_index(self) -> Result<usize> {
-        match self {
-            Self::RectMicro(7, 43) => Ok(0),
-            Self::RectMicro(7, 59) => Ok(1),
-            Self::RectMicro(7, 77) => Ok(2),
-            Self::RectMicro(7, 99) => Ok(3),
-            Self::RectMicro(7, 139) => Ok(4),
-            Self::RectMicro(9, 43) => Ok(5),
-            Self::RectMicro(9, 59) => Ok(6),
-            Self::RectMicro(9, 77) => Ok(7),
-            Self::RectMicro(9, 99) => Ok(8),
-            Self::RectMicro(9, 139) => Ok(9),
-            Self::RectMicro(11, 27) => Ok(10),
-            Self::RectMicro(11, 43) => Ok(11),
-            Self::RectMicro(11, 59) => Ok(12),
-            Self::RectMicro(11, 77) => Ok(13),
-            Self::RectMicro(11, 99) => Ok(14),
-            Self::RectMicro(11, 139) => Ok(15),
-            Self::RectMicro(13, 27) => Ok(16),
-            Self::RectMicro(13, 43) => Ok(17),
-            Self::RectMicro(13, 59) => Ok(18),
-            Self::RectMicro(13, 77) => Ok(19),
-            Self::RectMicro(13, 99) => Ok(20),
-            Self::RectMicro(13, 139) => Ok(21),
-            Self::RectMicro(15, 43) => Ok(22),
-            Self::RectMicro(15, 59) => Ok(23),
-            Self::RectMicro(15, 77) => Ok(24),
-            Self::RectMicro(15, 99) => Ok(25),
-            Self::RectMicro(15, 139) => Ok(26),
-            Self::RectMicro(17, 43) => Ok(27),
-            Self::RectMicro(17, 59) => Ok(28),
-            Self::RectMicro(17, 77) => Ok(29),
-            Self::RectMicro(17, 99) => Ok(30),
-            Self::RectMicro(17, 139) => Ok(31),
-            _ => Err(Error::InvalidVersion),
+        if let Self::RectMicro(v) = self {
+            match v {
+                RectMicroVersion::R7x43 => Ok(0),
+                RectMicroVersion::R7x59 => Ok(1),
+                RectMicroVersion::R7x77 => Ok(2),
+                RectMicroVersion::R7x99 => Ok(3),
+                RectMicroVersion::R7x139 => Ok(4),
+                RectMicroVersion::R9x43 => Ok(5),
+                RectMicroVersion::R9x59 => Ok(6),
+                RectMicroVersion::R9x77 => Ok(7),
+                RectMicroVersion::R9x99 => Ok(8),
+                RectMicroVersion::R9x139 => Ok(9),
+                RectMicroVersion::R11x27 => Ok(10),
+                RectMicroVersion::R11x43 => Ok(11),
+                RectMicroVersion::R11x59 => Ok(12),
+                RectMicroVersion::R11x77 => Ok(13),
+                RectMicroVersion::R11x99 => Ok(14),
+                RectMicroVersion::R11x139 => Ok(15),
+                RectMicroVersion::R13x27 => Ok(16),
+                RectMicroVersion::R13x43 => Ok(17),
+                RectMicroVersion::R13x59 => Ok(18),
+                RectMicroVersion::R13x77 => Ok(19),
+                RectMicroVersion::R13x99 => Ok(20),
+                RectMicroVersion::R13x139 => Ok(21),
+                RectMicroVersion::R15x43 => Ok(22),
+                RectMicroVersion::R15x59 => Ok(23),
+                RectMicroVersion::R15x77 => Ok(24),
+                RectMicroVersion::R15x99 => Ok(25),
+                RectMicroVersion::R15x139 => Ok(26),
+                RectMicroVersion::R17x43 => Ok(27),
+                RectMicroVersion::R17x59 => Ok(28),
+                RectMicroVersion::R17x77 => Ok(29),
+                RectMicroVersion::R17x99 => Ok(30),
+                RectMicroVersion::R17x139 => Ok(31),
+            }
+        } else {
+            Err(Error::InvalidVersion)
         }
     }
 
     /// Gets the index in ascending order of width.
     pub(crate) const fn rect_micro_width_index(self) -> Result<usize> {
-        match self {
-            Self::RectMicro(_, 27) => Ok(0),
-            Self::RectMicro(_, 43) => Ok(1),
-            Self::RectMicro(_, 59) => Ok(2),
-            Self::RectMicro(_, 77) => Ok(3),
-            Self::RectMicro(_, 99) => Ok(4),
-            Self::RectMicro(_, 139) => Ok(5),
-            _ => Err(Error::InvalidVersion),
+        if let Self::RectMicro(v) = self {
+            match v {
+                RectMicroVersion::R11x27 | RectMicroVersion::R13x27 => Ok(0),
+                RectMicroVersion::R7x43
+                | RectMicroVersion::R9x43
+                | RectMicroVersion::R11x43
+                | RectMicroVersion::R13x43
+                | RectMicroVersion::R15x43
+                | RectMicroVersion::R17x43 => Ok(1),
+                RectMicroVersion::R7x59
+                | RectMicroVersion::R9x59
+                | RectMicroVersion::R11x59
+                | RectMicroVersion::R13x59
+                | RectMicroVersion::R15x59
+                | RectMicroVersion::R17x59 => Ok(2),
+                RectMicroVersion::R7x77
+                | RectMicroVersion::R9x77
+                | RectMicroVersion::R11x77
+                | RectMicroVersion::R13x77
+                | RectMicroVersion::R15x77
+                | RectMicroVersion::R17x77 => Ok(3),
+                RectMicroVersion::R7x99
+                | RectMicroVersion::R9x99
+                | RectMicroVersion::R11x99
+                | RectMicroVersion::R13x99
+                | RectMicroVersion::R15x99
+                | RectMicroVersion::R17x99 => Ok(4),
+                RectMicroVersion::R7x139
+                | RectMicroVersion::R9x139
+                | RectMicroVersion::R11x139
+                | RectMicroVersion::R13x139
+                | RectMicroVersion::R15x139
+                | RectMicroVersion::R17x139 => Ok(5),
+            }
+        } else {
+            Err(Error::InvalidVersion)
         }
     }
 
     /// All widths of rMQR code.
-    pub(crate) const RMQR_ALL_WIDTH: [i16; 6] = [27, 43, 59, 77, 99, 139];
+    pub(crate) const RMQR_ALL_WIDTH: [u8; 6] = [27, 43, 59, 77, 99, 139];
 
     /// All heights of rMQR code.
-    pub(crate) const RMQR_ALL_HEIGHT: [i16; 6] = [7, 9, 11, 13, 15, 17];
+    pub(crate) const RMQR_ALL_HEIGHT: [u8; 6] = [7, 9, 11, 13, 15, 17];
 }
 
 #[cfg(test)]
