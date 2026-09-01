@@ -22,6 +22,11 @@ pub enum MicroVersion {
     M4,
 }
 
+impl MicroVersion {
+    /// All versions of Micro QR code.
+    pub(crate) const ALL: [Self; 4] = [Self::M1, Self::M2, Self::M3, Self::M4];
+}
+
 impl From<MicroVersion> for u8 {
     fn from(version: MicroVersion) -> Self {
         version as Self
