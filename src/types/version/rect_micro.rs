@@ -228,18 +228,6 @@ mod tests {
     }
 
     #[test]
-    fn try_from_u8_tuple_to_rect_micro_version_with_invalid_version() {
-        assert_eq!(
-            RectMicroVersion::try_from((0, 0)).unwrap_err(),
-            Error::InvalidVersion
-        );
-        assert_eq!(
-            RectMicroVersion::try_from((7, 42)).unwrap_err(),
-            Error::InvalidVersion
-        );
-    }
-
-    #[test]
     fn try_from_u8_tuple_to_rect_micro_version() {
         assert_eq!(
             RectMicroVersion::try_from((7, 43)).unwrap(),
@@ -368,6 +356,18 @@ mod tests {
         assert_eq!(
             RectMicroVersion::try_from((17, 139)).unwrap(),
             RectMicroVersion::R17x139
+        );
+    }
+
+    #[test]
+    fn try_from_u8_tuple_to_rect_micro_version_with_invalid_version() {
+        assert_eq!(
+            RectMicroVersion::try_from((0, 0)).unwrap_err(),
+            Error::InvalidVersion
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((u8::MAX, u8::MAX)).unwrap_err(),
+            Error::InvalidVersion
         );
     }
 }
