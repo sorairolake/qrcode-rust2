@@ -247,7 +247,7 @@ mod tests {
                     end: 10,
                 },
             ],
-            Version::Normal(1),
+            Version::Normal(NormalVersion::V1),
         );
     }
 
@@ -293,7 +293,7 @@ mod tests {
                     end: 38,
                 },
             ],
-            Version::Normal(9),
+            Version::Normal(NormalVersion::V9),
         );
     }
 
@@ -358,7 +358,7 @@ mod tests {
                     end: 11,
                 },
             ],
-            Version::Normal(1),
+            Version::Normal(NormalVersion::V1),
         );
     }
 
@@ -389,7 +389,7 @@ mod tests {
                     end: 11,
                 },
             ],
-            Version::RectMicro(17, 139),
+            Version::RectMicro(RectMicroVersion::R17x139),
         );
     }
 
@@ -420,7 +420,7 @@ mod tests {
                     end: 4,
                 },
             ],
-            Version::Micro(2),
+            Version::Micro(MicroVersion::M2),
         );
     }
 
@@ -444,7 +444,7 @@ mod tests {
                 begin: 0,
                 end: 4,
             }],
-            Version::Micro(2),
+            Version::Micro(MicroVersion::M2),
         );
     }
 
@@ -468,7 +468,7 @@ mod tests {
                 begin: 0,
                 end: 4,
             }],
-            Version::Micro(3),
+            Version::Micro(MicroVersion::M3),
         );
     }
 
@@ -481,7 +481,7 @@ mod tests {
     #[test]
     fn single_mode_baseline_micro_qr() {
         let data = b"9BA3935DM3TBE4";
-        let version = Version::Micro(3);
+        let version = Version::Micro(MicroVersion::M3);
 
         // Greedy alone overruns the M3-L 84-bit capacity.
         let greedy = Optimizer::new(
@@ -555,7 +555,11 @@ mod tests {
             b"foo BAR 123 baz 456",
         ];
         for &data in INPUTS {
-            for version in [Version::Normal(1), Version::Micro(3), Version::Micro(4)] {
+            for version in [
+                Version::Normal(NormalVersion::V1),
+                Version::Micro(MicroVersion::M3),
+                Version::Micro(MicroVersion::M4),
+            ] {
                 let parsed = Parser::new(data).collect::<Vec<_>>();
                 let opt = optimize(data, version);
                 let opt_len = total_encoded_len(&opt, version);
@@ -590,7 +594,7 @@ mod tests {
         // Greedy over-splits and overruns; the optimum is one alphanumeric
         // segment.
         let data = b"9BA3935DM3TBE4";
-        let version = Version::Micro(3);
+        let version = Version::Micro(MicroVersion::M3);
         let parsed = Parser::new(data).collect::<Vec<_>>();
         let greedy = Optimizer::new(parsed.iter().copied(), version).collect::<Vec<_>>();
         assert!(
@@ -601,7 +605,7 @@ mod tests {
         // A long numeric run: the single alphanumeric segment is far from
         // optimal.
         let data = b"AB000000000000000000CD";
-        let version = Version::Normal(1);
+        let version = Version::Normal(NormalVersion::V1);
         let parsed = Parser::new(data).collect::<Vec<_>>();
         let single_mode = parsed.iter().map(|s| s.mode).reduce(Mode::max).unwrap();
         let single = Segment {
