@@ -39,39 +39,65 @@ impl Mode {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, types::Mode};
+    /// use qrcode2::{NormalVersion, Version, types::Mode};
     ///
-    /// assert_eq!(Mode::Numeric.length_bits_count(Version::Normal(1)), 10);
+    /// assert_eq!(Mode::Numeric.length_bits_count(Version::Normal(NormalVersion::V1)), 10);
     /// ```
     #[must_use]
     pub fn length_bits_count(self, version: Version) -> usize {
         match version {
             Version::Micro(a) => {
-                let a = a.as_usize();
+                let a = u8::from(a).as_usize();
                 match self {
                     Self::Numeric => 2 + a,
                     Self::Alphanumeric | Self::Byte => 1 + a,
                     Self::Kanji => a,
                 }
             }
-            Version::Normal(1..=9) => match self {
-                Self::Numeric => 10,
-                Self::Alphanumeric => 9,
-                Self::Byte | Self::Kanji => 8,
+            Version::Normal(a) => match a {
+                NormalVersion::V1
+                | NormalVersion::V2
+                | NormalVersion::V3
+                | NormalVersion::V4
+                | NormalVersion::V5
+                | NormalVersion::V6
+                | NormalVersion::V7
+                | NormalVersion::V8
+                | NormalVersion::V9 => match self {
+                    Self::Numeric => 10,
+                    Self::Alphanumeric => 9,
+                    Self::Byte | Self::Kanji => 8,
+                },
+                NormalVersion::V10
+                | NormalVersion::V11
+                | NormalVersion::V12
+                | NormalVersion::V13
+                | NormalVersion::V14
+                | NormalVersion::V15
+                | NormalVersion::V16
+                | NormalVersion::V17
+                | NormalVersion::V18
+                | NormalVersion::V19
+                | NormalVersion::V20
+                | NormalVersion::V21
+                | NormalVersion::V22
+                | NormalVersion::V23
+                | NormalVersion::V24
+                | NormalVersion::V25
+                | NormalVersion::V26 => match self {
+                    Self::Numeric => 12,
+                    Self::Alphanumeric => 11,
+                    Self::Byte => 16,
+                    Self::Kanji => 10,
+                },
+                _ => match self {
+                    Self::Numeric => 14,
+                    Self::Alphanumeric => 13,
+                    Self::Byte => 16,
+                    Self::Kanji => 12,
+                },
             },
-            Version::Normal(10..=26) => match self {
-                Self::Numeric => 12,
-                Self::Alphanumeric => 11,
-                Self::Byte => 16,
-                Self::Kanji => 10,
-            },
-            Version::Normal(_) => match self {
-                Self::Numeric => 14,
-                Self::Alphanumeric => 13,
-                Self::Byte => 16,
-                Self::Kanji => 12,
-            },
-            Version::RectMicro(..) => {
+            Version::RectMicro(_) => {
                 let index = version.rect_micro_index().unwrap_or(31);
                 match self {
                     Self::Numeric => RMQR_LENGTH_BITS_COUNT[index][0],
