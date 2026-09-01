@@ -77,8 +77,8 @@ impl Mode {
                     }
                 }
             }
-            Version::RectMicro(_) => {
-                let index = version.rect_micro_index().unwrap_or(31);
+            Version::RectMicro(a) => {
+                let index = a.index();
                 match self {
                     Self::Numeric => RMQR_LENGTH_BITS_COUNT[index][0],
                     Self::Alphanumeric => RMQR_LENGTH_BITS_COUNT[index][1],
