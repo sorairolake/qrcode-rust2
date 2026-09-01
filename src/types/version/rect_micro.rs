@@ -107,7 +107,7 @@ pub enum RectMicroVersion {
 }
 
 impl RectMicroVersion {
-    /// All versions of rMQR code, sorted by width.
+    /// All versions of rMQR code, ordered by width.
     pub(crate) const ALL_BY_WIDTH: [Self; 32] = [
         Self::R11x27,
         Self::R13x27,
