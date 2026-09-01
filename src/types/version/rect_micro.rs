@@ -10,7 +10,7 @@ use crate::error::Error;
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum RectMicroVersion {
     /// A 7×43 rMQR code symbol.
-    R7x43 = 1,
+    R7x43,
 
     /// A 7×59 rMQR code symbol.
     R7x59,
@@ -184,5 +184,190 @@ impl TryFrom<(u8, u8)> for RectMicroVersion {
             (17, 139) => Ok(Self::R17x139),
             _ => Err(Error::InvalidVersion),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn from_rect_micro_version_to_u8_tuple() {
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R7x43), (7, 43));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R7x59), (7, 59));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R7x77), (7, 77));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R7x99), (7, 99));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R7x139), (7, 139));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R9x43), (9, 43));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R9x59), (9, 59));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R9x77), (9, 77));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R9x99), (9, 99));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R9x139), (9, 139));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R11x27), (11, 27));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R11x43), (11, 43));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R11x59), (11, 59));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R11x77), (11, 77));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R11x99), (11, 99));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R11x139), (11, 139));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R13x27), (13, 27));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R13x43), (13, 43));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R13x59), (13, 59));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R13x77), (13, 77));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R13x99), (13, 99));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R13x139), (13, 139));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R15x43), (15, 43));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R15x59), (15, 59));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R15x77), (15, 77));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R15x99), (15, 99));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R15x139), (15, 139));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R17x43), (17, 43));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R17x59), (17, 59));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R17x77), (17, 77));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R17x99), (17, 99));
+        assert_eq!(<(u8, u8)>::from(RectMicroVersion::R17x139), (17, 139));
+    }
+
+    #[test]
+    fn try_from_u8_tuple_to_rect_micro_version_with_invalid_version() {
+        assert_eq!(
+            RectMicroVersion::try_from((0, 0)).unwrap_err(),
+            Error::InvalidVersion
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((7, 42)).unwrap_err(),
+            Error::InvalidVersion
+        );
+    }
+
+    #[test]
+    fn try_from_u8_tuple_to_rect_micro_version() {
+        assert_eq!(
+            RectMicroVersion::try_from((7, 43)).unwrap(),
+            RectMicroVersion::R7x43
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((7, 59)).unwrap(),
+            RectMicroVersion::R7x59
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((7, 77)).unwrap(),
+            RectMicroVersion::R7x77
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((7, 99)).unwrap(),
+            RectMicroVersion::R7x99
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((7, 139)).unwrap(),
+            RectMicroVersion::R7x139
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((9, 43)).unwrap(),
+            RectMicroVersion::R9x43
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((9, 59)).unwrap(),
+            RectMicroVersion::R9x59
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((9, 77)).unwrap(),
+            RectMicroVersion::R9x77
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((9, 99)).unwrap(),
+            RectMicroVersion::R9x99
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((9, 139)).unwrap(),
+            RectMicroVersion::R9x139
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((11, 27)).unwrap(),
+            RectMicroVersion::R11x27
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((11, 43)).unwrap(),
+            RectMicroVersion::R11x43
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((11, 59)).unwrap(),
+            RectMicroVersion::R11x59
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((11, 77)).unwrap(),
+            RectMicroVersion::R11x77
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((11, 99)).unwrap(),
+            RectMicroVersion::R11x99
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((11, 139)).unwrap(),
+            RectMicroVersion::R11x139
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((13, 27)).unwrap(),
+            RectMicroVersion::R13x27
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((13, 43)).unwrap(),
+            RectMicroVersion::R13x43
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((13, 59)).unwrap(),
+            RectMicroVersion::R13x59
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((13, 77)).unwrap(),
+            RectMicroVersion::R13x77
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((13, 99)).unwrap(),
+            RectMicroVersion::R13x99
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((13, 139)).unwrap(),
+            RectMicroVersion::R13x139
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((15, 43)).unwrap(),
+            RectMicroVersion::R15x43
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((15, 59)).unwrap(),
+            RectMicroVersion::R15x59
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((15, 77)).unwrap(),
+            RectMicroVersion::R15x77
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((15, 99)).unwrap(),
+            RectMicroVersion::R15x99
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((15, 139)).unwrap(),
+            RectMicroVersion::R15x139
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((17, 43)).unwrap(),
+            RectMicroVersion::R17x43
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((17, 59)).unwrap(),
+            RectMicroVersion::R17x59
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((17, 77)).unwrap(),
+            RectMicroVersion::R17x77
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((17, 99)).unwrap(),
+            RectMicroVersion::R17x99
+        );
+        assert_eq!(
+            RectMicroVersion::try_from((17, 139)).unwrap(),
+            RectMicroVersion::R17x139
+        );
     }
 }
