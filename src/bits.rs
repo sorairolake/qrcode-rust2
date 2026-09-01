@@ -191,8 +191,7 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] if it is not valid to use the `ec_level` for the given
-    /// version (e.g. [`Version::Micro(1)`](Version::Micro) with
-    /// [`EcLevel::H`]).
+    /// version.
     ///
     /// # Examples
     ///
