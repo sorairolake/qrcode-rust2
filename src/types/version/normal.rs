@@ -235,14 +235,6 @@ mod tests {
     }
 
     #[test]
-    fn try_from_u8_to_normal_version_with_too_small_normal_version() {
-        assert_eq!(
-            NormalVersion::try_from(0).unwrap_err(),
-            Error::InvalidVersion
-        );
-    }
-
-    #[test]
     fn try_from_u8_to_normal_version() {
         assert_eq!(NormalVersion::try_from(1).unwrap(), NormalVersion::V1);
         assert_eq!(NormalVersion::try_from(2).unwrap(), NormalVersion::V2);
@@ -287,7 +279,11 @@ mod tests {
     }
 
     #[test]
-    fn try_from_u8_to_normal_version_with_too_big_normal_version() {
+    fn try_from_u8_to_normal_version_with_invalid_version() {
+        assert_eq!(
+            NormalVersion::try_from(0).unwrap_err(),
+            Error::InvalidVersion
+        );
         assert_eq!(
             NormalVersion::try_from(41).unwrap_err(),
             Error::InvalidVersion
