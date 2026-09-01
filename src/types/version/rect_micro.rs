@@ -146,75 +146,75 @@ impl RectMicroVersion {
     /// Gets the index of the version of the rMQR code.
     pub(crate) const fn index(self) -> usize {
         match self {
-            RectMicroVersion::R7x43 => 0,
-            RectMicroVersion::R7x59 => 1,
-            RectMicroVersion::R7x77 => 2,
-            RectMicroVersion::R7x99 => 3,
-            RectMicroVersion::R7x139 => 4,
-            RectMicroVersion::R9x43 => 5,
-            RectMicroVersion::R9x59 => 6,
-            RectMicroVersion::R9x77 => 7,
-            RectMicroVersion::R9x99 => 8,
-            RectMicroVersion::R9x139 => 9,
-            RectMicroVersion::R11x27 => 10,
-            RectMicroVersion::R11x43 => 11,
-            RectMicroVersion::R11x59 => 12,
-            RectMicroVersion::R11x77 => 13,
-            RectMicroVersion::R11x99 => 14,
-            RectMicroVersion::R11x139 => 15,
-            RectMicroVersion::R13x27 => 16,
-            RectMicroVersion::R13x43 => 17,
-            RectMicroVersion::R13x59 => 18,
-            RectMicroVersion::R13x77 => 19,
-            RectMicroVersion::R13x99 => 20,
-            RectMicroVersion::R13x139 => 21,
-            RectMicroVersion::R15x43 => 22,
-            RectMicroVersion::R15x59 => 23,
-            RectMicroVersion::R15x77 => 24,
-            RectMicroVersion::R15x99 => 25,
-            RectMicroVersion::R15x139 => 26,
-            RectMicroVersion::R17x43 => 27,
-            RectMicroVersion::R17x59 => 28,
-            RectMicroVersion::R17x77 => 29,
-            RectMicroVersion::R17x99 => 30,
-            RectMicroVersion::R17x139 => 31,
+            Self::R7x43 => 0,
+            Self::R7x59 => 1,
+            Self::R7x77 => 2,
+            Self::R7x99 => 3,
+            Self::R7x139 => 4,
+            Self::R9x43 => 5,
+            Self::R9x59 => 6,
+            Self::R9x77 => 7,
+            Self::R9x99 => 8,
+            Self::R9x139 => 9,
+            Self::R11x27 => 10,
+            Self::R11x43 => 11,
+            Self::R11x59 => 12,
+            Self::R11x77 => 13,
+            Self::R11x99 => 14,
+            Self::R11x139 => 15,
+            Self::R13x27 => 16,
+            Self::R13x43 => 17,
+            Self::R13x59 => 18,
+            Self::R13x77 => 19,
+            Self::R13x99 => 20,
+            Self::R13x139 => 21,
+            Self::R15x43 => 22,
+            Self::R15x59 => 23,
+            Self::R15x77 => 24,
+            Self::R15x99 => 25,
+            Self::R15x139 => 26,
+            Self::R17x43 => 27,
+            Self::R17x59 => 28,
+            Self::R17x77 => 29,
+            Self::R17x99 => 30,
+            Self::R17x139 => 31,
         }
     }
 
     /// Gets the index in ascending order of width.
     pub(crate) const fn width_index(self) -> usize {
         match self {
-            RectMicroVersion::R11x27 | RectMicroVersion::R13x27 => 0,
-            RectMicroVersion::R7x43
-            | RectMicroVersion::R9x43
-            | RectMicroVersion::R11x43
-            | RectMicroVersion::R13x43
-            | RectMicroVersion::R15x43
-            | RectMicroVersion::R17x43 => 1,
-            RectMicroVersion::R7x59
-            | RectMicroVersion::R9x59
-            | RectMicroVersion::R11x59
-            | RectMicroVersion::R13x59
-            | RectMicroVersion::R15x59
-            | RectMicroVersion::R17x59 => 2,
-            RectMicroVersion::R7x77
-            | RectMicroVersion::R9x77
-            | RectMicroVersion::R11x77
-            | RectMicroVersion::R13x77
-            | RectMicroVersion::R15x77
-            | RectMicroVersion::R17x77 => 3,
-            RectMicroVersion::R7x99
-            | RectMicroVersion::R9x99
-            | RectMicroVersion::R11x99
-            | RectMicroVersion::R13x99
-            | RectMicroVersion::R15x99
-            | RectMicroVersion::R17x99 => 4,
-            RectMicroVersion::R7x139
-            | RectMicroVersion::R9x139
-            | RectMicroVersion::R11x139
-            | RectMicroVersion::R13x139
-            | RectMicroVersion::R15x139
-            | RectMicroVersion::R17x139 => 5,
+            Self::R11x27 | Self::R13x27 => 0,
+            Self::R7x43
+            | Self::R9x43
+            | Self::R11x43
+            | Self::R13x43
+            | Self::R15x43
+            | Self::R17x43 => 1,
+            Self::R7x59
+            | Self::R9x59
+            | Self::R11x59
+            | Self::R13x59
+            | Self::R15x59
+            | Self::R17x59 => 2,
+            Self::R7x77
+            | Self::R9x77
+            | Self::R11x77
+            | Self::R13x77
+            | Self::R15x77
+            | Self::R17x77 => 3,
+            Self::R7x99
+            | Self::R9x99
+            | Self::R11x99
+            | Self::R13x99
+            | Self::R15x99
+            | Self::R17x99 => 4,
+            Self::R7x139
+            | Self::R9x139
+            | Self::R11x139
+            | Self::R13x139
+            | Self::R15x139
+            | Self::R17x139 => 5,
         }
     }
 }
