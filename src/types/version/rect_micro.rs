@@ -145,7 +145,7 @@ impl From<RectMicroVersion> for (u8, u8) {
     }
 }
 
-impl TryFrom<(u8, u8)> for NormalVersion {
+impl TryFrom<(u8, u8)> for RectMicroVersion {
     type Error = Error;
 
     fn try_from(version: (u8, u8)) -> Result<Self, Self::Error> {
