@@ -67,8 +67,8 @@ impl Canvas {
 
     /// Draws the alignment patterns in rMQR code.
     pub(super) fn draw_alignment_patterns_rmqr(&mut self) {
-        if self.version.is_rect_micro() {
-            let index = self.version.rect_micro_width_index().unwrap() + 34;
+        if let Version::RectMicro(v) = self.version {
+            let index = v.width_index() + 34;
             let x_positons = ALIGNMENT_PATTERN_POSITIONS[index];
             for x in x_positons {
                 self.draw_alignment_pattern_rmqr_at(*x, 1);
