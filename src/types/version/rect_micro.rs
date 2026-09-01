@@ -142,6 +142,81 @@ impl RectMicroVersion {
         Self::R15x139,
         Self::R17x139,
     ];
+
+    /// Gets the index of the version of the rMQR code.
+    pub(crate) const fn index(self) -> usize {
+        match self {
+            RectMicroVersion::R7x43 => 0,
+            RectMicroVersion::R7x59 => 1,
+            RectMicroVersion::R7x77 => 2,
+            RectMicroVersion::R7x99 => 3,
+            RectMicroVersion::R7x139 => 4,
+            RectMicroVersion::R9x43 => 5,
+            RectMicroVersion::R9x59 => 6,
+            RectMicroVersion::R9x77 => 7,
+            RectMicroVersion::R9x99 => 8,
+            RectMicroVersion::R9x139 => 9,
+            RectMicroVersion::R11x27 => 10,
+            RectMicroVersion::R11x43 => 11,
+            RectMicroVersion::R11x59 => 12,
+            RectMicroVersion::R11x77 => 13,
+            RectMicroVersion::R11x99 => 14,
+            RectMicroVersion::R11x139 => 15,
+            RectMicroVersion::R13x27 => 16,
+            RectMicroVersion::R13x43 => 17,
+            RectMicroVersion::R13x59 => 18,
+            RectMicroVersion::R13x77 => 19,
+            RectMicroVersion::R13x99 => 20,
+            RectMicroVersion::R13x139 => 21,
+            RectMicroVersion::R15x43 => 22,
+            RectMicroVersion::R15x59 => 23,
+            RectMicroVersion::R15x77 => 24,
+            RectMicroVersion::R15x99 => 25,
+            RectMicroVersion::R15x139 => 26,
+            RectMicroVersion::R17x43 => 27,
+            RectMicroVersion::R17x59 => 28,
+            RectMicroVersion::R17x77 => 29,
+            RectMicroVersion::R17x99 => 30,
+            RectMicroVersion::R17x139 => 31,
+        }
+    }
+
+    /// Gets the index in ascending order of width.
+    pub(crate) const fn width_index(self) -> usize {
+        match self {
+            RectMicroVersion::R11x27 | RectMicroVersion::R13x27 => 0,
+            RectMicroVersion::R7x43
+            | RectMicroVersion::R9x43
+            | RectMicroVersion::R11x43
+            | RectMicroVersion::R13x43
+            | RectMicroVersion::R15x43
+            | RectMicroVersion::R17x43 => 1,
+            RectMicroVersion::R7x59
+            | RectMicroVersion::R9x59
+            | RectMicroVersion::R11x59
+            | RectMicroVersion::R13x59
+            | RectMicroVersion::R15x59
+            | RectMicroVersion::R17x59 => 2,
+            RectMicroVersion::R7x77
+            | RectMicroVersion::R9x77
+            | RectMicroVersion::R11x77
+            | RectMicroVersion::R13x77
+            | RectMicroVersion::R15x77
+            | RectMicroVersion::R17x77 => 3,
+            RectMicroVersion::R7x99
+            | RectMicroVersion::R9x99
+            | RectMicroVersion::R11x99
+            | RectMicroVersion::R13x99
+            | RectMicroVersion::R15x99
+            | RectMicroVersion::R17x99 => 4,
+            RectMicroVersion::R7x139
+            | RectMicroVersion::R9x139
+            | RectMicroVersion::R11x139
+            | RectMicroVersion::R13x139
+            | RectMicroVersion::R15x139
+            | RectMicroVersion::R17x139 => 5,
+        }
+    }
 }
 
 impl From<RectMicroVersion> for (u8, u8) {
@@ -409,3 +484,4 @@ mod tests {
         );
     }
 }
+
