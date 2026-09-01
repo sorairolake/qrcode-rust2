@@ -185,3 +185,116 @@ impl TryFrom<u8> for NormalVersion {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn from_normal_version_to_u8() {
+        assert_eq!(u8::from(NormalVersion::V1), 1);
+        assert_eq!(u8::from(NormalVersion::V2), 2);
+        assert_eq!(u8::from(NormalVersion::V3), 3);
+        assert_eq!(u8::from(NormalVersion::V4), 4);
+        assert_eq!(u8::from(NormalVersion::V5), 5);
+        assert_eq!(u8::from(NormalVersion::V6), 6);
+        assert_eq!(u8::from(NormalVersion::V7), 7);
+        assert_eq!(u8::from(NormalVersion::V8), 8);
+        assert_eq!(u8::from(NormalVersion::V9), 9);
+        assert_eq!(u8::from(NormalVersion::V10), 10);
+        assert_eq!(u8::from(NormalVersion::V11), 11);
+        assert_eq!(u8::from(NormalVersion::V12), 12);
+        assert_eq!(u8::from(NormalVersion::V13), 13);
+        assert_eq!(u8::from(NormalVersion::V14), 14);
+        assert_eq!(u8::from(NormalVersion::V15), 15);
+        assert_eq!(u8::from(NormalVersion::V16), 16);
+        assert_eq!(u8::from(NormalVersion::V17), 17);
+        assert_eq!(u8::from(NormalVersion::V18), 18);
+        assert_eq!(u8::from(NormalVersion::V19), 19);
+        assert_eq!(u8::from(NormalVersion::V20), 20);
+        assert_eq!(u8::from(NormalVersion::V21), 21);
+        assert_eq!(u8::from(NormalVersion::V22), 22);
+        assert_eq!(u8::from(NormalVersion::V23), 23);
+        assert_eq!(u8::from(NormalVersion::V24), 24);
+        assert_eq!(u8::from(NormalVersion::V25), 25);
+        assert_eq!(u8::from(NormalVersion::V26), 26);
+        assert_eq!(u8::from(NormalVersion::V27), 27);
+        assert_eq!(u8::from(NormalVersion::V28), 28);
+        assert_eq!(u8::from(NormalVersion::V29), 29);
+        assert_eq!(u8::from(NormalVersion::V30), 30);
+        assert_eq!(u8::from(NormalVersion::V31), 31);
+        assert_eq!(u8::from(NormalVersion::V32), 32);
+        assert_eq!(u8::from(NormalVersion::V33), 33);
+        assert_eq!(u8::from(NormalVersion::V34), 34);
+        assert_eq!(u8::from(NormalVersion::V35), 35);
+        assert_eq!(u8::from(NormalVersion::V36), 36);
+        assert_eq!(u8::from(NormalVersion::V37), 37);
+        assert_eq!(u8::from(NormalVersion::V38), 38);
+        assert_eq!(u8::from(NormalVersion::V39), 39);
+        assert_eq!(u8::from(NormalVersion::V40), 40);
+    }
+
+    #[test]
+    fn try_from_u8_to_normal_version_with_too_small_normal_version() {
+        assert_eq!(
+            NormalVersion::try_from(0).unwrap_err(),
+            Error::InvalidVersion
+        );
+    }
+
+    #[test]
+    fn try_from_u8_to_normal_version() {
+        assert_eq!(NormalVersion::try_from(1).unwrap(), NormalVersion::V1);
+        assert_eq!(NormalVersion::try_from(2).unwrap(), NormalVersion::V2);
+        assert_eq!(NormalVersion::try_from(3).unwrap(), NormalVersion::V3);
+        assert_eq!(NormalVersion::try_from(4).unwrap(), NormalVersion::V4);
+        assert_eq!(NormalVersion::try_from(5).unwrap(), NormalVersion::V5);
+        assert_eq!(NormalVersion::try_from(6).unwrap(), NormalVersion::V6);
+        assert_eq!(NormalVersion::try_from(7).unwrap(), NormalVersion::V7);
+        assert_eq!(NormalVersion::try_from(8).unwrap(), NormalVersion::V8);
+        assert_eq!(NormalVersion::try_from(9).unwrap(), NormalVersion::V9);
+        assert_eq!(NormalVersion::try_from(10).unwrap(), NormalVersion::V10);
+        assert_eq!(NormalVersion::try_from(11).unwrap(), NormalVersion::V11);
+        assert_eq!(NormalVersion::try_from(12).unwrap(), NormalVersion::V12);
+        assert_eq!(NormalVersion::try_from(13).unwrap(), NormalVersion::V13);
+        assert_eq!(NormalVersion::try_from(14).unwrap(), NormalVersion::V14);
+        assert_eq!(NormalVersion::try_from(15).unwrap(), NormalVersion::V15);
+        assert_eq!(NormalVersion::try_from(16).unwrap(), NormalVersion::V16);
+        assert_eq!(NormalVersion::try_from(17).unwrap(), NormalVersion::V17);
+        assert_eq!(NormalVersion::try_from(18).unwrap(), NormalVersion::V18);
+        assert_eq!(NormalVersion::try_from(19).unwrap(), NormalVersion::V19);
+        assert_eq!(NormalVersion::try_from(20).unwrap(), NormalVersion::V20);
+        assert_eq!(NormalVersion::try_from(21).unwrap(), NormalVersion::V21);
+        assert_eq!(NormalVersion::try_from(22).unwrap(), NormalVersion::V22);
+        assert_eq!(NormalVersion::try_from(23).unwrap(), NormalVersion::V23);
+        assert_eq!(NormalVersion::try_from(24).unwrap(), NormalVersion::V24);
+        assert_eq!(NormalVersion::try_from(25).unwrap(), NormalVersion::V25);
+        assert_eq!(NormalVersion::try_from(26).unwrap(), NormalVersion::V26);
+        assert_eq!(NormalVersion::try_from(27).unwrap(), NormalVersion::V27);
+        assert_eq!(NormalVersion::try_from(28).unwrap(), NormalVersion::V28);
+        assert_eq!(NormalVersion::try_from(29).unwrap(), NormalVersion::V29);
+        assert_eq!(NormalVersion::try_from(30).unwrap(), NormalVersion::V30);
+        assert_eq!(NormalVersion::try_from(31).unwrap(), NormalVersion::V31);
+        assert_eq!(NormalVersion::try_from(32).unwrap(), NormalVersion::V32);
+        assert_eq!(NormalVersion::try_from(33).unwrap(), NormalVersion::V33);
+        assert_eq!(NormalVersion::try_from(34).unwrap(), NormalVersion::V34);
+        assert_eq!(NormalVersion::try_from(35).unwrap(), NormalVersion::V35);
+        assert_eq!(NormalVersion::try_from(36).unwrap(), NormalVersion::V36);
+        assert_eq!(NormalVersion::try_from(37).unwrap(), NormalVersion::V37);
+        assert_eq!(NormalVersion::try_from(38).unwrap(), NormalVersion::V38);
+        assert_eq!(NormalVersion::try_from(39).unwrap(), NormalVersion::V39);
+        assert_eq!(NormalVersion::try_from(40).unwrap(), NormalVersion::V40);
+    }
+
+    #[test]
+    fn try_from_u8_to_normal_version_with_too_big_normal_version() {
+        assert_eq!(
+            NormalVersion::try_from(41).unwrap_err(),
+            Error::InvalidVersion
+        );
+        assert_eq!(
+            NormalVersion::try_from(u8::MAX).unwrap_err(),
+            Error::InvalidVersion
+        );
+    }
+}
