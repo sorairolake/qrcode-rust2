@@ -4,11 +4,13 @@
 
 //! Implementation of [`NormalVersion`].
 
+use crate::error::Error;
+
 /// `NormalVersion` is a type that represents a normal QR code version.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum NormalVersion {
     /// A 21×21 normal QR code symbol.
-    V1,
+    V1 = 1,
 
     /// A 25×25 normal QR code symbol.
     V2,
@@ -126,4 +128,60 @@ pub enum NormalVersion {
 
     /// A 177×177 normal QR code symbol.
     V40,
+}
+
+impl From<NormalVersion> for u8 {
+    fn from(version: NormalVersion) -> Self {
+        version as Self
+    }
+}
+
+impl TryFrom<u8> for NormalVersion {
+    type Error = Error;
+
+    fn try_from(version: u8) -> Result<Self, Self::Error> {
+        match version {
+            1 => Ok(Self::V1),
+            2 => Ok(Self::V2),
+            3 => Ok(Self::V3),
+            4 => Ok(Self::V4),
+            5 => Ok(Self::V5),
+            6 => Ok(Self::V6),
+            7 => Ok(Self::V7),
+            8 => Ok(Self::V8),
+            9 => Ok(Self::V9),
+            10 => Ok(Self::V10),
+            11 => Ok(Self::V11),
+            12 => Ok(Self::V12),
+            13 => Ok(Self::V13),
+            14 => Ok(Self::V14),
+            15 => Ok(Self::V15),
+            16 => Ok(Self::V16),
+            17 => Ok(Self::V17),
+            18 => Ok(Self::V18),
+            19 => Ok(Self::V19),
+            20 => Ok(Self::V20),
+            21 => Ok(Self::V21),
+            22 => Ok(Self::V22),
+            23 => Ok(Self::V23),
+            24 => Ok(Self::V24),
+            25 => Ok(Self::V25),
+            26 => Ok(Self::V26),
+            27 => Ok(Self::V27),
+            28 => Ok(Self::V28),
+            29 => Ok(Self::V29),
+            30 => Ok(Self::V30),
+            31 => Ok(Self::V31),
+            32 => Ok(Self::V32),
+            33 => Ok(Self::V33),
+            34 => Ok(Self::V34),
+            35 => Ok(Self::V35),
+            36 => Ok(Self::V36),
+            37 => Ok(Self::V37),
+            38 => Ok(Self::V38),
+            39 => Ok(Self::V39),
+            40 => Ok(Self::V40),
+            _ => Err(Error::InvalidVersion),
+        }
+    }
 }
