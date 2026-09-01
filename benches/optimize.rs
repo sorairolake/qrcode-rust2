@@ -7,12 +7,12 @@
 extern crate test;
 
 use qrcode2::{
-    Version,
+    NormalVersion, Version,
     optimize::{self, Parser},
 };
 use test::{Bencher, black_box};
 
-const VERSION: Version = Version::Normal(40);
+const VERSION: Version = Version::Normal(NormalVersion::V40);
 
 /// Worst case for the run-boundary DP: every character is its own run, so the
 /// run count `k` equals the input length `n` and the DP does `O(k^2)` work.
