@@ -291,12 +291,6 @@ impl Version {
             Err(Error::InvalidVersion)
         }
     }
-
-    /// All widths of rMQR code.
-    pub(crate) const RMQR_ALL_WIDTH: [u8; 6] = [27, 43, 59, 77, 99, 139];
-
-    /// All heights of rMQR code.
-    pub(crate) const RMQR_ALL_HEIGHT: [u8; 6] = [7, 9, 11, 13, 15, 17];
 }
 
 #[cfg(test)]
