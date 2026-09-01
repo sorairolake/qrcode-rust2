@@ -88,7 +88,11 @@ impl Canvas {
             );
         }
 
-        let position_index = self.version.rect_micro_width_index().unwrap() + 34;
+        let position_index = if let Version::RectMicro(v) = self.version {
+            v.width_index() + 34
+        } else {
+            unreachable!();
+        };
         for x in ALIGNMENT_PATTERN_POSITIONS[position_index] {
             self.draw_line(*x, 3, *x, height - 4, Color::Dark, Color::Light);
         }
