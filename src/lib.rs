@@ -76,7 +76,7 @@ use crate::{
 };
 pub use crate::{
     error::{Error, Result},
-    types::{Color, EcLevel, Version},
+    types::{Color, EcLevel, MicroVersion, NormalVersion, RectMicroVersion, Version},
 };
 
 /// The encoded QR code symbol.
