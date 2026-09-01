@@ -6,6 +6,11 @@
 
 //! Implementation of [`Version`].
 
+mod micro;
+mod normal;
+mod rect_micro;
+
+pub use self::{micro::MicroVersion, normal::NormalVersion, rect_micro::RectMicroVersion};
 use super::EcLevel;
 use crate::{
     cast::As,
