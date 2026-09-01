@@ -22,23 +22,13 @@ use crate::{
 /// more information.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Version {
-    /// A normal QR code version. The parameter should be between 1 and 40. The
-    /// smallest version is `Version::Normal(1)` of size 21×21, and the largest
-    /// is `Version::Normal(40)` of size 177×177.
+    /// A normal QR code version.
     Normal(i16),
 
-    /// A Micro QR code version. The parameter should be between 1 and 4. The
-    /// smallest version is `Version::Micro(1)` of size 11×11, and the largest
-    /// is `Version::Micro(4)` of size 17×17.
+    /// A Micro QR code version.
     Micro(i16),
 
-    /// A rMQR code version. The first parameter represents the height and
-    /// should be 7, 9, 11, 13, 15, or 17. The second parameter represents the
-    /// width and should be 27, 43, 59, 77, 99, or 139. 27 can only be used with
-    /// 11, or 13. The smallest versions are `Version::RectMicro(7, 43)` of size
-    /// 7×43 when the height is minimum and `Version::RectMicro(11, 27)` of size
-    /// 11×27 when the width is minimum, and the largest is
-    /// `Version::RectMicro(17, 139)` of size 17×139.
+    /// A rMQR code version.
     RectMicro(i16, i16),
 }
 
