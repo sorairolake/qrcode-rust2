@@ -16,7 +16,7 @@ use crate::{
     cast::As,
     error::{Error, Result},
     optimize::{self, Parser, Segment},
-    types::{EcLevel, Version},
+    types::{EcLevel, MicroVersion, NormalVersion, RectMicroVersion, Version},
 };
 
 #[expect(clippy::missing_panics_doc)]
@@ -33,16 +33,21 @@ use crate::{
 /// # Examples
 ///
 /// ```
-/// use qrcode2::{EcLevel, Version, bits};
+/// use qrcode2::{EcLevel, NormalVersion, Version, bits};
 ///
 /// let bits = bits::encode_auto(b"Hello, world!", EcLevel::M).unwrap();
-/// assert_eq!(bits.version(), Version::Normal(1));
+/// assert_eq!(bits.version(), Version::Normal(NormalVersion::V1));
 /// ```
 pub fn encode_auto(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
-    for version in &[Version::Normal(9), Version::Normal(26), Version::Normal(40)] {
-        let opt_segments = optimize::optimize_segments(&segments, *version);
-        let total_len = optimize::total_encoded_len(&opt_segments, *version);
+    let versions = [
+        Version::Normal(NormalVersion::V9),
+        Version::Normal(NormalVersion::V26),
+        Version::Normal(NormalVersion::V40),
+    ];
+    for version in versions {
+        let opt_segments = optimize::optimize_segments(&segments, version);
+        let total_len = optimize::total_encoded_len(&opt_segments, version);
         let data_capacity = version.fetch(ec_level, &DATA_LENGTHS).unwrap();
         if total_len <= data_capacity {
             let min_version = find_min_version(total_len, ec_level);
@@ -80,7 +85,9 @@ fn find_min_version(length: usize, ec_level: EcLevel) -> Version {
     } else {
         base + 1
     };
-    Version::Normal((base + 1).as_i16())
+    let base = u8::try_from(base).unwrap();
+    let version = NormalVersion::try_from(base + 1).unwrap();
+    Version::Normal(version)
 }
 
 #[cfg(test)]
@@ -89,31 +96,52 @@ mod encode_auto_tests {
 
     #[test]
     fn find_min_version_works() {
-        assert_eq!(find_min_version(60, EcLevel::L), Version::Normal(1));
-        assert_eq!(find_min_version(200, EcLevel::L), Version::Normal(2));
-        assert_eq!(find_min_version(200, EcLevel::H), Version::Normal(3));
-        assert_eq!(find_min_version(20000, EcLevel::L), Version::Normal(37));
-        assert_eq!(find_min_version(640, EcLevel::L), Version::Normal(4));
-        assert_eq!(find_min_version(641, EcLevel::L), Version::Normal(5));
-        assert_eq!(find_min_version(999_999, EcLevel::H), Version::Normal(40));
+        assert_eq!(
+            find_min_version(60, EcLevel::L),
+            Version::Normal(NormalVersion::V1)
+        );
+        assert_eq!(
+            find_min_version(200, EcLevel::L),
+            Version::Normal(NormalVersion::V2)
+        );
+        assert_eq!(
+            find_min_version(200, EcLevel::H),
+            Version::Normal(NormalVersion::V3)
+        );
+        assert_eq!(
+            find_min_version(20000, EcLevel::L),
+            Version::Normal(NormalVersion::V37)
+        );
+        assert_eq!(
+            find_min_version(640, EcLevel::L),
+            Version::Normal(NormalVersion::V4)
+        );
+        assert_eq!(
+            find_min_version(641, EcLevel::L),
+            Version::Normal(NormalVersion::V5)
+        );
+        assert_eq!(
+            find_min_version(999_999, EcLevel::H),
+            Version::Normal(NormalVersion::V40)
+        );
     }
 
     #[test]
     fn alpha_q() {
         let bits = encode_auto(b"HELLO WORLD", EcLevel::Q).unwrap();
-        assert_eq!(bits.version(), Version::Normal(1));
+        assert_eq!(bits.version(), Version::Normal(NormalVersion::V1));
     }
 
     #[test]
     fn alpha_h() {
         let bits = encode_auto(b"HELLO WORLD", EcLevel::H).unwrap();
-        assert_eq!(bits.version(), Version::Normal(2));
+        assert_eq!(bits.version(), Version::Normal(NormalVersion::V2));
     }
 
     #[test]
     fn mixed() {
         let bits = encode_auto(b"This is a mixed data test. 1234567890", EcLevel::H).unwrap();
-        assert_eq!(bits.version(), Version::Normal(4));
+        assert_eq!(bits.version(), Version::Normal(NormalVersion::V4));
     }
 }
 
@@ -130,16 +158,21 @@ mod encode_auto_tests {
 /// # Examples
 ///
 /// ```
-/// use qrcode2::{EcLevel, Version, bits};
+/// use qrcode2::{EcLevel, MicroVersion, Version, bits};
 ///
 /// let bits = bits::encode_auto_micro(b"Hello, world!", EcLevel::M).unwrap();
-/// assert_eq!(bits.version(), Version::Micro(4));
+/// assert_eq!(bits.version(), Version::Micro(MicroVersion::M4));
 /// ```
 pub fn encode_auto_micro(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
     let mut possible_versions = Vec::new();
-    for version in 1..=4 {
-        let version = Version::Micro(version);
+    let versions = [
+        Version::Micro(MicroVersion::M1),
+        Version::Micro(MicroVersion::M2),
+        Version::Micro(MicroVersion::M3),
+        Version::Micro(MicroVersion::M4),
+    ];
+    for version in versions {
         let opt_segments = optimize::optimize_segments(&segments, version);
         let total_len = optimize::total_encoded_len(&opt_segments, version);
         let data_capacity = version.fetch(ec_level, &DATA_LENGTHS);
@@ -171,19 +204,19 @@ mod encode_auto_micro_tests {
     #[test]
     fn alpha_l() {
         let bits = encode_auto_micro(b"HELLO WORLD", EcLevel::L).unwrap();
-        assert_eq!(bits.version(), Version::Micro(3));
+        assert_eq!(bits.version(), Version::Micro(MicroVersion::M3));
     }
 
     #[test]
     fn alpha_q() {
         let bits = encode_auto_micro(b"HELLO WORLD", EcLevel::Q).unwrap();
-        assert_eq!(bits.version(), Version::Micro(4));
+        assert_eq!(bits.version(), Version::Micro(MicroVersion::M4));
     }
 
     #[test]
     fn mixed() {
         let bits = encode_auto_micro(b"Mixed. 1234567890", EcLevel::M).unwrap();
-        assert_eq!(bits.version(), Version::Micro(4));
+        assert_eq!(bits.version(), Version::Micro(MicroVersion::M4));
     }
 }
 
@@ -214,13 +247,13 @@ pub enum RectMicroStrategy {
 ///
 /// ```
 /// use qrcode2::{
-///     EcLevel, Version,
+///     EcLevel, RectMicroVersion, Version,
 ///     bits::{self, RectMicroStrategy},
 /// };
 ///
 /// let bits = bits::encode_auto_rect_micro(b"Hello, world!", EcLevel::M, RectMicroStrategy::Area)
 ///     .unwrap();
-/// assert_eq!(bits.version(), Version::RectMicro(11, 43));
+/// assert_eq!(bits.version(), Version::RectMicro(RectMicroVersion::R11x43));
 /// ```
 pub fn encode_auto_rect_micro(
     data: &[u8],
@@ -229,24 +262,54 @@ pub fn encode_auto_rect_micro(
 ) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
     let mut possible_versions = Vec::new();
-    for width in Version::RMQR_ALL_WIDTH {
-        for height in Version::RMQR_ALL_HEIGHT {
-            let version = Version::RectMicro(height, width);
-            if !version.is_rect_micro() {
-                continue;
-            }
-            let opt_segments = optimize::optimize_segments(&segments, version);
-            let total_len = optimize::total_encoded_len(&opt_segments, version);
-            let data_capacity = version.fetch(ec_level, &DATA_LENGTHS)?;
-            if total_len <= data_capacity {
-                possible_versions.push(version);
-                break;
-            }
+    // `versions` is ordered by width.
+    let versions = [
+        RectMicroVersion::R11x27,
+        RectMicroVersion::R13x27,
+        RectMicroVersion::R7x43,
+        RectMicroVersion::R9x43,
+        RectMicroVersion::R11x43,
+        RectMicroVersion::R13x43,
+        RectMicroVersion::R15x43,
+        RectMicroVersion::R17x43,
+        RectMicroVersion::R7x59,
+        RectMicroVersion::R9x59,
+        RectMicroVersion::R11x59,
+        RectMicroVersion::R13x59,
+        RectMicroVersion::R15x59,
+        RectMicroVersion::R17x59,
+        RectMicroVersion::R7x77,
+        RectMicroVersion::R9x77,
+        RectMicroVersion::R11x77,
+        RectMicroVersion::R13x77,
+        RectMicroVersion::R15x77,
+        RectMicroVersion::R17x77,
+        RectMicroVersion::R7x99,
+        RectMicroVersion::R9x99,
+        RectMicroVersion::R11x99,
+        RectMicroVersion::R13x99,
+        RectMicroVersion::R15x99,
+        RectMicroVersion::R17x99,
+        RectMicroVersion::R7x139,
+        RectMicroVersion::R9x139,
+        RectMicroVersion::R11x139,
+        RectMicroVersion::R13x139,
+        RectMicroVersion::R15x139,
+        RectMicroVersion::R17x139,
+    ];
+    for version in versions {
+        let version = Version::RectMicro(version);
+        let opt_segments = optimize::optimize_segments(&segments, version);
+        let total_len = optimize::total_encoded_len(&opt_segments, version);
+        let data_capacity = version.fetch(ec_level, &DATA_LENGTHS)?;
+        if total_len <= data_capacity {
+            possible_versions.push(version);
+            break;
         }
     }
 
     let min_version = match strategy {
-        // `possible_versions` is already sorted by width
+        // `possible_versions` is already sorted by width.
         RectMicroStrategy::Width => possible_versions.first(),
         RectMicroStrategy::Height => possible_versions.iter().min_by_key(|v| v.height()),
         RectMicroStrategy::Area => possible_versions
@@ -273,42 +336,42 @@ mod encode_auto_rect_micro_tests {
     fn alpha_m_width() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::M, RectMicroStrategy::Width).unwrap();
-        assert_eq!(bits.version(), Version::RectMicro(13, 27));
+        assert_eq!(bits.version(), Version::RectMicro(RectMicroVersion::R13x27));
     }
 
     #[test]
     fn alpha_m_height() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::M, RectMicroStrategy::Height).unwrap();
-        assert_eq!(bits.version(), Version::RectMicro(7, 59));
+        assert_eq!(bits.version(), Version::RectMicro(RectMicroVersion::R7x59));
     }
 
     #[test]
     fn alpha_m_area() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::M, RectMicroStrategy::Area).unwrap();
-        assert_eq!(bits.version(), Version::RectMicro(13, 27));
+        assert_eq!(bits.version(), Version::RectMicro(RectMicroVersion::R13x27));
     }
 
     #[test]
     fn alpha_h_width() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::H, RectMicroStrategy::Width).unwrap();
-        assert_eq!(bits.version(), Version::RectMicro(11, 43));
+        assert_eq!(bits.version(), Version::RectMicro(RectMicroVersion::R11x43));
     }
 
     #[test]
     fn alpha_h_height() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::H, RectMicroStrategy::Height).unwrap();
-        assert_eq!(bits.version(), Version::RectMicro(7, 77));
+        assert_eq!(bits.version(), Version::RectMicro(RectMicroVersion::R7x77));
     }
 
     #[test]
     fn alpha_h_area() {
         let bits =
             encode_auto_rect_micro(b"HELLO WORLD", EcLevel::H, RectMicroStrategy::Area).unwrap();
-        assert_eq!(bits.version(), Version::RectMicro(11, 43));
+        assert_eq!(bits.version(), Version::RectMicro(RectMicroVersion::R11x43));
     }
 
     #[test]
@@ -319,7 +382,7 @@ mod encode_auto_rect_micro_tests {
             RectMicroStrategy::Width,
         )
         .unwrap();
-        assert_eq!(bits.version(), Version::RectMicro(17, 77));
+        assert_eq!(bits.version(), Version::RectMicro(RectMicroVersion::R17x77));
     }
 
     #[test]
@@ -330,7 +393,10 @@ mod encode_auto_rect_micro_tests {
             RectMicroStrategy::Height,
         )
         .unwrap();
-        assert_eq!(bits.version(), Version::RectMicro(11, 139));
+        assert_eq!(
+            bits.version(),
+            Version::RectMicro(RectMicroVersion::R11x139)
+        );
     }
 
     #[test]
@@ -341,6 +407,6 @@ mod encode_auto_rect_micro_tests {
             RectMicroStrategy::Area,
         )
         .unwrap();
-        assert_eq!(bits.version(), Version::RectMicro(13, 99));
+        assert_eq!(bits.version(), Version::RectMicro(RectMicroVersion::R13x99));
     }
 }
