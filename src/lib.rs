@@ -242,18 +242,18 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{EcLevel, QrCode, Version};
+    /// use qrcode2::{EcLevel, NormalVersion, QrCode, Version};
     ///
-    /// let code = QrCode::with_version(b"Some data", Version::Normal(5), EcLevel::M).unwrap();
+    /// let code = QrCode::with_version(b"Some data", Version::Normal(NormalVersion::V5), EcLevel::M).unwrap();
     /// ```
     ///
     /// This method can also be used to generate Micro QR code or rMQR code.
     ///
     /// ```
-    /// use qrcode2::{EcLevel, QrCode, Version};
+    /// use qrcode2::{EcLevel, MicroVersion, QrCode, RectMicroVersion, Version};
     ///
-    /// let micro_code = QrCode::with_version(b"123", Version::Micro(1), EcLevel::L).unwrap();
-    /// let rmqr_code = QrCode::with_version(b"456", Version::RectMicro(7, 43), EcLevel::M).unwrap();
+    /// let micro_code = QrCode::with_version(b"123", Version::Micro(MicroVersion::M1), EcLevel::L).unwrap();
+    /// let rmqr_code = QrCode::with_version(b"456", Version::RectMicro(RectMicroVersion::R7x43), EcLevel::M).unwrap();
     /// ```
     pub fn with_version(
         data: impl AsRef<[u8]>,
@@ -286,9 +286,9 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{EcLevel, QrCode, Version, bits::Bits};
+    /// use qrcode2::{EcLevel, NormalVersion, QrCode, Version, bits::Bits};
     ///
-    /// let mut bits = Bits::new(Version::Normal(1));
+    /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// bits.push_eci_designator(9);
     /// bits.push_byte_data(b"\xCA\xFE\xE4\xE9\xEA\xE1\xF2 QR");
     /// bits.push_terminator(EcLevel::L);
@@ -317,10 +317,10 @@ impl QrCode {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{QrCode, Version};
+    /// use qrcode2::{NormalVersion, QrCode, Version};
     ///
     /// let code = QrCode::new(b"Some data").unwrap();
-    /// assert_eq!(code.version(), Version::Normal(1));
+    /// assert_eq!(code.version(), Version::Normal(NormalVersion::V1));
     /// ```
     #[must_use]
     pub const fn version(&self) -> Version {
@@ -482,7 +482,9 @@ mod tests {
     #[test]
     fn annex_i_qr() {
         // This uses the ISO Annex I as test vector.
-        let code = QrCode::with_version(b"01234567", Version::Normal(1), EcLevel::M).unwrap();
+        let code =
+            QrCode::with_version(b"01234567", Version::Normal(NormalVersion::V1), EcLevel::M)
+                .unwrap();
         assert_eq!(
             code.to_debug_str('#', '.'),
             concat!(
@@ -513,7 +515,8 @@ mod tests {
 
     #[test]
     fn annex_i_micro_qr() {
-        let code = QrCode::with_version(b"01234567", Version::Micro(2), EcLevel::L).unwrap();
+        let code = QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L)
+            .unwrap();
         assert_eq!(
             code.to_debug_str('#', '.'),
             concat!(
@@ -536,8 +539,12 @@ mod tests {
 
     #[test]
     fn annex_i_rmqr() {
-        let code =
-            QrCode::with_version(b"0123456", Version::RectMicro(11, 27), EcLevel::H).unwrap();
+        let code = QrCode::with_version(
+            b"0123456",
+            Version::RectMicro(RectMicroVersion::R11x27),
+            EcLevel::H,
+        )
+        .unwrap();
         assert_eq!(
             code.to_debug_str('#', '.'),
             concat!(
@@ -585,61 +592,81 @@ mod iso_capacity {
     /// families.
     const CAPACITIES: &[(Version, EcLevel, [Option<usize>; 3])] = &[
         // Micro QR
-        (Version::Micro(1), EcLevel::L, [Some(5), None, None]),
-        (Version::Micro(2), EcLevel::L, [Some(10), Some(6), None]),
-        (Version::Micro(2), EcLevel::M, [Some(8), Some(5), None]),
-        (Version::Micro(3), EcLevel::L, [Some(23), Some(14), Some(9)]),
-        (Version::Micro(3), EcLevel::M, [Some(18), Some(11), Some(7)]),
         (
-            Version::Micro(4),
+            Version::Micro(MicroVersion::M1),
+            EcLevel::L,
+            [Some(5), None, None],
+        ),
+        (
+            Version::Micro(MicroVersion::M2),
+            EcLevel::L,
+            [Some(10), Some(6), None],
+        ),
+        (
+            Version::Micro(MicroVersion::M2),
+            EcLevel::M,
+            [Some(8), Some(5), None],
+        ),
+        (
+            Version::Micro(MicroVersion::M3),
+            EcLevel::L,
+            [Some(23), Some(14), Some(9)],
+        ),
+        (
+            Version::Micro(MicroVersion::M3),
+            EcLevel::M,
+            [Some(18), Some(11), Some(7)],
+        ),
+        (
+            Version::Micro(MicroVersion::M4),
             EcLevel::L,
             [Some(35), Some(21), Some(15)],
         ),
         (
-            Version::Micro(4),
+            Version::Micro(MicroVersion::M4),
             EcLevel::M,
             [Some(30), Some(18), Some(13)],
         ),
         (Version::Micro(4), EcLevel::Q, [Some(21), Some(13), Some(9)]),
         // Normal QR, Version 1 (all four EC levels)
         (
-            Version::Normal(1),
+            Version::Normal(NormalVersion::V1),
             EcLevel::L,
             [Some(41), Some(25), Some(17)],
         ),
         (
-            Version::Normal(1),
+            Version::Normal(NormalVersion::V1),
             EcLevel::M,
             [Some(34), Some(20), Some(14)],
         ),
         (
-            Version::Normal(1),
+            Version::Normal(NormalVersion::V1),
             EcLevel::Q,
             [Some(27), Some(16), Some(11)],
         ),
         (
-            Version::Normal(1),
+            Version::Normal(NormalVersion::V1),
             EcLevel::H,
             [Some(17), Some(10), Some(7)],
         ),
         // rMQR (M and H only)
         (
-            Version::RectMicro(7, 43),
+            Version::RectMicro(RectMicroVersion::R7x43),
             EcLevel::M,
             [Some(12), Some(7), Some(5)],
         ),
         (
-            Version::RectMicro(7, 43),
+            Version::RectMicro(RectMicroVersion::R7x43),
             EcLevel::H,
             [Some(5), Some(3), Some(2)],
         ),
         (
-            Version::RectMicro(11, 27),
+            Version::RectMicro(RectMicroVersion::R11x27),
             EcLevel::M,
             [Some(14), Some(8), Some(6)],
         ),
         (
-            Version::RectMicro(11, 27),
+            Version::RectMicro(RectMicroVersion::R11x27),
             EcLevel::H,
             [Some(9), Some(6), Some(4)],
         ),
@@ -686,7 +713,7 @@ mod iso_capacity {
         for &payload in FIT {
             assert_eq!(payload.len(), 14);
             assert!(
-                QrCode::with_version(payload, Version::Micro(3), EcLevel::L).is_ok(),
+                QrCode::with_version(payload, Version::Micro(MicroVersion::M3), EcLevel::L).is_ok(),
                 "{:?} should fit M3-L as a single alphanumeric segment",
                 core::str::from_utf8(payload).unwrap()
             );
