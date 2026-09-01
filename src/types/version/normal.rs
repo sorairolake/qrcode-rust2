@@ -7,7 +7,7 @@
 use crate::error::Error;
 
 /// `NormalVersion` is a type that represents a normal QR code version.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum NormalVersion {
     /// A 21×21 normal QR code symbol.
     V1 = 1,
