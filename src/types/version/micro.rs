@@ -55,14 +55,6 @@ mod tests {
     }
 
     #[test]
-    fn try_from_u8_to_micro_version_with_too_small_micro_version() {
-        assert_eq!(
-            MicroVersion::try_from(0).unwrap_err(),
-            Error::InvalidVersion
-        );
-    }
-
-    #[test]
     fn try_from_u8_to_micro_version() {
         assert_eq!(MicroVersion::try_from(1).unwrap(), MicroVersion::M1);
         assert_eq!(MicroVersion::try_from(2).unwrap(), MicroVersion::M2);
@@ -71,7 +63,11 @@ mod tests {
     }
 
     #[test]
-    fn try_from_u8_to_micro_version_with_too_big_micro_version() {
+    fn try_from_u8_to_micro_version_with_invalid_version() {
+        assert_eq!(
+            MicroVersion::try_from(0).unwrap_err(),
+            Error::InvalidVersion
+        );
         assert_eq!(
             MicroVersion::try_from(5).unwrap_err(),
             Error::InvalidVersion
