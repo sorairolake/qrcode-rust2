@@ -8,10 +8,6 @@ use qrcode2::{
     EcLevel, MicroVersion, NormalVersion, QrCode, RectMicroVersion, Version, render::eps::Color,
 };
 
-use qrcode2::{
-    EcLevel, MicroVersion, NormalVersion, QrCode, RectMicroVersion, Version, render::eps::Color,
-};
-
 #[test]
 fn annex_i_qr_as_eps() {
     let code =
