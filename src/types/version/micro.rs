@@ -41,3 +41,44 @@ impl TryFrom<u8> for MicroVersion {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn from_micro_version_to_u8() {
+        assert_eq!(u8::from(MicroVersion::M1), 1);
+        assert_eq!(u8::from(MicroVersion::M2), 2);
+        assert_eq!(u8::from(MicroVersion::M3), 3);
+        assert_eq!(u8::from(MicroVersion::M4), 4);
+    }
+
+    #[test]
+    fn try_from_u8_to_micro_version_with_too_small_micro_version() {
+        assert_eq!(
+            MicroVersion::try_from(0).unwrap_err(),
+            Error::InvalidVersion
+        );
+    }
+
+    #[test]
+    fn try_from_u8_to_micro_version() {
+        assert_eq!(MicroVersion::try_from(1).unwrap(), MicroVersion::M1);
+        assert_eq!(MicroVersion::try_from(2).unwrap(), MicroVersion::M2);
+        assert_eq!(MicroVersion::try_from(3).unwrap(), MicroVersion::M3);
+        assert_eq!(MicroVersion::try_from(4).unwrap(), MicroVersion::M4);
+    }
+
+    #[test]
+    fn try_from_u8_to_micro_version_with_too_big_micro_version() {
+        assert_eq!(
+            MicroVersion::try_from(5).unwrap_err(),
+            Error::InvalidVersion
+        );
+        assert_eq!(
+            MicroVersion::try_from(u8::MAX).unwrap_err(),
+            Error::InvalidVersion
+        );
+    }
+}
