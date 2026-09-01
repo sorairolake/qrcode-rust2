@@ -10,7 +10,7 @@
 use super::Canvas;
 use crate::{
     cast::As,
-    types::{Color, EcLevel, Version},
+    types::{Color, EcLevel, NormalVersion, Version},
 };
 
 impl Canvas {
@@ -83,7 +83,8 @@ impl Canvas {
     /// Draws the version information patterns.
     pub(super) fn draw_version_info_patterns(&mut self) {
         match self.version {
-            Version::Micro(_) | Version::Normal(1..=6) => {}
+            Version::Micro(_) => {}
+            Version::Normal(a) if a <= NormalVersion::V6 => {}
             Version::Normal(a) => {
                 let version_info = VERSION_INFOS[(a - 7).as_usize()];
                 self.draw_number(
@@ -101,8 +102,8 @@ impl Canvas {
                     &VERSION_INFO_COORDS_TR,
                 );
             }
-            Version::RectMicro(..) => {
-                let index = self.version.rect_micro_index().unwrap();
+            Version::RectMicro(a) => {
+                let index = a.index();
                 let ec_level = usize::from(self.ec_level != EcLevel::M);
                 let version_info_left = RMQR_VERSION_INFOS_L[index][ec_level];
                 let version_info_right = RMQR_VERSION_INFOS_R[index][ec_level];
