@@ -20,7 +20,7 @@ use crate::{
 /// In QR code terminology, `Version` means the size of the generated image.
 /// Larger version means the size of code is larger, and therefore can carry
 /// more information.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum Version {
     /// A normal QR code version.
     Normal(NormalVersion),
