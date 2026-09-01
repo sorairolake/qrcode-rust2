@@ -48,11 +48,14 @@ impl Version {
     /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).width(), 139);
     /// ```
     #[must_use]
-    pub const fn width(self) -> u8 {
+    pub fn width(self) -> u8 {
         match self {
-            Self::Normal(v) => v * 4 + 17,
-            Self::Micro(v) => v * 2 + 9,
-            Self::RectMicro(_, w) => w,
+            Self::Normal(v) => u8::from(v) * 4 + 17,
+            Self::Micro(v) => u8::from(v) * 2 + 9,
+            Self::RectMicro(v) => {
+                let (_, w) = u8::from(v);
+                w
+            }
         }
     }
 
@@ -71,8 +74,9 @@ impl Version {
     /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).height(), 17);
     /// ```
     #[must_use]
-    pub const fn height(self) -> u8 {
-        if let Self::RectMicro(h, _) = self {
+    pub fn height(self) -> u8 {
+        if let Self::RectMicro(v) = self {
+            let (h, _) = u8::from(v);
             h
         } else {
             self.width()
@@ -95,9 +99,7 @@ impl Version {
         T: Copy + Default + PartialEq,
     {
         match self {
-            Self::Normal(v) => {
-                Ok(table[(u8::from(v) - 1).as_usize()][ec_level as usize])
-            }
+            Self::Normal(v) => Ok(table[(u8::from(v) - 1).as_usize()][ec_level as usize]),
             Self::Micro(v) => {
                 let obj = table[(u8::from(v) + 39).as_usize()][ec_level as usize];
                 if obj != T::default() {
@@ -318,7 +320,10 @@ mod tests {
                 (version - 1).as_usize()
             );
         }
-        assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).mode_bits_count(), 3);
+        assert_eq!(
+            Version::RectMicro(RectMicroVersion::R7x43).mode_bits_count(),
+            3
+        );
     }
 
     #[test]
