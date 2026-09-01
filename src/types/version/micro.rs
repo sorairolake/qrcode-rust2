@@ -7,7 +7,7 @@
 use crate::error::Error;
 
 /// `MicroVersion` is a type that represents a Micro QR code version.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum MicroVersion {
     /// An 11×11 Micro QR code symbol.
     M1 = 1,
