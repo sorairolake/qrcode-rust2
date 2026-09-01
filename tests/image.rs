@@ -9,7 +9,7 @@
 use std::sync::LazyLock;
 
 use qrcode2::{
-    EcLevel, Error, QrCode, Version,
+    EcLevel, Error, MicroVersion, NormalVersion, QrCode, RectMicroVersion, Version,
     image::{Luma, Rgb},
 };
 use shake::{ExtendableOutput, Shake128};
