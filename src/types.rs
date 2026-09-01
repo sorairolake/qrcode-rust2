@@ -10,4 +10,9 @@ mod ec_level;
 mod mode;
 mod version;
 
-pub use self::{color::Color, ec_level::EcLevel, mode::Mode, version::Version};
+pub use self::{
+    color::Color,
+    ec_level::EcLevel,
+    mode::Mode,
+    version::{MicroVersion, NormalVersion, RectMicroVersion, Version},
+};
