@@ -41,7 +41,10 @@ impl Mode {
     /// ```
     /// use qrcode2::{NormalVersion, Version, types::Mode};
     ///
-    /// assert_eq!(Mode::Numeric.length_bits_count(Version::Normal(NormalVersion::V1)), 10);
+    /// assert_eq!(
+    ///     Mode::Numeric.length_bits_count(Version::Normal(NormalVersion::V1)),
+    ///     10
+    /// );
     /// ```
     #[must_use]
     pub fn length_bits_count(self, version: Version) -> usize {
