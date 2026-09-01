@@ -54,49 +54,29 @@ impl Mode {
                     Self::Kanji => a,
                 }
             }
-            Version::Normal(a) => match a {
-                NormalVersion::V1
-                | NormalVersion::V2
-                | NormalVersion::V3
-                | NormalVersion::V4
-                | NormalVersion::V5
-                | NormalVersion::V6
-                | NormalVersion::V7
-                | NormalVersion::V8
-                | NormalVersion::V9 => match self {
-                    Self::Numeric => 10,
-                    Self::Alphanumeric => 9,
-                    Self::Byte | Self::Kanji => 8,
-                },
-                NormalVersion::V10
-                | NormalVersion::V11
-                | NormalVersion::V12
-                | NormalVersion::V13
-                | NormalVersion::V14
-                | NormalVersion::V15
-                | NormalVersion::V16
-                | NormalVersion::V17
-                | NormalVersion::V18
-                | NormalVersion::V19
-                | NormalVersion::V20
-                | NormalVersion::V21
-                | NormalVersion::V22
-                | NormalVersion::V23
-                | NormalVersion::V24
-                | NormalVersion::V25
-                | NormalVersion::V26 => match self {
-                    Self::Numeric => 12,
-                    Self::Alphanumeric => 11,
-                    Self::Byte => 16,
-                    Self::Kanji => 10,
-                },
-                _ => match self {
-                    Self::Numeric => 14,
-                    Self::Alphanumeric => 13,
-                    Self::Byte => 16,
-                    Self::Kanji => 12,
-                },
-            },
+            Version::Normal(a) => {
+                if a <= NormalVersion::V9 {
+                    match self {
+                        Self::Numeric => 10,
+                        Self::Alphanumeric => 9,
+                        Self::Byte | Self::Kanji => 8,
+                    }
+                } else if a <= NormalVersion::V26 {
+                    match self {
+                        Self::Numeric => 12,
+                        Self::Alphanumeric => 11,
+                        Self::Byte => 16,
+                        Self::Kanji => 10,
+                    }
+                } else {
+                    match self {
+                        Self::Numeric => 14,
+                        Self::Alphanumeric => 13,
+                        Self::Byte => 16,
+                        Self::Kanji => 12,
+                    }
+                }
+            }
             Version::RectMicro(_) => {
                 let index = version.rect_micro_index().unwrap_or(31);
                 match self {
