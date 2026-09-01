@@ -40,12 +40,9 @@ use crate::{
 /// ```
 pub fn encode_auto(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
-    let versions = [
-        Version::Normal(NormalVersion::V9),
-        Version::Normal(NormalVersion::V26),
-        Version::Normal(NormalVersion::V40),
-    ];
+    let versions = [NormalVersion::V9, NormalVersion::V26, NormalVersion::V40];
     for version in versions {
+        let version = Version::Normal(version);
         let opt_segments = optimize::optimize_segments(&segments, version);
         let total_len = optimize::total_encoded_len(&opt_segments, version);
         let data_capacity = version.fetch(ec_level, &DATA_LENGTHS).unwrap();
@@ -166,13 +163,8 @@ mod encode_auto_tests {
 pub fn encode_auto_micro(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
     let mut possible_versions = Vec::new();
-    let versions = [
-        Version::Micro(MicroVersion::M1),
-        Version::Micro(MicroVersion::M2),
-        Version::Micro(MicroVersion::M3),
-        Version::Micro(MicroVersion::M4),
-    ];
-    for version in versions {
+    for version in MicroVersion::ALL {
+        let version = Version::Micro(version);
         let opt_segments = optimize::optimize_segments(&segments, version);
         let total_len = optimize::total_encoded_len(&opt_segments, version);
         let data_capacity = version.fetch(ec_level, &DATA_LENGTHS);
@@ -262,42 +254,7 @@ pub fn encode_auto_rect_micro(
 ) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
     let mut possible_versions = Vec::new();
-    // `versions` is ordered by width.
-    let versions = [
-        RectMicroVersion::R11x27,
-        RectMicroVersion::R13x27,
-        RectMicroVersion::R7x43,
-        RectMicroVersion::R9x43,
-        RectMicroVersion::R11x43,
-        RectMicroVersion::R13x43,
-        RectMicroVersion::R15x43,
-        RectMicroVersion::R17x43,
-        RectMicroVersion::R7x59,
-        RectMicroVersion::R9x59,
-        RectMicroVersion::R11x59,
-        RectMicroVersion::R13x59,
-        RectMicroVersion::R15x59,
-        RectMicroVersion::R17x59,
-        RectMicroVersion::R7x77,
-        RectMicroVersion::R9x77,
-        RectMicroVersion::R11x77,
-        RectMicroVersion::R13x77,
-        RectMicroVersion::R15x77,
-        RectMicroVersion::R17x77,
-        RectMicroVersion::R7x99,
-        RectMicroVersion::R9x99,
-        RectMicroVersion::R11x99,
-        RectMicroVersion::R13x99,
-        RectMicroVersion::R15x99,
-        RectMicroVersion::R17x99,
-        RectMicroVersion::R7x139,
-        RectMicroVersion::R9x139,
-        RectMicroVersion::R11x139,
-        RectMicroVersion::R13x139,
-        RectMicroVersion::R15x139,
-        RectMicroVersion::R17x139,
-    ];
-    for version in versions {
+    for version in RectMicroVersion::ALL_BY_WIDTH {
         let version = Version::RectMicro(version);
         let opt_segments = optimize::optimize_segments(&segments, version);
         let total_len = optimize::total_encoded_len(&opt_segments, version);
