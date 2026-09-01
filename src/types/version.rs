@@ -129,7 +129,10 @@ impl Version {
     ///
     /// assert_eq!(Version::Normal(NormalVersion::V40).mode_bits_count(), 4);
     /// assert_eq!(Version::Micro(MicroVersion::M4).mode_bits_count(), 3);
-    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).mode_bits_count(), 3);
+    /// assert_eq!(
+    ///     Version::RectMicro(RectMicroVersion::R17x139).mode_bits_count(),
+    ///     3
+    /// );
     /// ```
     #[must_use]
     pub fn mode_bits_count(self) -> usize {
@@ -151,7 +154,10 @@ impl Version {
     /// assert_eq!(Version::Normal(NormalVersion::V40).is_normal(), true);
     ///
     /// assert_eq!(Version::Micro(MicroVersion::M1).is_normal(), false);
-    /// assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).is_normal(), false);
+    /// assert_eq!(
+    ///     Version::RectMicro(RectMicroVersion::R7x43).is_normal(),
+    ///     false
+    /// );
     /// ```
     #[must_use]
     pub const fn is_normal(self) -> bool {
@@ -169,7 +175,10 @@ impl Version {
     /// assert_eq!(Version::Micro(MicroVersion::M4).is_micro(), true);
     ///
     /// assert_eq!(Version::Normal(NormalVersion::V1).is_micro(), false);
-    /// assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).is_micro(), false);
+    /// assert_eq!(
+    ///     Version::RectMicro(RectMicroVersion::R7x43).is_micro(),
+    ///     false
+    /// );
     /// ```
     #[must_use]
     pub const fn is_micro(self) -> bool {
@@ -183,8 +192,14 @@ impl Version {
     /// ```
     /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
     ///
-    /// assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).is_rect_micro(), true);
-    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).is_rect_micro(), true);
+    /// assert_eq!(
+    ///     Version::RectMicro(RectMicroVersion::R7x43).is_rect_micro(),
+    ///     true
+    /// );
+    /// assert_eq!(
+    ///     Version::RectMicro(RectMicroVersion::R17x139).is_rect_micro(),
+    ///     true
+    /// );
     ///
     /// assert_eq!(Version::Normal(NormalVersion::V1).is_rect_micro(), false);
     /// assert_eq!(Version::Micro(MicroVersion::M1).is_rect_micro(), false);
