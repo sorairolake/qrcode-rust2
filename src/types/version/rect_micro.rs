@@ -106,6 +106,44 @@ pub enum RectMicroVersion {
     R17x139,
 }
 
+impl RectMicroVersion {
+    /// All versions of rMQR code, sorted by width.
+    pub(crate) const ALL_BY_WIDTH: [Self; 32] = [
+        Self::R11x27,
+        Self::R13x27,
+        Self::R7x43,
+        Self::R9x43,
+        Self::R11x43,
+        Self::R13x43,
+        Self::R15x43,
+        Self::R17x43,
+        Self::R7x59,
+        Self::R9x59,
+        Self::R11x59,
+        Self::R13x59,
+        Self::R15x59,
+        Self::R17x59,
+        Self::R7x77,
+        Self::R9x77,
+        Self::R11x77,
+        Self::R13x77,
+        Self::R15x77,
+        Self::R17x77,
+        Self::R7x99,
+        Self::R9x99,
+        Self::R11x99,
+        Self::R13x99,
+        Self::R15x99,
+        Self::R17x99,
+        Self::R7x139,
+        Self::R9x139,
+        Self::R11x139,
+        Self::R13x139,
+        Self::R15x139,
+        Self::R17x139,
+    ];
+}
+
 impl From<RectMicroVersion> for (u8, u8) {
     fn from(version: RectMicroVersion) -> Self {
         match version {
