@@ -244,7 +244,8 @@ impl QrCode {
     /// ```
     /// use qrcode2::{EcLevel, NormalVersion, QrCode, Version};
     ///
-    /// let code = QrCode::with_version(b"Some data", Version::Normal(NormalVersion::V5), EcLevel::M).unwrap();
+    /// let code =
+    ///     QrCode::with_version(b"Some data", Version::Normal(NormalVersion::V5), EcLevel::M).unwrap();
     /// ```
     ///
     /// This method can also be used to generate Micro QR code or rMQR code.
@@ -252,8 +253,14 @@ impl QrCode {
     /// ```
     /// use qrcode2::{EcLevel, MicroVersion, QrCode, RectMicroVersion, Version};
     ///
-    /// let micro_code = QrCode::with_version(b"123", Version::Micro(MicroVersion::M1), EcLevel::L).unwrap();
-    /// let rmqr_code = QrCode::with_version(b"456", Version::RectMicro(RectMicroVersion::R7x43), EcLevel::M).unwrap();
+    /// let micro_code =
+    ///     QrCode::with_version(b"123", Version::Micro(MicroVersion::M1), EcLevel::L).unwrap();
+    /// let rmqr_code = QrCode::with_version(
+    ///     b"456",
+    ///     Version::RectMicro(RectMicroVersion::R7x43),
+    ///     EcLevel::M,
+    /// )
+    /// .unwrap();
     /// ```
     pub fn with_version(
         data: impl AsRef<[u8]>,
