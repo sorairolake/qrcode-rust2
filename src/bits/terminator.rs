@@ -105,8 +105,7 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] on overflow, or if it is not valid to use the `ec_level`
-    /// for the given version (e.g. [`Version::Micro(1)`](Version::Micro) with
-    /// [`EcLevel::H`]).
+    /// for the given version.
     pub fn push_terminator(&mut self, ec_level: EcLevel) -> Result<()> {
         let terminator_size = match self.version {
             Version::Micro(a) => a.as_usize() * 2 + 1,
