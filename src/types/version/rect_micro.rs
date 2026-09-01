@@ -7,7 +7,7 @@
 use crate::error::Error;
 
 /// `RectMicroVersion` is a type that represents a rMQR code version.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum RectMicroVersion {
     /// A 7×43 rMQR code symbol.
     R7x43,
