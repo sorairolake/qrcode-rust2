@@ -41,11 +41,11 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::Version;
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
     ///
-    /// assert_eq!(Version::Normal(40).width(), 177);
-    /// assert_eq!(Version::Micro(4).width(), 17);
-    /// assert_eq!(Version::RectMicro(17, 139).width(), 139);
+    /// assert_eq!(Version::Normal(NormalVersion::V40).width(), 177);
+    /// assert_eq!(Version::Micro(MicroVersion::M4).width(), 17);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).width(), 139);
     /// ```
     #[must_use]
     pub const fn width(self) -> u8 {
@@ -64,11 +64,11 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::Version;
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
     ///
-    /// assert_eq!(Version::Normal(40).height(), 177);
-    /// assert_eq!(Version::Micro(4).height(), 17);
-    /// assert_eq!(Version::RectMicro(17, 139).height(), 17);
+    /// assert_eq!(Version::Normal(NormalVersion::V40).height(), 177);
+    /// assert_eq!(Version::Micro(MicroVersion::M4).height(), 17);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).height(), 17);
     /// ```
     #[must_use]
     pub const fn height(self) -> u8 {
@@ -95,25 +95,27 @@ impl Version {
         T: Copy + Default + PartialEq,
     {
         match self {
-            Self::Normal(v @ 1..=40) => {
-                return Ok(table[(v - 1).as_usize()][ec_level as usize]);
+            Self::Normal(v) => {
+                Ok(table[(u8::from(v) - 1).as_usize()][ec_level as usize])
             }
-            Self::Micro(v @ 1..=4) => {
-                let obj = table[(v + 39).as_usize()][ec_level as usize];
+            Self::Micro(v) => {
+                let obj = table[(u8::from(v) + 39).as_usize()][ec_level as usize];
                 if obj != T::default() {
-                    return Ok(obj);
+                    Ok(obj)
+                } else {
+                    Err(Error::InvalidVersion)
                 }
             }
-            Self::RectMicro(..) => {
+            Self::RectMicro(v) => {
                 let index = self.rect_micro_index()?;
                 let obj = table[index + 44][ec_level as usize];
                 if obj != T::default() {
-                    return Ok(obj);
+                    Ok(obj)
+                } else {
+                    Err(Error::InvalidVersion)
                 }
             }
-            _ => {}
         }
-        Err(Error::InvalidVersion)
     }
 
     /// Returns the number of bits needed to encode the mode indicator.
@@ -121,18 +123,18 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::Version;
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
     ///
-    /// assert_eq!(Version::Normal(40).mode_bits_count(), 4);
-    /// assert_eq!(Version::Micro(4).mode_bits_count(), 3);
-    /// assert_eq!(Version::RectMicro(17, 139).mode_bits_count(), 3);
+    /// assert_eq!(Version::Normal(NormalVersion::V40).mode_bits_count(), 4);
+    /// assert_eq!(Version::Micro(MicroVersion::M4).mode_bits_count(), 3);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).mode_bits_count(), 3);
     /// ```
     #[must_use]
     pub fn mode_bits_count(self) -> usize {
         match self {
             Self::Normal(_) => 4,
-            Self::Micro(a) => (a - 1).as_usize(),
-            Self::RectMicro(..) => 3,
+            Self::Micro(a) => (u8::from(a) - 1).as_usize(),
+            Self::RectMicro(_) => 3,
         }
     }
 
@@ -141,15 +143,13 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::Version;
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
     ///
-    /// assert_eq!(Version::Normal(1).is_normal(), true);
-    /// assert_eq!(Version::Normal(40).is_normal(), true);
-    /// // Invalid normal QR code version.
-    /// assert_eq!(Version::Normal(0).is_normal(), false);
+    /// assert_eq!(Version::Normal(NormalVersion::V1).is_normal(), true);
+    /// assert_eq!(Version::Normal(NormalVersion::V40).is_normal(), true);
     ///
-    /// assert_eq!(Version::Micro(1).is_normal(), false);
-    /// assert_eq!(Version::RectMicro(7, 43).is_normal(), false);
+    /// assert_eq!(Version::Micro(MicroVersion::M1).is_normal(), false);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).is_normal(), false);
     /// ```
     #[must_use]
     pub const fn is_normal(self) -> bool {
@@ -161,15 +161,13 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::Version;
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
     ///
-    /// assert_eq!(Version::Micro(1).is_micro(), true);
-    /// assert_eq!(Version::Micro(4).is_micro(), true);
-    /// // Invalid Micro QR code version.
-    /// assert_eq!(Version::Micro(0).is_micro(), false);
+    /// assert_eq!(Version::Micro(MicroVersion::M1).is_micro(), true);
+    /// assert_eq!(Version::Micro(MicroVersion::M4).is_micro(), true);
     ///
-    /// assert_eq!(Version::Normal(1).is_micro(), false);
-    /// assert_eq!(Version::RectMicro(7, 43).is_micro(), false);
+    /// assert_eq!(Version::Normal(NormalVersion::V1).is_micro(), false);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).is_micro(), false);
     /// ```
     #[must_use]
     pub const fn is_micro(self) -> bool {
@@ -181,15 +179,13 @@ impl Version {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::Version;
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
     ///
-    /// assert_eq!(Version::RectMicro(7, 43).is_rect_micro(), true);
-    /// assert_eq!(Version::RectMicro(17, 139).is_rect_micro(), true);
-    /// // Invalid rMQR code version.
-    /// assert_eq!(Version::RectMicro(0, 0).is_rect_micro(), false);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).is_rect_micro(), true);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).is_rect_micro(), true);
     ///
-    /// assert_eq!(Version::Normal(1).is_rect_micro(), false);
-    /// assert_eq!(Version::Micro(1).is_rect_micro(), false);
+    /// assert_eq!(Version::Normal(NormalVersion::V1).is_rect_micro(), false);
+    /// assert_eq!(Version::Micro(MicroVersion::M1).is_rect_micro(), false);
     /// ```
     #[must_use]
     pub const fn is_rect_micro(self) -> bool {
@@ -292,60 +288,59 @@ mod tests {
 
     #[test]
     fn width() {
-        assert_eq!(Version::Normal(1).width(), 21);
-        assert_eq!(Version::Normal(40).width(), 177);
-        assert_eq!(Version::Micro(1).width(), 11);
-        assert_eq!(Version::Micro(4).width(), 17);
-        assert_eq!(Version::RectMicro(7, 43).width(), 43);
-        assert_eq!(Version::RectMicro(11, 27).width(), 27);
-        assert_eq!(Version::RectMicro(17, 139).width(), 139);
+        assert_eq!(Version::Normal(NormalVersion::V1).width(), 21);
+        assert_eq!(Version::Normal(NormalVersion::V40).width(), 177);
+        assert_eq!(Version::Micro(MicroVersion::M1).width(), 11);
+        assert_eq!(Version::Micro(MicroVersion::M4).width(), 17);
+        assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).width(), 43);
+        assert_eq!(Version::RectMicro(RectMicroVersion::R11x27).width(), 27);
+        assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).width(), 139);
     }
 
     #[test]
     fn height() {
-        assert_eq!(Version::Normal(1).height(), 21);
-        assert_eq!(Version::Normal(40).height(), 177);
-        assert_eq!(Version::Micro(1).height(), 11);
-        assert_eq!(Version::Micro(4).height(), 17);
-        assert_eq!(Version::RectMicro(7, 43).height(), 7);
-        assert_eq!(Version::RectMicro(11, 27).height(), 11);
-        assert_eq!(Version::RectMicro(17, 139).height(), 17);
+        assert_eq!(Version::Normal(NormalVersion::V1).height(), 21);
+        assert_eq!(Version::Normal(NormalVersion::V40).height(), 177);
+        assert_eq!(Version::Micro(MicroVersion::M1).height(), 11);
+        assert_eq!(Version::Micro(MicroVersion::M4).height(), 17);
+        assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).height(), 7);
+        assert_eq!(Version::RectMicro(RectMicroVersion::R11x27).height(), 11);
+        assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).height(), 17);
     }
 
     #[test]
     fn mode_bits_count() {
-        assert_eq!(Version::Normal(1).mode_bits_count(), 4);
+        assert_eq!(Version::Normal(NormalVersion::V1).mode_bits_count(), 4);
         for version in 1..=4 {
+            let v = MicroVersion::try_from(version).unwrap();
             assert_eq!(
-                Version::Micro(version).mode_bits_count(),
+                Version::Micro(v).mode_bits_count(),
                 (version - 1).as_usize()
             );
         }
-        assert_eq!(Version::RectMicro(7, 43).mode_bits_count(), 3);
+        assert_eq!(Version::RectMicro(RectMicroVersion::R7x43).mode_bits_count(), 3);
     }
 
     #[test]
     fn is_normal() {
         for version in 1..=40 {
+            let version = NormalVersion::try_from(version).unwrap();
             assert!(Version::Normal(version).is_normal());
         }
-        assert!(!Version::Normal(0).is_normal());
-        assert!(!Version::Normal(41).is_normal());
 
-        assert!(!Version::Micro(1).is_normal());
-        assert!(!Version::RectMicro(7, 43).is_normal());
+        assert!(!Version::Micro(MicroVersion::M1).is_normal());
+        assert!(!Version::RectMicro(RectMicroVersion::R7x43).is_normal());
     }
 
     #[test]
     fn is_micro() {
         for version in 1..=4 {
+            let version = MicroVersion::try_from(version).unwrap();
             assert!(Version::Micro(version).is_micro());
         }
-        assert!(!Version::Micro(0).is_micro());
-        assert!(!Version::Micro(5).is_micro());
 
-        assert!(!Version::Normal(1).is_micro());
-        assert!(!Version::RectMicro(7, 43).is_micro());
+        assert!(!Version::Normal(NormalVersion::V1).is_micro());
+        assert!(!Version::RectMicro(RectMicroVersion::R7x43).is_micro());
     }
 
     #[test]
@@ -355,12 +350,12 @@ mod tests {
                 if width == 27 && (height != 11 && height != 13) {
                     continue;
                 }
-                assert!(Version::RectMicro(height, width).is_rect_micro());
+                let version = RectMicroVersion::try_from((height, width)).unwrap();
+                assert!(Version::RectMicro(version).is_rect_micro());
             }
         }
-        assert!(!Version::RectMicro(0, 0).is_rect_micro());
 
-        assert!(!Version::Normal(1).is_rect_micro());
-        assert!(!Version::Micro(1).is_rect_micro());
+        assert!(!Version::Normal(NormalVersion::V1).is_rect_micro());
+        assert!(!Version::Micro(MicroVersion::M1).is_rect_micro());
     }
 }
