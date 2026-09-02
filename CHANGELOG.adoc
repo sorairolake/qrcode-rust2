@@ -16,10 +16,17 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 == {compare-url}/v0.18.0\...HEAD[Unreleased]
 
+=== Added
+
+* Add `NormalVersion` ({pull-request-url}/180[#180])
+* Add `MicroVersion` ({pull-request-url}/180[#180])
+* Add `RectMicroVersion` ({pull-request-url}/180[#180])
+
 === Changed
 
 * Compute globally optimal mode segmentation (ISO/IEC 18004 Annex J) instead of
   the previous greedy heuristic ({pull-request-url}/148[#148])
+* Change internal representation of `Version` ({pull-request-url}/180[#180])
 
 === Fixed
 
