@@ -10,7 +10,7 @@
 use super::{Canvas, Module};
 use crate::{
     cast::As,
-    types::{Color, Version},
+    types::{Color, NormalVersion, Version},
 };
 
 impl Canvas {
@@ -52,10 +52,10 @@ impl Canvas {
     /// to help the scanner create the square grid.
     pub(super) fn draw_alignment_patterns(&mut self) {
         match self.version {
-            Version::Micro(_) | Version::Normal(1) | Version::RectMicro(..) => {}
-            Version::Normal(2..=6) => self.draw_alignment_pattern_at(-7, -7),
+            Version::Micro(_) | Version::Normal(NormalVersion::V1) | Version::RectMicro(_) => {}
+            Version::Normal(a) if a <= NormalVersion::V6 => self.draw_alignment_pattern_at(-7, -7),
             Version::Normal(a) => {
-                let positions = ALIGNMENT_PATTERN_POSITIONS[(a - 7).as_usize()];
+                let positions = ALIGNMENT_PATTERN_POSITIONS[(u8::from(a) - 7).as_usize()];
                 for x in positions {
                     for y in positions {
                         self.draw_alignment_pattern_at(*x, *y);
@@ -135,11 +135,11 @@ pub static ALIGNMENT_PATTERN_POSITIONS: [&[i16]; 40] = [
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::EcLevel;
+    use crate::types::{EcLevel, RectMicroVersion};
 
     #[test]
     fn draw_alignment_patterns_1() {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
         c.draw_finder_patterns();
         c.draw_alignment_patterns();
         assert_eq!(
@@ -173,7 +173,7 @@ mod tests {
 
     #[test]
     fn draw_alignment_patterns_3() {
-        let mut c = Canvas::new(Version::Normal(3), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V3), EcLevel::L);
         c.draw_finder_patterns();
         c.draw_alignment_patterns();
         assert_eq!(
@@ -215,7 +215,7 @@ mod tests {
 
     #[test]
     fn draw_alignment_patterns_7() {
-        let mut c = Canvas::new(Version::Normal(7), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V7), EcLevel::L);
         c.draw_finder_patterns();
         c.draw_alignment_patterns();
         assert_eq!(
@@ -273,7 +273,7 @@ mod tests {
 
     #[test]
     fn draw_alignment_patterns_rmqr_7x77() {
-        let mut c = Canvas::new(Version::RectMicro(7, 77), EcLevel::L);
+        let mut c = Canvas::new(Version::RectMicro(RectMicroVersion::R7x77), EcLevel::L);
         c.draw_finder_patterns();
         c.draw_alignment_patterns_rmqr();
         assert_eq!(
