@@ -62,7 +62,7 @@ pub fn construct_codewords(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::NormalVersion;
+    use crate::types::NormalVersion;
 
     #[test]
     fn add_ec_simple() {
