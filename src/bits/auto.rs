@@ -260,9 +260,8 @@ pub fn encode_auto_rect_micro(
         if let Some(sh) = skip_height {
             if current_height == sh {
                 continue;
-            } else {
-                skip_height = None;
             }
+            skip_height = None;
         }
         let opt_segments = optimize::optimize_segments(&segments, version);
         let total_len = optimize::total_encoded_len(&opt_segments, version);
