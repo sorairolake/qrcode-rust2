@@ -29,7 +29,10 @@ use crate::{
 ///     ec::max_allowed_errors(Version::Normal(NormalVersion::V40), EcLevel::M),
 ///     Ok(686)
 /// );
-/// assert_eq!(ec::max_allowed_errors(Version::Micro(MicroVersion::M4), EcLevel::Q), Ok(7));
+/// assert_eq!(
+///     ec::max_allowed_errors(Version::Micro(MicroVersion::M4), EcLevel::Q),
+///     Ok(7)
+/// );
 /// assert_eq!(
 ///     ec::max_allowed_errors(Version::RectMicro(RectMicroVersion::R17x139), EcLevel::H),
 ///     Ok(78)
