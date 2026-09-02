@@ -41,7 +41,7 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{error::Error, types::Version};
+    use crate::{error::Error, types::{MicroVersion, NormalVersion, Version}};
 
     #[test]
     fn iso_18004_2006_example_1() {
