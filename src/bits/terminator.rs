@@ -149,6 +149,8 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::{MicroVersion, NormalVersion};
+;
 
     #[test]
     fn hello_world() {
