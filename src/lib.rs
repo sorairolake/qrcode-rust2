@@ -10,7 +10,7 @@
 
 //! The `qrcode2` crate is a [QR code] encoding library.
 //!
-//! This crate provides a [normal QR code], [Micro QR code], and [rMQR code]
+//! This crate provides a [QR code model 2], [Micro QR code], and [rMQR code]
 //! encoder for binary data.
 //!
 //! # Examples
@@ -37,7 +37,7 @@
 //! ```
 //!
 //! [QR code]: https://www.qrcode.com/
-//! [normal QR code]: https://www.qrcode.com/codes/model12.html
+//! [QR code model 2]: https://www.qrcode.com/codes/model12.html
 //! [Micro QR code]: https://www.qrcode.com/codes/microqr.html
 //! [rMQR code]: https://www.qrcode.com/codes/rmqr.html
 
