@@ -53,7 +53,7 @@ impl Version {
             Self::Normal(v) => u8::from(v).as_i16() * 4 + 17,
             Self::Micro(v) => u8::from(v).as_i16() * 2 + 9,
             Self::RectMicro(v) => {
-                let (_, w) = u8::from(v);
+                let (_, w) = <(u8, u8)>::from(v);
                 w.as_i16()
             }
         }
@@ -76,7 +76,7 @@ impl Version {
     #[must_use]
     pub fn height(self) -> i16 {
         if let Self::RectMicro(v) = self {
-            let (h, _) = u8::from(v);
+            let (h, _) = <(u8, u8)>::from(v);
             h.as_i16()
         } else {
             self.width()
