@@ -327,7 +327,7 @@ mod tests {
                 begin: 0,
                 end: 8,
             }],
-            Version::Normal(1),
+            Version::Normal(NormalVersion::V1),
         );
     }
 

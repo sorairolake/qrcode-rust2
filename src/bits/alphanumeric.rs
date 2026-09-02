@@ -60,7 +60,7 @@ mod tests {
 
     #[test]
     fn iso_18004_2006_example() {
-        let mut bits = Bits::new(Version::Normal(1));
+        let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
         assert_eq!(bits.push_alphanumeric_data(b"AC-42"), Ok(()));
         assert_eq!(
             bits.into_bytes(),
@@ -77,7 +77,7 @@ mod tests {
 
     #[test]
     fn micro_qr_unsupported() {
-        let mut bits = Bits::new(Version::Micro(1));
+        let mut bits = Bits::new(Version::Micro(MicroVersion::M1));
         assert_eq!(
             bits.push_alphanumeric_data(b"A"),
             Err(Error::UnsupportedCharacterSet)
@@ -86,7 +86,7 @@ mod tests {
 
     #[test]
     fn data_too_long() {
-        let mut bits = Bits::new(Version::Micro(2));
+        let mut bits = Bits::new(Version::Micro(MicroVersion::M2));
         assert_eq!(
             bits.push_alphanumeric_data(b"ABCDEFGH"),
             Err(Error::DataTooLong)

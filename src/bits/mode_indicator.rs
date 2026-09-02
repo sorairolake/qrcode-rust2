@@ -41,7 +41,7 @@ impl Bits {
     pub fn push_mode_indicator(&mut self, mode: ExtendedMode) -> Result<()> {
         #[expect(clippy::match_same_arms)]
         let number = match (self.version, mode) {
-            (Version::Micro(1), ExtendedMode::Data(Mode::Numeric)) => return Ok(()),
+            (Version::Micro(MicroVersion::M1), ExtendedMode::Data(Mode::Numeric)) => return Ok(()),
             (Version::Micro(_), ExtendedMode::Data(Mode::Numeric)) => 0,
             (Version::Micro(_), ExtendedMode::Data(Mode::Alphanumeric)) => 1,
             (Version::Micro(_), ExtendedMode::Data(Mode::Byte)) => 0b10,

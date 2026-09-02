@@ -67,7 +67,7 @@ mod tests {
 
     #[test]
     fn alphanumeric() {
-        let res = encode(b"HELLO WORLD", Version::Normal(1), EcLevel::Q);
+        let res = encode(b"HELLO WORLD", Version::Normal(NormalVersion::V1), EcLevel::Q);
         assert_eq!(
             res,
             Ok(vec![
@@ -90,7 +90,7 @@ mod tests {
 
     #[test]
     fn auto_mode_switch() {
-        let res = encode(b"123A", Version::Micro(2), EcLevel::L);
+        let res = encode(b"123A", Version::Micro(MicroVersion::M2), EcLevel::L);
         assert_eq!(
             res,
             Ok(vec![
@@ -105,7 +105,7 @@ mod tests {
 
     #[test]
     fn too_long() {
-        let res = encode(b">>>>>>>>", Version::Normal(1), EcLevel::H);
+        let res = encode(b">>>>>>>>", Version::Normal(NormalVersion::V1), EcLevel::H);
         assert_eq!(res, Err(Error::DataTooLong));
     }
 
@@ -116,10 +116,10 @@ mod tests {
     // returning DataTooLong.
     #[test]
     fn micro_m3_alphanumeric_with_digit_run() {
-        assert!(encode(b"9BA3935DM3TBE4", Version::Micro(3), EcLevel::L).is_ok());
+        assert!(encode(b"9BA3935DM3TBE4", Version::Micro(MicroVersion::M3), EcLevel::L).is_ok());
         // One more character genuinely overflows M3 and must still be rejected.
         assert_eq!(
-            encode(b"9BA3935DM3TBE45", Version::Micro(3), EcLevel::L),
+            encode(b"9BA3935DM3TBE45", Version::Micro(MicroVersion::M3), EcLevel::L),
             Err(Error::DataTooLong)
         );
     }
