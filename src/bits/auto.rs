@@ -178,9 +178,9 @@ pub fn encode_auto_micro(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     let min_version = possible_versions.iter().min_by_key(|v| v.width());
 
     if let Some(version) = min_version {
-        let mut bits = Bits::new(*version);
-        let opt_segments = optimize::optimize_segments(&segments, *version);
-        bits.reserve(optimize::total_encoded_len(&opt_segments, *version));
+        let mut bits = Bits::new(version);
+        let opt_segments = optimize::optimize_segments(&segments, version);
+        bits.reserve(optimize::total_encoded_len(&opt_segments, version));
         bits.push_segments(data, opt_segments.into_iter())?;
         bits.push_terminator(ec_level)?;
         return Ok(bits);
@@ -282,9 +282,9 @@ pub fn encode_auto_rect_micro(
     };
 
     if let Some(version) = min_version {
-        let mut bits = Bits::new(*version);
-        let opt_segments = optimize::optimize_segments(&segments, *version);
-        bits.reserve(optimize::total_encoded_len(&opt_segments, *version));
+        let mut bits = Bits::new(version);
+        let opt_segments = optimize::optimize_segments(&segments, version);
+        bits.reserve(optimize::total_encoded_len(&opt_segments, version));
         bits.push_segments(data, opt_segments.into_iter())?;
         bits.push_terminator(ec_level)?;
         return Ok(bits);
