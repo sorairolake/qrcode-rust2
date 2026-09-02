@@ -9,7 +9,7 @@
 use super::error_correction_sizes::{DATA_BYTES_PER_BLOCK, EC_BYTES_PER_BLOCK};
 use crate::{
     error::Result,
-    types::{EcLevel, Version},
+    types::{EcLevel, MicroVersion, NormalVersion, Version},
 };
 
 /// Computes the maximum allowed number of erratic modules can be introduced to
@@ -23,24 +23,25 @@ use crate::{
 /// # Examples
 ///
 /// ```
-/// use qrcode2::{EcLevel, Version, ec};
+/// use qrcode2::{EcLevel, MicroVersion, NormalVersion, RectMicroVersion, Version, ec};
 ///
 /// assert_eq!(
-///     ec::max_allowed_errors(Version::Normal(40), EcLevel::M),
+///     ec::max_allowed_errors(Version::Normal(NormalVersion::V40), EcLevel::M),
 ///     Ok(686)
 /// );
-/// assert_eq!(ec::max_allowed_errors(Version::Micro(4), EcLevel::Q), Ok(7));
+/// assert_eq!(ec::max_allowed_errors(Version::Micro(MicroVersion::M4), EcLevel::Q), Ok(7));
 /// assert_eq!(
-///     ec::max_allowed_errors(Version::RectMicro(17, 139), EcLevel::H),
+///     ec::max_allowed_errors(Version::RectMicro(RectMicroVersion::R17x139), EcLevel::H),
 ///     Ok(78)
 /// );
 /// ```
 pub fn max_allowed_errors(version: Version, ec_level: EcLevel) -> Result<usize> {
     let p = match (version, ec_level) {
-        (Version::Micro(2) | Version::Normal(1), EcLevel::L) => 3,
-        (Version::Micro(_) | Version::Normal(2), EcLevel::L)
-        | (Version::Micro(2) | Version::Normal(1), EcLevel::M) => 2,
-        (Version::Normal(1), _) | (Version::Normal(3), EcLevel::L) => 1,
+        (Version::Micro(MicroVersion::M2) | Version::Normal(NormalVersion::V1), EcLevel::L) => 3,
+        (Version::Micro(_) | Version::Normal(NormalVersion::V2), EcLevel::L)
+        | (Version::Micro(MicroVersion::M2) | Version::Normal(NormalVersion::V1), EcLevel::M) => 2,
+        (Version::Normal(NormalVersion::V1), _)
+        | (Version::Normal(NormalVersion::V3), EcLevel::L) => 1,
         _ => 0,
     };
 
@@ -54,146 +55,147 @@ pub fn max_allowed_errors(version: Version, ec_level: EcLevel) -> Result<usize> 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::RectMicroVersion;
 
     #[test]
     fn low_versions() {
         assert_eq!(
-            max_allowed_errors(Version::Normal(1), EcLevel::L).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V1), EcLevel::L).unwrap(),
             2
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(1), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V1), EcLevel::M).unwrap(),
             4
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(1), EcLevel::Q).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V1), EcLevel::Q).unwrap(),
             6
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(1), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V1), EcLevel::H).unwrap(),
             8
         );
 
         assert_eq!(
-            max_allowed_errors(Version::Normal(2), EcLevel::L).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V2), EcLevel::L).unwrap(),
             4
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(2), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V2), EcLevel::M).unwrap(),
             8
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(2), EcLevel::Q).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V2), EcLevel::Q).unwrap(),
             11
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(2), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V2), EcLevel::H).unwrap(),
             14
         );
 
         assert_eq!(
-            max_allowed_errors(Version::Normal(3), EcLevel::L).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V3), EcLevel::L).unwrap(),
             7
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(3), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V3), EcLevel::M).unwrap(),
             13
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(3), EcLevel::Q).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V3), EcLevel::Q).unwrap(),
             18
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(3), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V3), EcLevel::H).unwrap(),
             22
         );
 
         assert_eq!(
-            max_allowed_errors(Version::Normal(4), EcLevel::L).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V4), EcLevel::L).unwrap(),
             10
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(4), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V4), EcLevel::M).unwrap(),
             18
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(4), EcLevel::Q).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V4), EcLevel::Q).unwrap(),
             26
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(4), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V4), EcLevel::H).unwrap(),
             32
         );
 
         assert_eq!(
-            max_allowed_errors(Version::Micro(1), EcLevel::L).unwrap(),
+            max_allowed_errors(Version::Micro(MicroVersion::M1), EcLevel::L).unwrap(),
             0
         );
 
         assert_eq!(
-            max_allowed_errors(Version::Micro(2), EcLevel::L).unwrap(),
+            max_allowed_errors(Version::Micro(MicroVersion::M2), EcLevel::L).unwrap(),
             1
         );
         assert_eq!(
-            max_allowed_errors(Version::Micro(2), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::Micro(MicroVersion::M2), EcLevel::M).unwrap(),
             2
         );
 
         assert_eq!(
-            max_allowed_errors(Version::Micro(3), EcLevel::L).unwrap(),
+            max_allowed_errors(Version::Micro(MicroVersion::M3), EcLevel::L).unwrap(),
             2
         );
         assert_eq!(
-            max_allowed_errors(Version::Micro(3), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::Micro(MicroVersion::M3), EcLevel::M).unwrap(),
             4
         );
 
         assert_eq!(
-            max_allowed_errors(Version::Micro(4), EcLevel::L).unwrap(),
+            max_allowed_errors(Version::Micro(MicroVersion::M4), EcLevel::L).unwrap(),
             3
         );
         assert_eq!(
-            max_allowed_errors(Version::Micro(4), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::Micro(MicroVersion::M4), EcLevel::M).unwrap(),
             5
         );
         assert_eq!(
-            max_allowed_errors(Version::Micro(4), EcLevel::Q).unwrap(),
+            max_allowed_errors(Version::Micro(MicroVersion::M4), EcLevel::Q).unwrap(),
             7
         );
 
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(7, 43), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R7x43), EcLevel::M).unwrap(),
             3
         );
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(7, 43), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R7x43), EcLevel::H).unwrap(),
             5
         );
 
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(7, 59), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R7x59), EcLevel::M).unwrap(),
             4
         );
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(7, 59), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R7x59), EcLevel::H).unwrap(),
             7
         );
 
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(7, 77), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R7x77), EcLevel::M).unwrap(),
             6
         );
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(7, 77), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R7x77), EcLevel::H).unwrap(),
             11
         );
 
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(7, 99), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R7x99), EcLevel::M).unwrap(),
             8
         );
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(7, 99), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R7x99), EcLevel::H).unwrap(),
             15
         );
     }
@@ -201,28 +203,28 @@ mod tests {
     #[test]
     fn high_versions() {
         assert_eq!(
-            max_allowed_errors(Version::Normal(40), EcLevel::L).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V40), EcLevel::L).unwrap(),
             375
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(40), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V40), EcLevel::M).unwrap(),
             686
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(40), EcLevel::Q).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V40), EcLevel::Q).unwrap(),
             1020
         );
         assert_eq!(
-            max_allowed_errors(Version::Normal(40), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::Normal(NormalVersion::V40), EcLevel::H).unwrap(),
             1215
         );
 
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(17, 139), EcLevel::M).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R17x139), EcLevel::M).unwrap(),
             40
         );
         assert_eq!(
-            max_allowed_errors(Version::RectMicro(17, 139), EcLevel::H).unwrap(),
+            max_allowed_errors(Version::RectMicro(RectMicroVersion::R17x139), EcLevel::H).unwrap(),
             78
         );
     }
