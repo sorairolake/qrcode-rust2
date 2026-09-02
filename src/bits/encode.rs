@@ -55,7 +55,7 @@ mod tests {
     use super::*;
     use crate::{
         error::Error,
-        types::{EcLevel, Version},
+        types::{EcLevel, MicroVersion, NormalVersion, Version},
     };
 
     fn encode(data: &[u8], version: Version, ec_level: EcLevel) -> Result<Vec<u8>> {
