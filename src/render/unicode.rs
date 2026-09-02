@@ -121,8 +121,9 @@ impl RenderCanvas for Canvas1x2 {
 mod tests {
     use super::*;
     use crate::{
+        QrCode,
         render::Renderer,
-        types::{EcLevel, MicroVersion, QrCode, Version},
+        types::{EcLevel, MicroVersion, Version},
     };
 
     #[test]
