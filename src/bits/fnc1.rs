@@ -22,7 +22,7 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
     /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// bits.push_fnc1_first_position();
@@ -44,7 +44,7 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
     /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// bits.push_fnc1_second_position(37);
@@ -56,7 +56,7 @@ impl Bits {
     /// please pass in its ASCII value + 100:
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
     /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// bits.push_fnc1_second_position(b'A' + 100);
