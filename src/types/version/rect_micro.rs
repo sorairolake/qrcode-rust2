@@ -304,8 +304,14 @@ impl TryFrom<(u8, u8)> for RectMicroVersion {
     /// ```
     /// use qrcode2::RectMicroVersion;
     ///
-    /// assert_eq!(RectMicroVersion::try_from((7, 43)), Ok(RectMicroVersion::R7x43));
-    /// assert_eq!(RectMicroVersion::try_from((17, 139)), Ok(RectMicroVersion::R17x139));
+    /// assert_eq!(
+    ///     RectMicroVersion::try_from((7, 43)),
+    ///     Ok(RectMicroVersion::R7x43)
+    /// );
+    /// assert_eq!(
+    ///     RectMicroVersion::try_from((17, 139)),
+    ///     Ok(RectMicroVersion::R17x139)
+    /// );
     ///
     /// assert!(RectMicroVersion::try_from((0, 0)).is_err());
     /// ```
