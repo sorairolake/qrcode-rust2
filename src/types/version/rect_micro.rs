@@ -242,6 +242,16 @@ impl RectMicroVersion {
 }
 
 impl From<RectMicroVersion> for (u8, u8) {
+    /// Converts a `RectMicroVersion` into a `(height, width)` tuple.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::RectMicroVersion;
+    ///
+    /// assert_eq!(<(u8, u8)>::from(RectMicroVersion::R7x43), (7, 43));
+    /// assert_eq!(<(u8, u8)>::from(RectMicroVersion::R17x139), (17, 139));
+    /// ```
     fn from(version: RectMicroVersion) -> Self {
         match version {
             RectMicroVersion::R7x43 => (7, 43),
@@ -283,6 +293,28 @@ impl From<RectMicroVersion> for (u8, u8) {
 impl TryFrom<(u8, u8)> for RectMicroVersion {
     type Error = Error;
 
+    /// Converts a `(height, width)` tuple to a `RectMicroVersion`.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Err`] if `version` is not a valid rMQR code version.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::RectMicroVersion;
+    ///
+    /// assert_eq!(
+    ///     RectMicroVersion::try_from((7, 43)),
+    ///     Ok(RectMicroVersion::R7x43)
+    /// );
+    /// assert_eq!(
+    ///     RectMicroVersion::try_from((17, 139)),
+    ///     Ok(RectMicroVersion::R17x139)
+    /// );
+    ///
+    /// assert!(RectMicroVersion::try_from((0, 0)).is_err());
+    /// ```
     fn try_from(version: (u8, u8)) -> Result<Self, Self::Error> {
         match version {
             (7, 43) => Ok(Self::R7x43),

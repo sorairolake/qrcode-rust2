@@ -155,6 +155,16 @@ impl NormalVersion {
 }
 
 impl From<NormalVersion> for u8 {
+    /// Converts a `NormalVersion` into a [`u8`] value.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::NormalVersion;
+    ///
+    /// assert_eq!(u8::from(NormalVersion::V1), 1);
+    /// assert_eq!(u8::from(NormalVersion::V40), 40);
+    /// ```
     fn from(version: NormalVersion) -> Self {
         version as Self
     }
@@ -163,6 +173,22 @@ impl From<NormalVersion> for u8 {
 impl TryFrom<u8> for NormalVersion {
     type Error = Error;
 
+    /// Converts a [`u8`] value to a `NormalVersion`.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Err`] if `version` is not a valid normal QR code version.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::NormalVersion;
+    ///
+    /// assert_eq!(NormalVersion::try_from(1), Ok(NormalVersion::V1));
+    /// assert_eq!(NormalVersion::try_from(40), Ok(NormalVersion::V40));
+    ///
+    /// assert!(NormalVersion::try_from(0).is_err());
+    /// ```
     fn try_from(version: u8) -> Result<Self, Self::Error> {
         match version {
             1 => Ok(Self::V1),

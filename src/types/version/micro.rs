@@ -50,6 +50,16 @@ impl MicroVersion {
 }
 
 impl From<MicroVersion> for u8 {
+    /// Converts a `MicroVersion` into a [`u8`] value.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::MicroVersion;
+    ///
+    /// assert_eq!(u8::from(MicroVersion::M1), 1);
+    /// assert_eq!(u8::from(MicroVersion::M4), 4);
+    /// ```
     fn from(version: MicroVersion) -> Self {
         version as Self
     }
@@ -58,6 +68,22 @@ impl From<MicroVersion> for u8 {
 impl TryFrom<u8> for MicroVersion {
     type Error = Error;
 
+    /// Converts a [`u8`] value to a `MicroVersion`.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Err`] if `version` is not a valid Micro QR code version.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::MicroVersion;
+    ///
+    /// assert_eq!(MicroVersion::try_from(1), Ok(MicroVersion::M1));
+    /// assert_eq!(MicroVersion::try_from(4), Ok(MicroVersion::M4));
+    ///
+    /// assert!(MicroVersion::try_from(0).is_err());
+    /// ```
     fn try_from(version: u8) -> Result<Self, Self::Error> {
         match version {
             1 => Ok(Self::M1),
