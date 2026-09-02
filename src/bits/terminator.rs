@@ -108,8 +108,8 @@ impl Bits {
     /// for the given version.
     pub fn push_terminator(&mut self, ec_level: EcLevel) -> Result<()> {
         let terminator_size = match self.version {
-            Version::Micro(a) => a.as_usize() * 2 + 1,
-            Version::RectMicro(..) => 3,
+            Version::Micro(a) => u8::from(a).as_usize() * 2 + 1,
+            Version::RectMicro(_) => 3,
             Version::Normal(_) => 4,
         };
 
