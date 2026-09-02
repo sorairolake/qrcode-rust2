@@ -107,6 +107,28 @@ pub enum RectMicroVersion {
 }
 
 impl RectMicroVersion {
+    /// The first rMQR code version in the version indicator order.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::RectMicroVersion;
+    ///
+    /// assert_eq!(RectMicroVersion::MIN, RectMicroVersion::R7x43);
+    /// ```
+    pub const MIN: Self = Self::R7x43;
+
+    /// The last rMQR code version in the version indicator order.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::RectMicroVersion;
+    ///
+    /// assert_eq!(RectMicroVersion::MAX, RectMicroVersion::R17x139);
+    /// ```
+    pub const MAX: Self = Self::R17x139;
+
     /// All versions of rMQR code.
     pub(crate) const ALL: [Self; 32] = [
         Self::R7x43,
