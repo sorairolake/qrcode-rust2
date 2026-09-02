@@ -60,10 +60,10 @@ pub enum NormalVersion {
     /// An 85×85 normal QR code symbol.
     V17,
 
-    /// A 89×89 normal QR code symbol.
+    /// An 89×89 normal QR code symbol.
     V18,
 
-    /// An 93×93 normal QR code symbol.
+    /// A 93×93 normal QR code symbol.
     V19,
 
     /// A 97×97 normal QR code symbol.
