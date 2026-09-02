@@ -144,7 +144,7 @@ impl Canvas {
     ///
     /// <div class="warning">
     ///
-    /// Note that the standard gives the formula for *efficiency* score, which
+    /// Note that the standard gives the formula for _efficiency_ score, which
     /// has the inverse meaning of this method, but it is very easy to convert
     /// between the two (this score is (16×width − standard-score)).
     ///

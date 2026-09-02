@@ -505,7 +505,7 @@ mod tests {
         assert!(total_encoded_len(&opt, version) <= 84);
     }
 
-    /// Independent reference: the minimum encoded length over *every* way to
+    /// Independent reference: the minimum encoded length over _every_ way to
     /// partition the parsed runs into contiguous single-mode segments, found by
     /// exhaustive enumeration (each segment uses the lowest common mode of its
     /// runs). Exponential in the run count, so only for small test inputs.

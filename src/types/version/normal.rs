@@ -6,132 +6,132 @@
 
 use crate::error::Error;
 
-/// `NormalVersion` is a type that represents a normal QR code version.
+/// `NormalVersion` is a type that represents a QR code model 2 version.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum NormalVersion {
-    /// A 21×21 normal QR code symbol.
+    /// A 21×21 QR code model 2 symbol.
     V1 = 1,
 
-    /// A 25×25 normal QR code symbol.
+    /// A 25×25 QR code model 2 symbol.
     V2,
 
-    /// A 29×29 normal QR code symbol.
+    /// A 29×29 QR code model 2 symbol.
     V3,
 
-    /// A 33×33 normal QR code symbol.
+    /// A 33×33 QR code model 2 symbol.
     V4,
 
-    /// A 37×37 normal QR code symbol.
+    /// A 37×37 QR code model 2 symbol.
     V5,
 
-    /// A 41×41 normal QR code symbol.
+    /// A 41×41 QR code model 2 symbol.
     V6,
 
-    /// A 45×45 normal QR code symbol.
+    /// A 45×45 QR code model 2 symbol.
     V7,
 
-    /// A 49×49 normal QR code symbol.
+    /// A 49×49 QR code model 2 symbol.
     V8,
 
-    /// A 53×53 normal QR code symbol.
+    /// A 53×53 QR code model 2 symbol.
     V9,
 
-    /// A 57×57 normal QR code symbol.
+    /// A 57×57 QR code model 2 symbol.
     V10,
 
-    /// A 61×61 normal QR code symbol.
+    /// A 61×61 QR code model 2 symbol.
     V11,
 
-    /// A 65×65 normal QR code symbol.
+    /// A 65×65 QR code model 2 symbol.
     V12,
 
-    /// A 69×69 normal QR code symbol.
+    /// A 69×69 QR code model 2 symbol.
     V13,
 
-    /// A 73×73 normal QR code symbol.
+    /// A 73×73 QR code model 2 symbol.
     V14,
 
-    /// A 77×77 normal QR code symbol.
+    /// A 77×77 QR code model 2 symbol.
     V15,
 
-    /// An 81×81 normal QR code symbol.
+    /// An 81×81 QR code model 2 symbol.
     V16,
 
-    /// An 85×85 normal QR code symbol.
+    /// An 85×85 QR code model 2 symbol.
     V17,
 
-    /// An 89×89 normal QR code symbol.
+    /// An 89×89 QR code model 2 symbol.
     V18,
 
-    /// A 93×93 normal QR code symbol.
+    /// A 93×93 QR code model 2 symbol.
     V19,
 
-    /// A 97×97 normal QR code symbol.
+    /// A 97×97 QR code model 2 symbol.
     V20,
 
-    /// A 101×101 normal QR code symbol.
+    /// A 101×101 QR code model 2 symbol.
     V21,
 
-    /// A 105×105 normal QR code symbol.
+    /// A 105×105 QR code model 2 symbol.
     V22,
 
-    /// A 109×109 normal QR code symbol.
+    /// A 109×109 QR code model 2 symbol.
     V23,
 
-    /// A 113×113 normal QR code symbol.
+    /// A 113×113 QR code model 2 symbol.
     V24,
 
-    /// A 117×117 normal QR code symbol.
+    /// A 117×117 QR code model 2 symbol.
     V25,
 
-    /// A 121×121 normal QR code symbol.
+    /// A 121×121 QR code model 2 symbol.
     V26,
 
-    /// A 125×125 normal QR code symbol.
+    /// A 125×125 QR code model 2 symbol.
     V27,
 
-    /// A 129×129 normal QR code symbol.
+    /// A 129×129 QR code model 2 symbol.
     V28,
 
-    /// A 133×133 normal QR code symbol.
+    /// A 133×133 QR code model 2 symbol.
     V29,
 
-    /// A 137×137 normal QR code symbol.
+    /// A 137×137 QR code model 2 symbol.
     V30,
 
-    /// A 141×141 normal QR code symbol.
+    /// A 141×141 QR code model 2 symbol.
     V31,
 
-    /// A 145×145 normal QR code symbol.
+    /// A 145×145 QR code model 2 symbol.
     V32,
 
-    /// A 149×149 normal QR code symbol.
+    /// A 149×149 QR code model 2 symbol.
     V33,
 
-    /// A 153×153 normal QR code symbol.
+    /// A 153×153 QR code model 2 symbol.
     V34,
 
-    /// A 157×157 normal QR code symbol.
+    /// A 157×157 QR code model 2 symbol.
     V35,
 
-    /// A 161×161 normal QR code symbol.
+    /// A 161×161 QR code model 2 symbol.
     V36,
 
-    /// A 165×165 normal QR code symbol.
+    /// A 165×165 QR code model 2 symbol.
     V37,
 
-    /// A 169×169 normal QR code symbol.
+    /// A 169×169 QR code model 2 symbol.
     V38,
 
-    /// A 173×173 normal QR code symbol.
+    /// A 173×173 QR code model 2 symbol.
     V39,
 
-    /// A 177×177 normal QR code symbol.
+    /// A 177×177 QR code model 2 symbol.
     V40,
 }
 
 impl NormalVersion {
-    /// The smallest normal QR code version.
+    /// The smallest QR code model 2 version.
     ///
     /// # Examples
     ///
@@ -142,7 +142,7 @@ impl NormalVersion {
     /// ```
     pub const MIN: Self = Self::V1;
 
-    /// The largest normal QR code version.
+    /// The largest QR code model 2 version.
     ///
     /// # Examples
     ///
@@ -177,7 +177,7 @@ impl TryFrom<u8> for NormalVersion {
     ///
     /// # Errors
     ///
-    /// Returns [`Err`] if `version` is not a valid normal QR code version.
+    /// Returns [`Err`] if `version` is not a valid QR code model 2 version.
     ///
     /// # Examples
     ///

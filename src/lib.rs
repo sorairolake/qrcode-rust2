@@ -10,7 +10,7 @@
 
 //! The `qrcode2` crate is a [QR code] encoding library.
 //!
-//! This crate provides a [normal QR code], [Micro QR code], and [rMQR code]
+//! This crate provides a [QR code model 2], [Micro QR code], and [rMQR code]
 //! encoder for binary data.
 //!
 //! # Examples
@@ -37,7 +37,7 @@
 //! ```
 //!
 //! [QR code]: https://www.qrcode.com/
-//! [normal QR code]: https://www.qrcode.com/codes/model12.html
+//! [QR code model 2]: https://www.qrcode.com/codes/model12.html
 //! [Micro QR code]: https://www.qrcode.com/codes/microqr.html
 //! [rMQR code]: https://www.qrcode.com/codes/rmqr.html
 
@@ -573,12 +573,12 @@ mod tests {
 
 #[cfg(test)]
 mod iso_capacity {
-    //! Data-driven conformance for QR character capacities (Micro, Normal,
+    //! Data-driven conformance for QR character capacities (Micro, Model 2,
     //! rMQR).
     //!
     //! The encoder validates against the bit-capacity table `DATA_LENGTHS`
     //! (ISO/IEC 18004:2006 Table 7, ISO/IEC 23941:2022 Table 6); the per-mode
-    //! *character* capacities below are derived from it at runtime and are not
+    //! _character_ capacities below are derived from it at runtime and are not
     //! otherwise asserted anywhere. These tests lock both the boundary (exactly
     //! `cap` chars encode, `cap + 1` does not) and the segmentation that
     //! determines whether mixed-mode payloads reach that boundary at all.
@@ -592,7 +592,7 @@ mod iso_capacity {
     const MODE_UNITS: [u8; 3] = [b'7', b'A', b'a'];
 
     /// `(version, ec, [numeric, alphanumeric, byte])` character capacities.
-    /// Micro and Normal QR are from ISO/IEC 18004:2006; rMQR from ISO/IEC
+    /// Micro and Model 2 QR are from ISO/IEC 18004:2006; rMQR from ISO/IEC
     /// 23941:2022. Kanji is omitted (it needs Shift-JIS fixtures). `None` marks
     /// a mode/EC level not valid for the version. The clamp fix applies to
     /// every version type, so the boundary is asserted across all three
@@ -639,7 +639,7 @@ mod iso_capacity {
             EcLevel::Q,
             [Some(21), Some(13), Some(9)],
         ),
-        // Normal QR, Version 1 (all four EC levels)
+        // Model 2 QR, Version 1 (all four EC levels)
         (
             Version::Normal(NormalVersion::V1),
             EcLevel::L,

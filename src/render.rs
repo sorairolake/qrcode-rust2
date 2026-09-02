@@ -141,7 +141,7 @@ impl<'a, P: Pixel> Renderer<'a, P> {
     ///
     /// If `Renderer` is constructed using
     /// [`QrCode::render`](crate::QrCode::render), the size of the quiet zone is
-    /// 4 for normal QR code, and 2 for Micro QR code and rMQR code.
+    /// 4 for QR code model 2, and 2 for Micro QR code and rMQR code.
     pub const fn quiet_zone(&mut self, quiet_zone: u32) -> &mut Self {
         self.quiet_zone = quiet_zone;
         self
@@ -186,7 +186,7 @@ impl<'a, P: Pixel> Renderer<'a, P> {
     /// module's size should be 10×10, so the actual image size will be 190×190.
     ///
     /// The module size is at least 1×1, so if the restriction is too small, the
-    /// final image *can* be larger than the input.
+    /// final image _can_ be larger than the input.
     pub fn max_dimensions(&mut self, width: u32, height: u32) -> &mut Self {
         let quiet_zone = if self.has_quiet_zone { 2 } else { 0 } * self.quiet_zone;
         let width_in_modules = self.horizontal_modules_count + quiet_zone;
