@@ -10,7 +10,7 @@
 use super::Canvas;
 use crate::{
     cast::As,
-    types::{Color, EcLevel, Version},
+    types::{Color, EcLevel, NormalVersion, Version},
 };
 
 impl Canvas {
@@ -71,7 +71,7 @@ impl Canvas {
                 // Dark module.
                 self.put(8, -8, Color::Dark);
             }
-            Version::RectMicro(..) => {}
+            Version::RectMicro(_) => {}
         }
     }
 
@@ -83,9 +83,10 @@ impl Canvas {
     /// Draws the version information patterns.
     pub(super) fn draw_version_info_patterns(&mut self) {
         match self.version {
-            Version::Micro(_) | Version::Normal(1..=6) => {}
+            Version::Micro(_) => {}
+            Version::Normal(a) if a <= NormalVersion::V6 => {}
             Version::Normal(a) => {
-                let version_info = VERSION_INFOS[(a - 7).as_usize()];
+                let version_info = VERSION_INFOS[(u8::from(a) - 7).as_usize()];
                 self.draw_number(
                     version_info,
                     18,
@@ -101,8 +102,8 @@ impl Canvas {
                     &VERSION_INFO_COORDS_TR,
                 );
             }
-            Version::RectMicro(..) => {
-                let index = self.version.rect_micro_index().unwrap();
+            Version::RectMicro(a) => {
+                let index = a.index();
                 let ec_level = usize::from(self.ec_level != EcLevel::M);
                 let version_info_left = RMQR_VERSION_INFOS_L[index][ec_level];
                 let version_info_right = RMQR_VERSION_INFOS_R[index][ec_level];
@@ -410,10 +411,11 @@ static RMQR_VERSION_INFOS_R: [[u32; 2]; 32] = [
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::MicroVersion;
 
     #[test]
     fn draw_number() {
-        let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Micro(MicroVersion::M1), EcLevel::L);
         c.draw_number(
             0b1010_1101,
             8,
@@ -442,7 +444,7 @@ mod tests {
 
     #[test]
     fn draw_version_info_1() {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
         c.draw_version_info_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -475,7 +477,7 @@ mod tests {
 
     #[test]
     fn draw_version_info_7() {
-        let mut c = Canvas::new(Version::Normal(7), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V7), EcLevel::L);
         c.draw_version_info_patterns();
 
         assert_eq!(
@@ -533,7 +535,7 @@ mod tests {
 
     #[test]
     fn draw_reserved_format_info_patterns_qr() {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
         c.draw_reserved_format_info_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -566,7 +568,7 @@ mod tests {
 
     #[test]
     fn draw_reserved_format_info_patterns_micro_qr() {
-        let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Micro(MicroVersion::M1), EcLevel::L);
         c.draw_reserved_format_info_patterns();
         assert_eq!(
             c.to_debug_str(),

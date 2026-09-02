@@ -24,7 +24,7 @@ use crate::{
 /// # Errors
 ///
 /// Returns [`Err`] if it is not valid to use the `ec_level` for the given
-/// version (e.g. [`Version::Micro(1)`](Version::Micro) with [`EcLevel::H`]).
+/// version.
 pub fn construct_codewords(
     rawbits: &[u8],
     version: Version,
@@ -62,12 +62,13 @@ pub fn construct_codewords(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::NormalVersion;
 
     #[test]
     fn add_ec_simple() {
         let msg = b" [\x0Bx\xD1r\xDCMC@\xEC\x11\xEC\x11\xEC\x11";
         let (blocks_vec, ec_vec) =
-            construct_codewords(msg, Version::Normal(1), EcLevel::M).unwrap();
+            construct_codewords(msg, Version::Normal(NormalVersion::V1), EcLevel::M).unwrap();
         assert_eq!(blocks_vec, msg);
         assert_eq!(ec_vec, b"\xC4#'w\xEB\xD7\xE7\xE2]\x17");
     }
@@ -98,7 +99,7 @@ mod tests {
         ];
 
         let (blocks_vec, ec_vec) =
-            construct_codewords(&msg, Version::Normal(5), EcLevel::Q).unwrap();
+            construct_codewords(&msg, Version::Normal(NormalVersion::V5), EcLevel::Q).unwrap();
         assert_eq!(blocks_vec, expected_blocks);
         assert_eq!(ec_vec, expected_ec);
     }

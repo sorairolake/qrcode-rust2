@@ -88,7 +88,11 @@ impl Canvas {
             );
         }
 
-        let position_index = self.version.rect_micro_width_index().unwrap() + 34;
+        let position_index = if let Version::RectMicro(v) = self.version {
+            v.width_index() + 34
+        } else {
+            unreachable!();
+        };
         for x in ALIGNMENT_PATTERN_POSITIONS[position_index] {
             self.draw_line(*x, 3, *x, height - 4, Color::Dark, Color::Light);
         }
@@ -100,14 +104,14 @@ impl Canvas {
     /// code symbol, to establish the fine-grained module coordinates when
     /// scanning.
     pub(super) fn draw_timing_patterns(&mut self) {
-        if let Version::RectMicro(..) = self.version {
+        if self.version.is_rect_micro() {
             self.draw_rmqr_line();
         } else {
             let width = self.width;
             let (y, x1, x2) = match self.version {
                 Version::Micro(_) => (0, 8, width - 1),
                 Version::Normal(_) => (6, 8, width - 9),
-                Version::RectMicro(..) => unreachable!(),
+                Version::RectMicro(_) => unreachable!(),
             };
             self.draw_line(x1, y, x2, y, Color::Dark, Color::Light);
             self.draw_line(y, x1, y, x2, Color::Dark, Color::Light);
@@ -118,11 +122,11 @@ impl Canvas {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::EcLevel;
+    use crate::types::{EcLevel, MicroVersion, NormalVersion, RectMicroVersion};
 
     #[test]
     fn draw_timing_patterns_qr() {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -155,7 +159,7 @@ mod tests {
 
     #[test]
     fn draw_timing_patterns_micro_qr() {
-        let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Micro(MicroVersion::M1), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -178,7 +182,7 @@ mod tests {
 
     #[test]
     fn draw_timing_patterns_rmqr_7x77() {
-        let mut c = Canvas::new(Version::RectMicro(7, 77), EcLevel::L);
+        let mut c = Canvas::new(Version::RectMicro(RectMicroVersion::R7x77), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -197,7 +201,7 @@ mod tests {
 
     #[test]
     fn draw_timing_patterns_rmqr_9x77() {
-        let mut c = Canvas::new(Version::RectMicro(9, 77), EcLevel::L);
+        let mut c = Canvas::new(Version::RectMicro(RectMicroVersion::R9x77), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -218,7 +222,7 @@ mod tests {
 
     #[test]
     fn draw_timing_patterns_rmqr_11x77() {
-        let mut c = Canvas::new(Version::RectMicro(11, 77), EcLevel::L);
+        let mut c = Canvas::new(Version::RectMicro(RectMicroVersion::R11x77), EcLevel::L);
         c.draw_timing_patterns();
         assert_eq!(
             c.to_debug_str(),

@@ -41,7 +41,7 @@ impl Canvas {
         match self.version {
             Version::Normal(_) => ALL_PATTERNS_QR.iter(),
             Version::Micro(_) => ALL_PATTERNS_MICRO_QR.iter(),
-            Version::RectMicro(..) => ALL_PATTERNS_RMQR.iter(),
+            Version::RectMicro(_) => ALL_PATTERNS_RMQR.iter(),
         }
         .map(|ptn| {
             let mut c = self.clone();

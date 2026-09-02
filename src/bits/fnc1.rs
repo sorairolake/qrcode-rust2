@@ -22,9 +22,9 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
-    /// let mut bits = Bits::new(Version::Normal(1));
+    /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// bits.push_fnc1_first_position();
     /// bits.push_numeric_data(b"01049123451234591597033130128");
     /// bits.push_alphanumeric_data(b"%10ABC123");
@@ -44,9 +44,9 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
-    /// let mut bits = Bits::new(Version::Normal(1));
+    /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// bits.push_fnc1_second_position(37);
     /// bits.push_alphanumeric_data(b"AA1234BBB112");
     /// bits.push_byte_data(b"text text text text\r");
@@ -56,9 +56,9 @@ impl Bits {
     /// please pass in its ASCII value + 100:
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
-    /// let mut bits = Bits::new(Version::Normal(1));
+    /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// bits.push_fnc1_second_position(b'A' + 100);
     /// ```
     pub fn push_fnc1_second_position(&mut self, application_indicator: u8) -> Result<()> {

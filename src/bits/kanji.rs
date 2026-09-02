@@ -40,11 +40,11 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::Version;
+    use crate::types::{MicroVersion, NormalVersion, Version};
 
     #[test]
     fn iso_18004_example() {
-        let mut bits = Bits::new(Version::Normal(1));
+        let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
         assert_eq!(bits.push_kanji_data(b"\x93\x5F\xE4\xAA"), Ok(()));
         assert_eq!(
             bits.into_bytes(),
@@ -60,7 +60,7 @@ mod tests {
 
     #[test]
     fn micro_qr_unsupported() {
-        let mut bits = Bits::new(Version::Micro(2));
+        let mut bits = Bits::new(Version::Micro(MicroVersion::M2));
         assert_eq!(
             bits.push_kanji_data(b"?"),
             Err(Error::UnsupportedCharacterSet)
@@ -69,7 +69,7 @@ mod tests {
 
     #[test]
     fn data_too_long() {
-        let mut bits = Bits::new(Version::Micro(3));
+        let mut bits = Bits::new(Version::Micro(MicroVersion::M3));
         assert_eq!(
             bits.push_kanji_data(b"\x93_\x93_\x93_\x93_\x93_\x93_\x93_\x93_"),
             Err(Error::DataTooLong)

@@ -9,7 +9,7 @@
 use std::sync::LazyLock;
 
 use qrcode2::{
-    EcLevel, Error, QrCode, Version,
+    EcLevel, Error, MicroVersion, NormalVersion, QrCode, RectMicroVersion, Version,
     image::{Luma, Rgb},
 };
 use shake::{ExtendableOutput, Shake128};
@@ -22,7 +22,8 @@ static INPUT_DATA: LazyLock<Vec<u8>> = LazyLock::new(|| {
 
 #[test]
 fn annex_i_qr_as_image() {
-    let code = QrCode::with_version(b"01234567", Version::Normal(1), EcLevel::M).unwrap();
+    let code =
+        QrCode::with_version(b"01234567", Version::Normal(NormalVersion::V1), EcLevel::M).unwrap();
     let image = code.render::<Luma<u8>>().build();
     let expected = image::load_from_memory(include_bytes!("data/test_annex_i_qr_as_image.png"))
         .unwrap()
@@ -33,7 +34,8 @@ fn annex_i_qr_as_image() {
 
 #[test]
 fn annex_i_micro_qr_as_image() {
-    let code = QrCode::with_version(b"01234567", Version::Micro(2), EcLevel::L).unwrap();
+    let code =
+        QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
         .render()
         .min_dimensions(200, 200)
@@ -50,7 +52,12 @@ fn annex_i_micro_qr_as_image() {
 
 #[test]
 fn annex_i_rmqr_as_image() {
-    let code = QrCode::with_version(b"0123456", Version::RectMicro(11, 27), EcLevel::H).unwrap();
+    let code = QrCode::with_version(
+        b"0123456",
+        Version::RectMicro(RectMicroVersion::R11x27),
+        EcLevel::H,
+    )
+    .unwrap();
     let image = code.render::<Luma<u8>>().build();
     let expected = image::load_from_memory(include_bytes!("data/test_annex_i_rmqr_as_image.png"))
         .unwrap()
@@ -76,8 +83,12 @@ fn qr_v40_ec_l_as_image() {
         assert_eq!(err, Error::DataTooLong);
     }
     {
-        let code =
-            QrCode::with_version(&INPUT_DATA[..2953], Version::Normal(40), EcLevel::L).unwrap();
+        let code = QrCode::with_version(
+            &INPUT_DATA[..2953],
+            Version::Normal(NormalVersion::V40),
+            EcLevel::L,
+        )
+        .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
             image::load_from_memory(include_bytes!("data/test_qr_v40_ec_l_as_image.png"))
@@ -87,7 +98,12 @@ fn qr_v40_ec_l_as_image() {
         assert_eq!(image.into_raw(), expected.into_raw());
     }
     {
-        let err = QrCode::with_version(&*INPUT_DATA, Version::Normal(40), EcLevel::L).unwrap_err();
+        let err = QrCode::with_version(
+            &*INPUT_DATA,
+            Version::Normal(NormalVersion::V40),
+            EcLevel::L,
+        )
+        .unwrap_err();
         assert_eq!(err, Error::DataTooLong);
     }
 }
@@ -123,8 +139,12 @@ fn qr_v40_ec_m_as_image() {
         assert_eq!(err, Error::DataTooLong);
     }
     {
-        let code =
-            QrCode::with_version(&INPUT_DATA[..2331], Version::Normal(40), EcLevel::M).unwrap();
+        let code = QrCode::with_version(
+            &INPUT_DATA[..2331],
+            Version::Normal(NormalVersion::V40),
+            EcLevel::M,
+        )
+        .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
             image::load_from_memory(include_bytes!("data/test_qr_v40_ec_m_as_image.png"))
@@ -134,8 +154,12 @@ fn qr_v40_ec_m_as_image() {
         assert_eq!(image.into_raw(), expected.into_raw());
     }
     {
-        let err =
-            QrCode::with_version(&INPUT_DATA[..2332], Version::Normal(40), EcLevel::M).unwrap_err();
+        let err = QrCode::with_version(
+            &INPUT_DATA[..2332],
+            Version::Normal(NormalVersion::V40),
+            EcLevel::M,
+        )
+        .unwrap_err();
         assert_eq!(err, Error::DataTooLong);
     }
 }
@@ -157,8 +181,12 @@ fn qr_v40_ec_h_as_image() {
         assert_eq!(err, Error::DataTooLong);
     }
     {
-        let code =
-            QrCode::with_version(&INPUT_DATA[..1273], Version::Normal(40), EcLevel::H).unwrap();
+        let code = QrCode::with_version(
+            &INPUT_DATA[..1273],
+            Version::Normal(NormalVersion::V40),
+            EcLevel::H,
+        )
+        .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
             image::load_from_memory(include_bytes!("data/test_qr_v40_ec_h_as_image.png"))
@@ -168,8 +196,12 @@ fn qr_v40_ec_h_as_image() {
         assert_eq!(image.into_raw(), expected.into_raw());
     }
     {
-        let err =
-            QrCode::with_version(&INPUT_DATA[..1274], Version::Normal(40), EcLevel::H).unwrap_err();
+        let err = QrCode::with_version(
+            &INPUT_DATA[..1274],
+            Version::Normal(NormalVersion::V40),
+            EcLevel::H,
+        )
+        .unwrap_err();
         assert_eq!(err, Error::DataTooLong);
     }
 }
@@ -193,7 +225,12 @@ fn micro_qr_v4_ec_l_as_image() {
         assert_eq!(err, Error::DataTooLong);
     }
     {
-        let code = QrCode::with_version(&INPUT_DATA[..15], Version::Micro(4), EcLevel::L).unwrap();
+        let code = QrCode::with_version(
+            &INPUT_DATA[..15],
+            Version::Micro(MicroVersion::M4),
+            EcLevel::L,
+        )
+        .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
             image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_l_as_image.png"))
@@ -203,8 +240,12 @@ fn micro_qr_v4_ec_l_as_image() {
         assert_eq!(image.into_raw(), expected.into_raw());
     }
     {
-        let err =
-            QrCode::with_version(&INPUT_DATA[..16], Version::Micro(4), EcLevel::L).unwrap_err();
+        let err = QrCode::with_version(
+            &INPUT_DATA[..16],
+            Version::Micro(MicroVersion::M4),
+            EcLevel::L,
+        )
+        .unwrap_err();
         assert_eq!(err, Error::DataTooLong);
     }
 }
@@ -242,7 +283,12 @@ fn micro_qr_v4_ec_m_as_image() {
         assert_eq!(err, Error::DataTooLong);
     }
     {
-        let code = QrCode::with_version(&INPUT_DATA[..13], Version::Micro(4), EcLevel::M).unwrap();
+        let code = QrCode::with_version(
+            &INPUT_DATA[..13],
+            Version::Micro(MicroVersion::M4),
+            EcLevel::M,
+        )
+        .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
             image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_m_as_image.png"))
@@ -252,8 +298,12 @@ fn micro_qr_v4_ec_m_as_image() {
         assert_eq!(image.into_raw(), expected.into_raw());
     }
     {
-        let err =
-            QrCode::with_version(&INPUT_DATA[..14], Version::Micro(4), EcLevel::M).unwrap_err();
+        let err = QrCode::with_version(
+            &INPUT_DATA[..14],
+            Version::Micro(MicroVersion::M4),
+            EcLevel::M,
+        )
+        .unwrap_err();
         assert_eq!(err, Error::DataTooLong);
     }
 }
@@ -276,7 +326,12 @@ fn micro_qr_v4_ec_q_as_image() {
         assert_eq!(err, Error::DataTooLong);
     }
     {
-        let code = QrCode::with_version(&INPUT_DATA[..9], Version::Micro(4), EcLevel::Q).unwrap();
+        let code = QrCode::with_version(
+            &INPUT_DATA[..9],
+            Version::Micro(MicroVersion::M4),
+            EcLevel::Q,
+        )
+        .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
             image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_q_as_image.png"))
@@ -286,8 +341,12 @@ fn micro_qr_v4_ec_q_as_image() {
         assert_eq!(image.into_raw(), expected.into_raw());
     }
     {
-        let err =
-            QrCode::with_version(&INPUT_DATA[..10], Version::Micro(4), EcLevel::Q).unwrap_err();
+        let err = QrCode::with_version(
+            &INPUT_DATA[..10],
+            Version::Micro(MicroVersion::M4),
+            EcLevel::Q,
+        )
+        .unwrap_err();
         assert_eq!(err, Error::DataTooLong);
     }
 }
@@ -325,9 +384,12 @@ fn rmqr_vr17x139_ec_m_as_image() {
         assert_eq!(err, Error::DataTooLong);
     }
     {
-        let code =
-            QrCode::with_version(&INPUT_DATA[..150], Version::RectMicro(17, 139), EcLevel::M)
-                .unwrap();
+        let code = QrCode::with_version(
+            &INPUT_DATA[..150],
+            Version::RectMicro(RectMicroVersion::R17x139),
+            EcLevel::M,
+        )
+        .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
             image::load_from_memory(include_bytes!("data/test_rmqr_vr17x139_ec_m_as_image.png"))
@@ -337,8 +399,12 @@ fn rmqr_vr17x139_ec_m_as_image() {
         assert_eq!(image.into_raw(), expected.into_raw());
     }
     {
-        let err = QrCode::with_version(&INPUT_DATA[..151], Version::RectMicro(17, 139), EcLevel::M)
-            .unwrap_err();
+        let err = QrCode::with_version(
+            &INPUT_DATA[..151],
+            Version::RectMicro(RectMicroVersion::R17x139),
+            EcLevel::M,
+        )
+        .unwrap_err();
         assert_eq!(err, Error::DataTooLong);
     }
 }
@@ -362,8 +428,12 @@ fn rmqr_vr17x139_ec_h_as_image() {
         assert_eq!(err, Error::DataTooLong);
     }
     {
-        let code = QrCode::with_version(&INPUT_DATA[..74], Version::RectMicro(17, 139), EcLevel::H)
-            .unwrap();
+        let code = QrCode::with_version(
+            &INPUT_DATA[..74],
+            Version::RectMicro(RectMicroVersion::R17x139),
+            EcLevel::H,
+        )
+        .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
             image::load_from_memory(include_bytes!("data/test_rmqr_vr17x139_ec_h_as_image.png"))
@@ -373,8 +443,12 @@ fn rmqr_vr17x139_ec_h_as_image() {
         assert_eq!(image.into_raw(), expected.into_raw());
     }
     {
-        let err = QrCode::with_version(&INPUT_DATA[..75], Version::RectMicro(17, 139), EcLevel::H)
-            .unwrap_err();
+        let err = QrCode::with_version(
+            &INPUT_DATA[..75],
+            Version::RectMicro(RectMicroVersion::R17x139),
+            EcLevel::H,
+        )
+        .unwrap_err();
         assert_eq!(err, Error::DataTooLong);
     }
 }

@@ -76,5 +76,6 @@ macro_rules! impl_as {
 }
 impl_as!(i16);
 impl_as!(isize);
+impl_as!(u8);
 impl_as!(u32);
 impl_as!(usize);

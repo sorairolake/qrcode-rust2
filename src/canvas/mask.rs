@@ -116,6 +116,7 @@ impl Canvas {
                 FORMAT_INFOS_QR[simple_format_number]
             }
             Version::Micro(a) => {
+                let a = u8::from(a);
                 let micro_pattern_number = match pattern {
                     MaskPattern::HorizontalLines => 0b00,
                     MaskPattern::LargeCheckerboard => 0b01,
@@ -137,7 +138,7 @@ impl Canvas {
                 let simple_format_number = symbol_number << 2 | micro_pattern_number;
                 FORMAT_INFOS_MICRO_QR[simple_format_number]
             }
-            Version::RectMicro(..) => return,
+            Version::RectMicro(_) => return,
         };
         self.draw_format_info_patterns_with_number(format_number);
     }
@@ -158,10 +159,11 @@ static FORMAT_INFOS_MICRO_QR: [u16; 32] = [
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::{MicroVersion, NormalVersion};
 
     #[test]
     fn apply_mask_qr() {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
         c.draw_all_functional_patterns();
         c.apply_mask(MaskPattern::Checkerboard);
 
@@ -196,7 +198,7 @@ mod tests {
 
     #[test]
     fn draw_format_info_patterns_qr() {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
         c.draw_format_info_patterns(MaskPattern::LargeCheckerboard);
         assert_eq!(
             c.to_debug_str(),
@@ -229,7 +231,7 @@ mod tests {
 
     #[test]
     fn draw_format_info_patterns_micro_qr() {
-        let mut c = Canvas::new(Version::Micro(2), EcLevel::L);
+        let mut c = Canvas::new(Version::Micro(MicroVersion::M2), EcLevel::L);
         c.draw_format_info_patterns(MaskPattern::LargeCheckerboard);
         assert_eq!(
             c.to_debug_str(),

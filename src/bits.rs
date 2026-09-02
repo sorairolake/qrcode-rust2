@@ -45,9 +45,9 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
-    /// let bits = Bits::new(Version::Normal(1));
+    /// let bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// ```
     #[must_use]
     pub const fn new(version: Version) -> Self {
@@ -124,9 +124,9 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
-    /// let mut bits = Bits::new(Version::Normal(1));
+    /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// bits.push_numeric_data(b"01234567");
     /// assert_eq!(
     ///     bits.into_bytes(),
@@ -150,9 +150,9 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
-    /// let mut bits = Bits::new(Version::Normal(1));
+    /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// assert_eq!(bits.len(), 0);
     ///
     /// bits.push_numeric_data(b"01234567");
@@ -172,9 +172,9 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
-    /// let mut bits = Bits::new(Version::Normal(1));
+    /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// assert_eq!(bits.is_empty(), true);
     ///
     /// bits.push_numeric_data(b"01234567");
@@ -191,15 +191,14 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] if it is not valid to use the `ec_level` for the given
-    /// version (e.g. [`Version::Micro(1)`](Version::Micro) with
-    /// [`EcLevel::H`]).
+    /// version.
     ///
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{EcLevel, Version, bits::Bits};
+    /// use qrcode2::{EcLevel, NormalVersion, Version, bits::Bits};
     ///
-    /// let bits = Bits::new(Version::Normal(1));
+    /// let bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// assert_eq!(bits.max_len(EcLevel::M), Ok(128));
     /// ```
     pub fn max_len(&self, ec_level: EcLevel) -> Result<usize> {
@@ -211,10 +210,10 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
-    /// let bits = Bits::new(Version::Normal(1));
-    /// assert_eq!(bits.version(), Version::Normal(1));
+    /// let bits = Bits::new(Version::Normal(NormalVersion::V1));
+    /// assert_eq!(bits.version(), Version::Normal(NormalVersion::V1));
     /// ```
     #[must_use]
     pub const fn version(&self) -> Version {
@@ -225,10 +224,11 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::NormalVersion;
 
     #[test]
     fn push_number() {
-        let mut bits = Bits::new(Version::Normal(1));
+        let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
 
         // 0:0 .. 0:3
         bits.push_number(3, 0b010);

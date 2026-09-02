@@ -8,7 +8,7 @@
 
 use anyhow::Context;
 use clap::{Parser, ValueEnum};
-use qrcode2::{EcLevel, QrCode, Version};
+use qrcode2::{EcLevel, MicroVersion, NormalVersion, QrCode, RectMicroVersion, Version};
 
 #[derive(Debug, Parser)]
 #[command(version, about)]
@@ -26,7 +26,7 @@ struct Opt {
 
     /// The version of the symbol.
     #[arg(short('v'), long, num_args(1..=2), value_name("NUMBER"))]
-    symbol_version: Option<Vec<i16>>,
+    symbol_version: Option<Vec<u8>>,
 
     /// The type of QR code.
     #[arg(
@@ -89,9 +89,18 @@ fn main() -> anyhow::Result<()> {
     let ec_level = opt.error_correction_level.into();
     let code = if let Some(sv) = opt.symbol_version {
         let version = match opt.variant {
-            Variant::Normal => Version::Normal(sv[0]),
-            Variant::Micro => Version::Micro(sv[0]),
-            Variant::Rmqr => Version::RectMicro(sv[0], sv[1]),
+            Variant::Normal => {
+                let version = NormalVersion::try_from(sv[0])?;
+                Version::Normal(version)
+            }
+            Variant::Micro => {
+                let version = MicroVersion::try_from(sv[0])?;
+                Version::Micro(version)
+            }
+            Variant::Rmqr => {
+                let version = RectMicroVersion::try_from((sv[0], sv[1]))?;
+                Version::RectMicro(version)
+            }
         };
         QrCode::with_version(input, version, ec_level)
     } else {

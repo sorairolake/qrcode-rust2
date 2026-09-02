@@ -17,19 +17,15 @@ pub struct DataModuleIter {
 }
 
 impl DataModuleIter {
-    pub const fn new(version: Version) -> Self {
+    pub fn new(version: Version) -> Self {
         // In rMQR code, disregarding the bottom and right alignment patterns
         // works well.
-        let (width, height) = if let Version::RectMicro(..) = version {
+        let (width, height) = if version.is_rect_micro() {
             (version.width() - 1, version.height() - 1)
         } else {
             (version.width(), version.height())
         };
-        let timing_pattern_column = if let Version::Normal(_) = version {
-            6
-        } else {
-            0
-        };
+        let timing_pattern_column = if version.is_normal() { 6 } else { 0 };
 
         let (x, y) = (width - 1, height - 1);
         Self {
@@ -84,10 +80,12 @@ mod tests {
     use alloc::vec::Vec;
 
     use super::*;
+    use crate::types::{MicroVersion, NormalVersion};
 
     #[test]
     fn qr() {
-        let res = DataModuleIter::new(Version::Normal(1)).collect::<Vec<(i16, i16)>>();
+        let res =
+            DataModuleIter::new(Version::Normal(NormalVersion::V1)).collect::<Vec<(i16, i16)>>();
         assert_eq!(
             res,
             [
@@ -517,7 +515,8 @@ mod tests {
 
     #[test]
     fn micro_qr() {
-        let res = DataModuleIter::new(Version::Micro(1)).collect::<Vec<(i16, i16)>>();
+        let res =
+            DataModuleIter::new(Version::Micro(MicroVersion::M1)).collect::<Vec<(i16, i16)>>();
         assert_eq!(
             res,
             [
@@ -637,7 +636,8 @@ mod tests {
 
     #[test]
     fn micro_qr_2() {
-        let res = DataModuleIter::new(Version::Micro(2)).collect::<Vec<(i16, i16)>>();
+        let res =
+            DataModuleIter::new(Version::Micro(MicroVersion::M2)).collect::<Vec<(i16, i16)>>();
         assert_eq!(
             res,
             [

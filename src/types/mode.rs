@@ -9,7 +9,7 @@
 
 use core::cmp::Ordering;
 
-use super::Version;
+use super::{NormalVersion, Version};
 use crate::cast::As;
 
 /// The mode indicator, which specifies the character set of the encoded data.
@@ -39,40 +39,49 @@ impl Mode {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, types::Mode};
+    /// use qrcode2::{NormalVersion, Version, types::Mode};
     ///
-    /// assert_eq!(Mode::Numeric.length_bits_count(Version::Normal(1)), 10);
+    /// assert_eq!(
+    ///     Mode::Numeric.length_bits_count(Version::Normal(NormalVersion::V1)),
+    ///     10
+    /// );
     /// ```
     #[must_use]
     pub fn length_bits_count(self, version: Version) -> usize {
         match version {
             Version::Micro(a) => {
-                let a = a.as_usize();
+                let a = u8::from(a).as_usize();
                 match self {
                     Self::Numeric => 2 + a,
                     Self::Alphanumeric | Self::Byte => 1 + a,
                     Self::Kanji => a,
                 }
             }
-            Version::Normal(1..=9) => match self {
-                Self::Numeric => 10,
-                Self::Alphanumeric => 9,
-                Self::Byte | Self::Kanji => 8,
-            },
-            Version::Normal(10..=26) => match self {
-                Self::Numeric => 12,
-                Self::Alphanumeric => 11,
-                Self::Byte => 16,
-                Self::Kanji => 10,
-            },
-            Version::Normal(_) => match self {
-                Self::Numeric => 14,
-                Self::Alphanumeric => 13,
-                Self::Byte => 16,
-                Self::Kanji => 12,
-            },
-            Version::RectMicro(..) => {
-                let index = version.rect_micro_index().unwrap_or(31);
+            Version::Normal(a) => {
+                if a <= NormalVersion::V9 {
+                    match self {
+                        Self::Numeric => 10,
+                        Self::Alphanumeric => 9,
+                        Self::Byte | Self::Kanji => 8,
+                    }
+                } else if a <= NormalVersion::V26 {
+                    match self {
+                        Self::Numeric => 12,
+                        Self::Alphanumeric => 11,
+                        Self::Byte => 16,
+                        Self::Kanji => 10,
+                    }
+                } else {
+                    match self {
+                        Self::Numeric => 14,
+                        Self::Alphanumeric => 13,
+                        Self::Byte => 16,
+                        Self::Kanji => 12,
+                    }
+                }
+            }
+            Version::RectMicro(a) => {
+                let index = a.index();
                 match self {
                     Self::Numeric => RMQR_LENGTH_BITS_COUNT[index][0],
                     Self::Alphanumeric => RMQR_LENGTH_BITS_COUNT[index][1],

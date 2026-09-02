@@ -73,7 +73,7 @@ impl RenderCanvas for Canvas1x2 {
     type Image = String;
 
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
-        let canvas = vec![light_pixel.value(); (width * height).as_usize()];
+        let canvas = vec![light_pixel.value(); (height * width).as_usize()];
         let dark_pixel = dark_pixel.value();
         Self {
             canvas,
@@ -120,7 +120,11 @@ impl RenderCanvas for Canvas1x2 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{EcLevel, QrCode, Version, render::Renderer};
+    use crate::{
+        QrCode,
+        render::Renderer,
+        types::{EcLevel, MicroVersion, Version},
+    };
 
     #[test]
     fn render_to_utf8_string() {
@@ -141,7 +145,8 @@ mod tests {
 
     #[test]
     fn integration_render_utf8_1x2() {
-        let code = QrCode::with_version(b"09876542", Version::Micro(2), EcLevel::L).unwrap();
+        let code = QrCode::with_version(b"09876542", Version::Micro(MicroVersion::M2), EcLevel::L)
+            .unwrap();
         let image = code.render::<Dense1x2>().module_dimensions(1, 1).build();
         assert_eq!(
             image,
@@ -161,7 +166,8 @@ mod tests {
 
     #[test]
     fn integration_render_utf8_1x2_inverted() {
-        let code = QrCode::with_version(b"12345678", Version::Micro(2), EcLevel::L).unwrap();
+        let code = QrCode::with_version(b"12345678", Version::Micro(MicroVersion::M2), EcLevel::L)
+            .unwrap();
         let image = code
             .render::<Dense1x2>()
             .dark_color(Dense1x2::Light)

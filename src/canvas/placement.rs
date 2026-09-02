@@ -8,7 +8,7 @@
 //! Implementation of features related to the data placement.
 
 use super::{Canvas, Module, data_module_iter::DataModuleIter};
-use crate::types::{Color, EcLevel, Version};
+use crate::types::{Color, EcLevel, MicroVersion, Version};
 
 impl Canvas {
     fn draw_codewords<I>(&mut self, codewords: &[u8], is_half_codeword_at_end: bool, coords: &mut I)
@@ -45,7 +45,10 @@ impl Canvas {
     pub fn draw_data(&mut self, data: &[u8], ec: &[u8]) {
         let is_half_codeword_at_end = matches!(
             (self.version, self.ec_level),
-            (Version::Micro(1 | 3), EcLevel::L) | (Version::Micro(3), EcLevel::M)
+            (
+                Version::Micro(MicroVersion::M1 | MicroVersion::M3),
+                EcLevel::L
+            ) | (Version::Micro(MicroVersion::M3), EcLevel::M)
         );
         let mut coords = DataModuleIter::new(self.version);
         self.draw_codewords(data, is_half_codeword_at_end, &mut coords);
@@ -56,10 +59,11 @@ impl Canvas {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::{NormalVersion, RectMicroVersion};
 
     #[test]
     fn micro_qr_1() {
-        let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Micro(MicroVersion::M1), EcLevel::L);
         c.draw_all_functional_patterns();
         c.draw_data(b"\x6E\x5D\xE2", b"\x2B\x63");
         assert_eq!(
@@ -83,7 +87,7 @@ mod tests {
 
     #[test]
     fn qr_2() {
-        let mut c = Canvas::new(Version::Normal(2), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V2), EcLevel::L);
         c.draw_all_functional_patterns();
         c.draw_data(
             &[
@@ -129,7 +133,7 @@ mod tests {
 
     #[test]
     fn rmqr() {
-        let mut c = Canvas::new(Version::RectMicro(7, 77), EcLevel::M);
+        let mut c = Canvas::new(Version::RectMicro(RectMicroVersion::R7x77), EcLevel::M);
         c.draw_all_functional_patterns();
         c.draw_data(
             &[

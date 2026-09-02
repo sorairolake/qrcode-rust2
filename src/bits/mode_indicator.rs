@@ -9,7 +9,7 @@
 use super::Bits;
 use crate::{
     error::{Error, Result},
-    types::{Mode, Version},
+    types::{MicroVersion, Mode, Version},
 };
 
 /// An "extended" mode indicator, includes all indicators supported by QR code
@@ -41,20 +41,20 @@ impl Bits {
     pub fn push_mode_indicator(&mut self, mode: ExtendedMode) -> Result<()> {
         #[expect(clippy::match_same_arms)]
         let number = match (self.version, mode) {
-            (Version::Micro(1), ExtendedMode::Data(Mode::Numeric)) => return Ok(()),
+            (Version::Micro(MicroVersion::M1), ExtendedMode::Data(Mode::Numeric)) => return Ok(()),
             (Version::Micro(_), ExtendedMode::Data(Mode::Numeric)) => 0,
             (Version::Micro(_), ExtendedMode::Data(Mode::Alphanumeric)) => 1,
             (Version::Micro(_), ExtendedMode::Data(Mode::Byte)) => 0b10,
             (Version::Micro(_), ExtendedMode::Data(Mode::Kanji)) => 0b11,
             (Version::Micro(_), _) => return Err(Error::UnsupportedCharacterSet),
-            (Version::RectMicro(..), ExtendedMode::Data(Mode::Numeric)) => 0b001,
-            (Version::RectMicro(..), ExtendedMode::Data(Mode::Alphanumeric)) => 0b010,
-            (Version::RectMicro(..), ExtendedMode::Data(Mode::Byte)) => 0b011,
-            (Version::RectMicro(..), ExtendedMode::Data(Mode::Kanji)) => 0b100,
-            (Version::RectMicro(..), ExtendedMode::Eci) => 0b111,
-            (Version::RectMicro(..), ExtendedMode::Fnc1First) => 0b101,
-            (Version::RectMicro(..), ExtendedMode::Fnc1Second) => 0b110,
-            (Version::RectMicro(..), _) => return Err(Error::UnsupportedCharacterSet),
+            (Version::RectMicro(_), ExtendedMode::Data(Mode::Numeric)) => 0b001,
+            (Version::RectMicro(_), ExtendedMode::Data(Mode::Alphanumeric)) => 0b010,
+            (Version::RectMicro(_), ExtendedMode::Data(Mode::Byte)) => 0b011,
+            (Version::RectMicro(_), ExtendedMode::Data(Mode::Kanji)) => 0b100,
+            (Version::RectMicro(_), ExtendedMode::Eci) => 0b111,
+            (Version::RectMicro(_), ExtendedMode::Fnc1First) => 0b101,
+            (Version::RectMicro(_), ExtendedMode::Fnc1Second) => 0b110,
+            (Version::RectMicro(_), _) => return Err(Error::UnsupportedCharacterSet),
             (_, ExtendedMode::Data(Mode::Numeric)) => 0b0001,
             (_, ExtendedMode::Data(Mode::Alphanumeric)) => 0b0010,
             (_, ExtendedMode::Data(Mode::Byte)) => 0b0100,

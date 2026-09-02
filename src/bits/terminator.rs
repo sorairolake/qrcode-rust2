@@ -105,12 +105,11 @@ impl Bits {
     /// # Errors
     ///
     /// Returns [`Err`] on overflow, or if it is not valid to use the `ec_level`
-    /// for the given version (e.g. [`Version::Micro(1)`](Version::Micro) with
-    /// [`EcLevel::H`]).
+    /// for the given version.
     pub fn push_terminator(&mut self, ec_level: EcLevel) -> Result<()> {
         let terminator_size = match self.version {
-            Version::Micro(a) => a.as_usize() * 2 + 1,
-            Version::RectMicro(..) => 3,
+            Version::Micro(a) => u8::from(a).as_usize() * 2 + 1,
+            Version::RectMicro(_) => 3,
             Version::Normal(_) => 4,
         };
 
@@ -150,10 +149,11 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::{MicroVersion, NormalVersion};
 
     #[test]
     fn hello_world() {
-        let mut bits = Bits::new(Version::Normal(1));
+        let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
         assert_eq!(bits.push_alphanumeric_data(b"HELLO WORLD"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::Q), Ok(()));
         assert_eq!(
@@ -178,14 +178,14 @@ mod tests {
 
     #[test]
     fn too_long() {
-        let mut bits = Bits::new(Version::Micro(1));
+        let mut bits = Bits::new(Version::Micro(MicroVersion::M1));
         assert_eq!(bits.push_numeric_data(b"9999999"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Err(Error::DataTooLong));
     }
 
     #[test]
     fn no_terminator() {
-        let mut bits = Bits::new(Version::Micro(1));
+        let mut bits = Bits::new(Version::Micro(MicroVersion::M1));
         assert_eq!(bits.push_numeric_data(b"99999"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Ok(()));
         assert_eq!(bits.into_bytes(), [0b1011_1111, 0b0011_1110, 0b0011_0000]);
@@ -193,7 +193,7 @@ mod tests {
 
     #[test]
     fn no_padding() {
-        let mut bits = Bits::new(Version::Micro(1));
+        let mut bits = Bits::new(Version::Micro(MicroVersion::M1));
         assert_eq!(bits.push_numeric_data(b"9999"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Ok(()));
         assert_eq!(bits.into_bytes(), [0b1001_1111, 0b0011_1100, 0b1000_0000]);
@@ -201,7 +201,7 @@ mod tests {
 
     #[test]
     fn micro_version_1_half_byte_padding() {
-        let mut bits = Bits::new(Version::Micro(1));
+        let mut bits = Bits::new(Version::Micro(MicroVersion::M1));
         assert_eq!(bits.push_numeric_data(b"999"), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Ok(()));
         assert_eq!(bits.into_bytes(), [0b0111_1111, 0b0011_1000, 0b0000_0000]);
@@ -209,7 +209,7 @@ mod tests {
 
     #[test]
     fn micro_version_1_full_byte_padding() {
-        let mut bits = Bits::new(Version::Micro(1));
+        let mut bits = Bits::new(Version::Micro(MicroVersion::M1));
         assert_eq!(bits.push_numeric_data(b""), Ok(()));
         assert_eq!(bits.push_terminator(EcLevel::L), Ok(()));
         assert_eq!(bits.into_bytes(), [0b0000_0000, 0b1110_1100, 0]);
