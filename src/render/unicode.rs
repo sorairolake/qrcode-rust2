@@ -73,7 +73,7 @@ impl RenderCanvas for Canvas1x2 {
     type Image = String;
 
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
-        let canvas = vec![light_pixel.value(); (width * height).as_usize()];
+        let canvas = vec![light_pixel.value(); (height * width).as_usize()];
         let dark_pixel = dark_pixel.value();
         Self {
             canvas,

@@ -72,7 +72,7 @@ impl Canvas {
     #[must_use]
     pub fn new(version: Version, ec_level: EcLevel) -> Self {
         let (width, height) = (version.width(), version.height());
-        let modules = vec![Module::Empty; (width * height).as_usize()];
+        let modules = vec![Module::Empty; (height * width).as_usize()];
         Self {
             width,
             height,
