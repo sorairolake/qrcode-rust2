@@ -120,7 +120,10 @@ impl RenderCanvas for Canvas1x2 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{EcLevel, MicroVersion, QrCode, Version, render::Renderer};
+    use crate::{
+        render::Renderer,
+        types::{EcLevel, MicroVersion, QrCode, Version},
+    };
 
     #[test]
     fn render_to_utf8_string() {
