@@ -39,8 +39,9 @@ pub fn is_functional(version: Version, width: i16, x: i16, y: i16) -> bool {
 
     match version {
         Version::Micro(_) => x == 0 || y == 0 || (x < 9 && y < 9),
-        Version::RectMicro(..) => unimplemented!(),
+        Version::RectMicro(_) => unimplemented!(),
         Version::Normal(a) => {
+            let a = u8::from(a).as_i16();
             let timing_patterns = x == 6 || y == 6;
             let top_left_finder_pattern = x < 9 && y < 9;
             let bottom_left_finder_pattern = x < 9 && y >= width - 8;
@@ -76,11 +77,11 @@ pub fn is_functional(version: Version, width: i16, x: i16, y: i16) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::EcLevel;
+    use crate::types::{EcLevel, MicroVersion, NormalVersion};
 
     #[test]
     fn all_functional_patterns_qr() {
-        let mut c = Canvas::new(Version::Normal(2), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V2), EcLevel::L);
         c.draw_all_functional_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -117,7 +118,7 @@ mod tests {
 
     #[test]
     fn all_functional_patterns_micro_qr() {
-        let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Micro(MicroVersion::M1), EcLevel::L);
         c.draw_all_functional_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -140,7 +141,7 @@ mod tests {
 
     #[test]
     fn is_functional_qr_1() {
-        let version = Version::Normal(1);
+        let version = Version::Normal(NormalVersion::V1);
         assert!(is_functional(version, version.width(), 0, 0));
         assert!(is_functional(version, version.width(), 10, 6));
         assert!(!is_functional(version, version.width(), 10, 5));
@@ -154,7 +155,7 @@ mod tests {
 
     #[test]
     fn is_functional_qr_3() {
-        let version = Version::Normal(3);
+        let version = Version::Normal(NormalVersion::V3);
         assert!(is_functional(version, version.width(), 0, 0));
         assert!(!is_functional(version, version.width(), 25, 24));
         assert!(is_functional(version, version.width(), 24, 24));
@@ -165,7 +166,7 @@ mod tests {
 
     #[test]
     fn is_functional_qr_7() {
-        let version = Version::Normal(7);
+        let version = Version::Normal(NormalVersion::V7);
         assert!(is_functional(version, version.width(), 21, 4));
         assert!(is_functional(version, version.width(), 7, 21));
         assert!(is_functional(version, version.width(), 22, 22));
@@ -178,7 +179,7 @@ mod tests {
 
     #[test]
     fn is_functional_micro() {
-        let version = Version::Micro(1);
+        let version = Version::Micro(MicroVersion::M1);
         assert!(is_functional(version, version.width(), 8, 0));
         assert!(is_functional(version, version.width(), 10, 0));
         assert!(!is_functional(version, version.width(), 10, 1));
