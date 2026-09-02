@@ -26,7 +26,10 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{error::Error, types::{MicroVersion, NormalVersion, Version}};
+    use crate::{
+        error::Error,
+        types::{MicroVersion, NormalVersion, Version},
+    };
 
     #[test]
     fn push_byte_data() {
