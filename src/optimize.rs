@@ -200,6 +200,7 @@ mod tests {
     use alloc::vec::Vec;
 
     use super::*;
+    use crate::types::{MicroVersion, NormalVersion, RectMicroVersion};
 
     fn optimization_result(given: &[Segment], expected: &[Segment], version: Version) {
         let prev_len = total_encoded_len(given, version);
