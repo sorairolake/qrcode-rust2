@@ -315,7 +315,7 @@ mod tests {
 
     #[test]
     fn is_rect_micro() {
-        for version in RectMicroVersion::ALL_BY_WIDTH {
+        for version in RectMicroVersion::ALL {
             assert!(Version::RectMicro(version).is_rect_micro());
         }
 
