@@ -253,14 +253,23 @@ pub fn encode_auto_rect_micro(
 ) -> Result<Bits> {
     let segments = Parser::new(data).collect::<Vec<Segment>>();
     let mut possible_versions = Vec::new();
+    let mut skip_height = None;
     for version in RectMicroVersion::ALL {
         let version = Version::RectMicro(version);
+        let current_height = version.height();
+        if let Some(sh) = skip_height {
+            if current_height == sh {
+                continue;
+            } else {
+                skip_height = None;
+            }
+        }
         let opt_segments = optimize::optimize_segments(&segments, version);
         let total_len = optimize::total_encoded_len(&opt_segments, version);
         let data_capacity = version.fetch(ec_level, &DATA_LENGTHS)?;
         if total_len <= data_capacity {
             possible_versions.push(version);
-            break;
+            skip_height = Some(current_height);
         }
     }
 
