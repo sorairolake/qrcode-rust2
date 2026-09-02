@@ -239,11 +239,10 @@ mod tests {
     #[test]
     fn mode_bits_count() {
         assert_eq!(Version::Normal(NormalVersion::V1).mode_bits_count(), 4);
-        for version in 1..=4 {
-            let v = MicroVersion::try_from(version).unwrap();
+        for version in MicroVersion::ALL {
             assert_eq!(
-                Version::Micro(v).mode_bits_count(),
-                (version - 1).as_usize()
+                Version::Micro(version).mode_bits_count(),
+                (u8::from(version) - 1).as_usize()
             );
         }
         assert_eq!(
@@ -254,8 +253,49 @@ mod tests {
 
     #[test]
     fn is_normal() {
-        for version in 1..=40 {
-            let version = NormalVersion::try_from(version).unwrap();
+        let all_versions = [
+            NormalVersion::V1,
+            NormalVersion::V2,
+            NormalVersion::V3,
+            NormalVersion::V4,
+            NormalVersion::V5,
+            NormalVersion::V6,
+            NormalVersion::V7,
+            NormalVersion::V8,
+            NormalVersion::V9,
+            NormalVersion::V10,
+            NormalVersion::V11,
+            NormalVersion::V12,
+            NormalVersion::V13,
+            NormalVersion::V14,
+            NormalVersion::V15,
+            NormalVersion::V16,
+            NormalVersion::V17,
+            NormalVersion::V18,
+            NormalVersion::V19,
+            NormalVersion::V20,
+            NormalVersion::V21,
+            NormalVersion::V22,
+            NormalVersion::V23,
+            NormalVersion::V24,
+            NormalVersion::V25,
+            NormalVersion::V26,
+            NormalVersion::V27,
+            NormalVersion::V28,
+            NormalVersion::V29,
+            NormalVersion::V30,
+            NormalVersion::V31,
+            NormalVersion::V32,
+            NormalVersion::V33,
+            NormalVersion::V34,
+            NormalVersion::V35,
+            NormalVersion::V36,
+            NormalVersion::V37,
+            NormalVersion::V38,
+            NormalVersion::V39,
+            NormalVersion::V40,
+        ];
+        for version in all_versions {
             assert!(Version::Normal(version).is_normal());
         }
 
@@ -265,8 +305,7 @@ mod tests {
 
     #[test]
     fn is_micro() {
-        for version in 1..=4 {
-            let version = MicroVersion::try_from(version).unwrap();
+        for version in MicroVersion::ALL {
             assert!(Version::Micro(version).is_micro());
         }
 
@@ -276,14 +315,8 @@ mod tests {
 
     #[test]
     fn is_rect_micro() {
-        for width in Version::RMQR_ALL_WIDTH {
-            for height in Version::RMQR_ALL_HEIGHT {
-                if width == 27 && (height != 11 && height != 13) {
-                    continue;
-                }
-                let version = RectMicroVersion::try_from((height, width)).unwrap();
-                assert!(Version::RectMicro(version).is_rect_micro());
-            }
+        for version in RectMicroVersion::ALL_BY_WIDTH {
+            assert!(Version::RectMicro(version).is_rect_micro());
         }
 
         assert!(!Version::Normal(NormalVersion::V1).is_rect_micro());
