@@ -9,7 +9,7 @@
 
 use core::cmp::Ordering;
 
-use super::Version;
+use super::{NormalVersion, Version};
 use crate::cast::As;
 
 /// The mode indicator, which specifies the character set of the encoded data.
