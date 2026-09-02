@@ -22,7 +22,7 @@ use crate::{
 /// more information.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum Version {
-    /// A normal QR code version.
+    /// A QR code version.
     Normal(NormalVersion),
 
     /// A Micro QR code version.
@@ -143,7 +143,7 @@ impl Version {
         }
     }
 
-    /// Checks whether is version refers to a normal QR code.
+    /// Checks whether is version refers to a QR code.
     ///
     /// # Examples
     ///

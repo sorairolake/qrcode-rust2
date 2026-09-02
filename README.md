@@ -21,7 +21,7 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 **qrcode-rust2** ([`qrcode2`][version-url]) is a [QR code] encoding library
 written in [Rust].
 
-This crate provides a [normal QR code], [Micro QR code], and [rMQR code]
+This crate provides a [QR code], [Micro QR code], and [rMQR code]
 encoder for binary data.
 
 > [!IMPORTANT]
@@ -144,7 +144,7 @@ licensing information.
 [license-badge]: https://img.shields.io/crates/l/qrcode2?style=for-the-badge
 [QR code]: https://www.qrcode.com/
 [Rust]: https://www.rust-lang.org/
-[normal QR code]: https://www.qrcode.com/codes/model12.html
+[QR code]: https://www.qrcode.com/codes/model12.html
 [Micro QR code]: https://www.qrcode.com/codes/microqr.html
 [rMQR code]: https://www.qrcode.com/codes/rmqr.html
 [`qrcode`]: https://crates.io/crates/qrcode

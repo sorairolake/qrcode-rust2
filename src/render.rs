@@ -141,7 +141,7 @@ impl<'a, P: Pixel> Renderer<'a, P> {
     ///
     /// If `Renderer` is constructed using
     /// [`QrCode::render`](crate::QrCode::render), the size of the quiet zone is
-    /// 4 for normal QR code, and 2 for Micro QR code and rMQR code.
+    /// 4 for QR code, and 2 for Micro QR code and rMQR code.
     pub const fn quiet_zone(&mut self, quiet_zone: u32) -> &mut Self {
         self.quiet_zone = quiet_zone;
         self
