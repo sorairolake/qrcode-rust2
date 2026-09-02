@@ -93,15 +93,18 @@ fn main() -> anyhow::Result<()> {
     let code = if let Some(sv) = opt.symbol_version {
         let version = match opt.variant {
             Variant::Normal => {
-                let version = NormalVersion::try_from(sv[0])?;
+                let version = NormalVersion::try_from(sv[0])
+                    .context("could not set a normal QR code version")?;
                 Version::Normal(version)
             }
             Variant::Micro => {
-                let version = MicroVersion::try_from(sv[0])?;
+                let version = MicroVersion::try_from(sv[0])
+                    .context("could not set a Micro QR code version")?;
                 Version::Micro(version)
             }
             Variant::Rmqr => {
-                let version = RectMicroVersion::try_from((sv[0], sv[1]))?;
+                let version = RectMicroVersion::try_from((sv[0], sv[1]))
+                    .context("could not set a rMQR code version")?;
                 Version::RectMicro(version)
             }
         };
