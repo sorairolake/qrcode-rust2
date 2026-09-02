@@ -224,7 +224,7 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::NormalVersion;
+    use crate::types::NormalVersion;
 
     #[test]
     fn push_number() {
