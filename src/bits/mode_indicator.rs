@@ -9,7 +9,7 @@
 use super::Bits;
 use crate::{
     error::{Error, Result},
-    types::{Mode, Version},
+    types::{MicroVersion, Mode, Version},
 };
 
 /// An "extended" mode indicator, includes all indicators supported by QR code
