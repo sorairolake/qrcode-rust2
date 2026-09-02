@@ -58,7 +58,7 @@ pub fn max_allowed_errors(version: Version, ec_level: EcLevel) -> Result<usize> 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::RectMicroVersion;
+    use crate::types::RectMicroVersion;
 
     #[test]
     fn low_versions() {
