@@ -59,7 +59,7 @@ impl Canvas {
                 self.draw_finder_pattern_at(-4, 3);
                 self.draw_finder_pattern_at(3, -4);
             }
-            Version::RectMicro(..) => self.draw_finder_pattern_rmqr_at(),
+            Version::RectMicro(_) => self.draw_finder_pattern_rmqr_at(),
         }
     }
 }
@@ -67,11 +67,11 @@ impl Canvas {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::EcLevel;
+    use crate::types::{EcLevel, MicroVersion, NormalVersion, RectMicroVersion};
 
     #[test]
     fn qr() {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::L);
         c.draw_finder_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -104,7 +104,7 @@ mod tests {
 
     #[test]
     fn micro_qr() {
-        let mut c = Canvas::new(Version::Micro(1), EcLevel::L);
+        let mut c = Canvas::new(Version::Micro(MicroVersion::M1), EcLevel::L);
         c.draw_finder_patterns();
         assert_eq!(
             c.to_debug_str(),
@@ -127,7 +127,7 @@ mod tests {
 
     #[test]
     fn rmqr() {
-        let mut c = Canvas::new(Version::RectMicro(7, 43), EcLevel::M);
+        let mut c = Canvas::new(Version::RectMicro(RectMicroVersion::R7x43), EcLevel::M);
         c.draw_finder_patterns();
         assert_eq!(
             c.to_debug_str(),
