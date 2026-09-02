@@ -102,19 +102,19 @@ impl Version {
             Self::Normal(v) => Ok(table[(u8::from(v) - 1).as_usize()][ec_level as usize]),
             Self::Micro(v) => {
                 let obj = table[(u8::from(v) + 39).as_usize()][ec_level as usize];
-                if obj != T::default() {
-                    Ok(obj)
-                } else {
+                if obj == T::default() {
                     Err(Error::InvalidVersion)
+                } else {
+                    Ok(obj)
                 }
             }
             Self::RectMicro(v) => {
                 let index = v.index();
                 let obj = table[index + 44][ec_level as usize];
-                if obj != T::default() {
-                    Ok(obj)
-                } else {
+                if obj == T::default() {
                     Err(Error::InvalidVersion)
+                } else {
+                    Ok(obj)
                 }
             }
         }
