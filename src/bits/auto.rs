@@ -265,12 +265,12 @@ pub fn encode_auto_rect_micro(
     }
 
     let min_version = match strategy {
-        // `possible_versions` is already sorted by width.
-        RectMicroStrategy::Width => possible_versions.first(),
-        RectMicroStrategy::Height => possible_versions.iter().min_by_key(|v| v.height()),
+        RectMicroStrategy::Width => possible_versions.iter().min_by_key(|v| v.width()),
+        // `possible_versions` is already sorted by height.
+        RectMicroStrategy::Height => possible_versions.first(),
         RectMicroStrategy::Area => possible_versions
             .iter()
-            .min_by_key(|v| v.width() * v.height()),
+            .min_by_key(|v| v.height() * v.width()),
     };
 
     if let Some(version) = min_version {
