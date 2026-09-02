@@ -174,7 +174,7 @@ impl Canvas {
                 s1_a + s1_b + s2 + s3_a + s3_b + s4
             }
             Version::Micro(_) => self.compute_light_side_penalty_score(),
-            Version::RectMicro(..) => 0,
+            Version::RectMicro(_) => 0,
         }
     }
 }
@@ -182,10 +182,10 @@ impl Canvas {
 #[cfg(test)]
 mod tests {
     use super::{super::MaskPattern, *};
-    use crate::types::EcLevel;
+    use crate::types::{EcLevel, MicroVersion, NormalVersion};
 
     fn create_test_canvas() -> Canvas {
-        let mut c = Canvas::new(Version::Normal(1), EcLevel::Q);
+        let mut c = Canvas::new(Version::Normal(NormalVersion::V1), EcLevel::Q);
         c.draw_all_functional_patterns();
         c.draw_data(
             b"\x20\x5B\x0B\x78\xD1\x72\xDC\x4D\x43\x40\xEC\x11\x00",
@@ -294,7 +294,7 @@ mod tests {
             Color::Light,
         ];
 
-        let mut c = Canvas::new(Version::Micro(4), EcLevel::Q);
+        let mut c = Canvas::new(Version::Micro(MicroVersion::M4), EcLevel::Q);
         for i in 0_i16..17 {
             c.put(i, -1, HORIZONTAL_SIDE[i.as_usize()]);
             c.put(-1, i, VERTICAL_SIDE[i.as_usize()]);
