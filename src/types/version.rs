@@ -109,7 +109,7 @@ impl Version {
                 }
             }
             Self::RectMicro(v) => {
-                let index = self.rect_micro_index()?;
+                let index = v.index();
                 let obj = table[index + 44][ec_level as usize];
                 if obj != T::default() {
                     Ok(obj)
