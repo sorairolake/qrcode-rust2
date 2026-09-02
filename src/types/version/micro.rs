@@ -23,6 +23,28 @@ pub enum MicroVersion {
 }
 
 impl MicroVersion {
+    /// The smallest Micro QR code version.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::MicroVersion;
+    ///
+    /// assert_eq!(MicroVersion::MIN, MicroVersion::M1);
+    /// ```
+    pub const MIN: Self = Self::M1;
+
+    /// The largest Micro QR code version.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::MicroVersion;
+    ///
+    /// assert_eq!(MicroVersion::MAX, MicroVersion::M4);
+    /// ```
+    pub const MAX: Self = Self::M4;
+
     /// All versions of Micro QR code.
     pub(crate) const ALL: [Self; 4] = [Self::M1, Self::M2, Self::M3, Self::M4];
 }
