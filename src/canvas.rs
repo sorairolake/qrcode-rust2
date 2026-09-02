@@ -150,7 +150,7 @@ impl Canvas {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::NormalVersion;
+    use crate::types::NormalVersion;
 
     #[test]
     fn index() {
