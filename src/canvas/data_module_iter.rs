@@ -80,7 +80,7 @@ mod tests {
     use alloc::vec::Vec;
 
     use super::*;
-    use crate::{MicroVersion, NormalVersion};
+    use crate::types::{MicroVersion, NormalVersion};
 
     #[test]
     fn qr() {
