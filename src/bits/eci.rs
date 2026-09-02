@@ -29,7 +29,7 @@ impl Bits {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{Version, bits::Bits};
+    /// use qrcode2::{NormalVersion, Version, bits::Bits};
     ///
     /// let mut bits = Bits::new(Version::Normal(NormalVersion::V1));
     /// // 9 = ISO-8859-7 (Greek).
@@ -63,7 +63,7 @@ impl Bits {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::Version;
+    use crate::types::{MicroVersion, NormalVersion, Version};
 
     #[test]
     fn push_eci_designator_9() {
