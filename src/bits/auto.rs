@@ -13,7 +13,6 @@ use alloc::vec::Vec;
 
 use super::{Bits, terminator::DATA_LENGTHS};
 use crate::{
-    cast::As,
     error::{Error, Result},
     optimize::{self, Parser, Segment},
     types::{EcLevel, MicroVersion, NormalVersion, RectMicroVersion, Version},
