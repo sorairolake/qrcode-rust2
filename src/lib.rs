@@ -634,7 +634,11 @@ mod iso_capacity {
             EcLevel::M,
             [Some(30), Some(18), Some(13)],
         ),
-        (Version::Micro(MicroVersion::M4), EcLevel::Q, [Some(21), Some(13), Some(9)]),
+        (
+            Version::Micro(MicroVersion::M4),
+            EcLevel::Q,
+            [Some(21), Some(13), Some(9)],
+        ),
         // Normal QR, Version 1 (all four EC levels)
         (
             Version::Normal(NormalVersion::V1),
