@@ -130,6 +130,30 @@ pub enum NormalVersion {
     V40,
 }
 
+impl NormalVersion {
+    /// The smallest normal QR code version.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::NormalVersion;
+    ///
+    /// assert_eq!(NormalVersion::MIN, NormalVersion::V1);
+    /// ```
+    pub const MIN: Self = Self::V1;
+
+    /// The largest normal QR code version.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::NormalVersion;
+    ///
+    /// assert_eq!(NormalVersion::MAX, NormalVersion::V40);
+    /// ```
+    pub const MAX: Self = Self::V40;
+}
+
 impl From<NormalVersion> for u8 {
     fn from(version: NormalVersion) -> Self {
         version as Self
