@@ -90,14 +90,14 @@ pub struct QrCode {
 }
 
 impl QrCode {
-    /// Constructs a new QR code which automatically encodes the given data.
+    /// Constructs a new QR code model 2 which automatically encodes the given data.
     ///
     /// This method uses [`EcLevel::M`] and automatically chooses the smallest
-    /// QR code based on [`bits::encode_auto`].
+    /// QR code model 2 based on [`bits::encode_auto`].
     ///
     /// # Errors
     ///
-    /// Returns [`Err`] if the QR code cannot be constructed, e.g. when the data
+    /// Returns [`Err`] if the QR code model 2 cannot be constructed, e.g. when the data
     /// is too long.
     ///
     /// # Examples
@@ -155,15 +155,15 @@ impl QrCode {
         Self::rect_micro_with_error_correction_level(data, EcLevel::default())
     }
 
-    /// Constructs a new QR code which automatically encodes the given data at a
+    /// Constructs a new QR code model 2 which automatically encodes the given data at a
     /// specific error correction level.
     ///
-    /// This method automatically chooses the smallest QR code based on
+    /// This method automatically chooses the smallest QR code model 2 based on
     /// [`bits::encode_auto`].
     ///
     /// # Errors
     ///
-    /// Returns [`Err`] if the QR code cannot be constructed, e.g. when the data
+    /// Returns [`Err`] if the QR code model 2 cannot be constructed, e.g. when the data
     /// is too long.
     ///
     /// # Examples
