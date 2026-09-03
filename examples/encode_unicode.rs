@@ -74,7 +74,7 @@ impl From<Ecc> for EcLevel {
 
 #[derive(Clone, Debug, Default, ValueEnum)]
 enum Variant {
-    /// QR code.
+    /// Normal QR code.
     #[default]
     Normal,
 
@@ -93,8 +93,8 @@ fn main() -> anyhow::Result<()> {
     let code = if let Some(sv) = opt.symbol_version {
         let version = match opt.variant {
             Variant::Normal => {
-                let version =
-                    NormalVersion::try_from(sv[0]).context("could not set a QR code version")?;
+                let version = NormalVersion::try_from(sv[0])
+                    .context("could not set a normal QR code version")?;
                 Version::Normal(version)
             }
             Variant::Micro => {
