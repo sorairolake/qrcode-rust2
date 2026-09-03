@@ -19,15 +19,15 @@ use crate::{
 };
 
 #[expect(clippy::missing_panics_doc)]
-/// Automatically determines the minimum QR code model 2 version to store the data, and
-/// encode the result.
+/// Automatically determines the minimum QR code model 2 version to store the
+/// data, and encode the result.
 ///
 /// This method will not consider any Micro QR code or rMQR code versions.
 ///
 /// # Errors
 ///
-/// Returns [`Err`] if the data is too long to fit even the highest QR code model 2
-/// version.
+/// Returns [`Err`] if the data is too long to fit even the highest QR code
+/// model 2 version.
 ///
 /// # Examples
 ///
@@ -57,8 +57,8 @@ pub fn encode_auto(data: &[u8], ec_level: EcLevel) -> Result<Bits> {
     Err(Error::DataTooLong)
 }
 
-/// Finds the smallest version (QR code model 2 only) that can store N bits of data in
-/// the given error correction level.
+/// Finds the smallest version (QR code model 2 only) that can store N bits of
+/// data in the given error correction level.
 fn find_min_version(length: usize, ec_level: EcLevel) -> Version {
     let mut base = 0_usize;
     let mut size = 39;
