@@ -546,7 +546,7 @@ mod tests {
     }
 
     #[test]
-    fn annex_i_rmqr() {
+    fn rmqr() {
         let code = QrCode::with_version(
             b"0123456",
             Version::RectMicro(RectMicroVersion::R11x27),

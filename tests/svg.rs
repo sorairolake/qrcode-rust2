@@ -14,7 +14,7 @@ fn annex_i_qr_as_svg() {
     let code =
         QrCode::with_version(b"01234567", Version::Normal(NormalVersion::V1), EcLevel::M).unwrap();
     let image = code.render::<Color<'_>>().build();
-    let expected = include_str!("data/test_annex_i_qr_as_svg.svg");
+    let expected = include_str!("data/annex_i_qr_as_svg.svg");
     assert_eq!(&image, expected);
 }
 
@@ -28,12 +28,12 @@ fn annex_i_micro_qr_as_svg() {
         .dark_color(Color::new("#800000").unwrap())
         .light_color(Color::new("#ffff80").unwrap())
         .build();
-    let expected = include_str!("data/test_annex_i_micro_qr_as_svg.svg");
+    let expected = include_str!("data/annex_i_micro_qr_as_svg.svg");
     assert_eq!(&image, expected);
 }
 
 #[test]
-fn annex_i_rmqr_as_svg() {
+fn rmqr_as_svg() {
     let code = QrCode::with_version(
         b"0123456",
         Version::RectMicro(RectMicroVersion::R11x27),
@@ -41,6 +41,6 @@ fn annex_i_rmqr_as_svg() {
     )
     .unwrap();
     let image = code.render::<Color<'_>>().build();
-    let expected = include_str!("data/test_annex_i_rmqr_as_svg.svg");
+    let expected = include_str!("data/rmqr_as_svg.svg");
     assert_eq!(&image, expected);
 }
