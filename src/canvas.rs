@@ -42,7 +42,7 @@ use alloc::{vec, vec::Vec};
 
 pub use self::{functional::is_functional, mask::MaskPattern, module::Module};
 use crate::{
-    cast::As,
+
     types::{Color, EcLevel, Version},
 };
 
@@ -72,7 +72,7 @@ impl Canvas {
     #[must_use]
     pub fn new(version: Version, ec_level: EcLevel) -> Self {
         let (width, height) = (version.width(), version.height());
-        let modules = vec![Module::Empty; (height * width).as_usize()];
+        let modules = vec![Module::Empty; (height * width).try_into().unwrap()];
         Self {
             width,
             height,
@@ -86,7 +86,7 @@ impl Canvas {
     #[cfg(test)]
     fn to_debug_str(&self) -> String {
         let width = self.width;
-        let mut res = String::with_capacity((width * (width + 1)).as_usize());
+        let mut res = String::with_capacity((width * (width + 1)).try_into().unwrap());
         for y in 0..self.height {
             res.push('\n');
             for x in 0..width {
@@ -106,7 +106,7 @@ impl Canvas {
     #[cfg(test)]
     fn to_debug_str_mask_same(&self) -> String {
         let width = self.width;
-        let mut res = String::with_capacity((width * (width + 1)).as_usize());
+        let mut res = String::with_capacity((width * (width + 1)).try_into().unwrap());
         for y in 0..self.height {
             res.push('\n');
             for x in 0..width {
@@ -121,9 +121,9 @@ impl Canvas {
     }
 
     fn coords_to_index(&self, x: i16, y: i16) -> usize {
-        let x = if x < 0 { x + self.width } else { x }.as_usize();
-        let y = if y < 0 { y + self.height } else { y }.as_usize();
-        y * self.width.as_usize() + x
+        let x = if x < 0 { x + self.width } else { x }.try_into().unwrap();
+        let y = if y < 0 { y + self.height } else { y }.try_into().unwrap();
+        y * self.width.try_into().unwrap() + x
     }
 
     /// Obtains a module at the given coordinates. For convenience, negative
