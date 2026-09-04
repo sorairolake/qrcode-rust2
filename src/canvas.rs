@@ -65,6 +65,7 @@ pub struct Canvas {
 }
 
 impl Canvas {
+    #[expect(clippy::missing_panics_doc)]
     /// Constructs a new canvas big enough for a QR code of the given version.
     #[must_use]
     pub fn new(version: Version, ec_level: EcLevel) -> Self {
