@@ -293,8 +293,8 @@ mod tests {
 
         let mut c = Canvas::new(Version::Micro(MicroVersion::M4), EcLevel::Q);
         for i in 0_i16..17 {
-            c.put(i, -1, HORIZONTAL_SIDE[i.as_usize()]);
-            c.put(-1, i, VERTICAL_SIDE[i.as_usize()]);
+            c.put(i, -1, HORIZONTAL_SIDE[i.try_into().unwrap()]);
+            c.put(-1, i, VERTICAL_SIDE[i.try_into().unwrap()]);
         }
 
         assert_eq!(c.compute_light_side_penalty_score(), 168);
