@@ -32,9 +32,9 @@ use crate::{
 
 /// An SVG color.
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct Color<'a>(&'a str);
+pub struct Color(csscolorparser::Color);
 
-impl<'a> Color<'a> {
+impl Color {
     /// Creates a new `Color` with the given CSS color string.
     ///
     /// # Errors
@@ -55,15 +55,15 @@ impl<'a> Color<'a> {
     /// ```
     ///
     /// [CSS Color Module Level 4]: https://www.w3.org/TR/css-color-4/
-    pub fn new(color: &'a str) -> Result<Self, ParseColorError> {
-        csscolorparser::parse(color)?;
+    pub fn new(color: &str) -> Result<Self, ParseColorError> {
+        let color = csscolorparser::parse(color)?;
         Ok(Self(color))
     }
 }
 
-impl<'a> Pixel for Color<'a> {
+impl Pixel for Color {
     type Image = String;
-    type Canvas = Canvas<'a>;
+    type Canvas = Canvas;
 
     fn default_color(color: ModuleColor) -> Self {
         let color = color.select("#000", "#fff");
@@ -73,13 +73,13 @@ impl<'a> Pixel for Color<'a> {
 
 /// A canvas for SVG rendering.
 #[derive(Debug)]
-pub struct Canvas<'a> {
+pub struct Canvas {
     svg: String,
-    marker: PhantomData<Color<'a>>,
+    marker: PhantomData<Color>,
 }
 
-impl<'a> RenderCanvas for Canvas<'a> {
-    type Pixel = Color<'a>;
+impl RenderCanvas for Canvas {
+    type Pixel = Color;
     type Image = String;
 
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
