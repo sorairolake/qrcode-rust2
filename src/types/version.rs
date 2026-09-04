@@ -12,10 +12,7 @@ mod rect_micro;
 
 pub use self::{micro::MicroVersion, normal::NormalVersion, rect_micro::RectMicroVersion};
 use super::EcLevel;
-use crate::{
-    cast::As,
-    error::{Error, Result},
-};
+use crate::error::{Error, Result};
 
 /// In QR code terminology, `Version` means the size of the generated image.
 /// Larger version means the size of code is larger, and therefore can carry
@@ -99,9 +96,9 @@ impl Version {
         T: Copy + Default + PartialEq,
     {
         match self {
-            Self::Normal(v) => Ok(table[(u8::from(v) - 1).as_usize()][ec_level as usize]),
+            Self::Normal(v) => Ok(table[(u8::from(v) - 1).into()][ec_level as usize]),
             Self::Micro(v) => {
-                let obj = table[(u8::from(v) + 39).as_usize()][ec_level as usize];
+                let obj = table[(u8::from(v) + 39).into()][ec_level as usize];
                 if obj == T::default() {
                     Err(Error::InvalidVersion)
                 } else {
@@ -138,7 +135,7 @@ impl Version {
     pub fn mode_bits_count(self) -> usize {
         match self {
             Self::Normal(_) => 4,
-            Self::Micro(a) => (u8::from(a) - 1).as_usize(),
+            Self::Micro(a) => (u8::from(a) - 1).into(),
             Self::RectMicro(_) => 3,
         }
     }
@@ -242,7 +239,7 @@ mod tests {
         for version in MicroVersion::ALL {
             assert_eq!(
                 Version::Micro(version).mode_bits_count(),
-                (u8::from(version) - 1).as_usize()
+                (u8::from(version) - 1).into()
             );
         }
         assert_eq!(
