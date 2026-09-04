@@ -26,7 +26,7 @@ pub use self::{
     mode_indicator::ExtendedMode,
 };
 use crate::{
-    cast::{As, Truncate},
+    cast::Truncate,
     error::{Error, Result},
     types::{EcLevel, Version},
 };
@@ -98,6 +98,7 @@ impl Bits {
         self.bit_offset = b & 7;
     }
 
+    #[expect(clippy::missing_panics_doc)]
     /// Pushes an N-bit big-endian integer to the end of the bits, and check
     /// that the number does not overflow the bits.
     ///
