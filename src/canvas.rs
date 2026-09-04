@@ -41,10 +41,7 @@ use alloc::string::String;
 use alloc::{vec, vec::Vec};
 
 pub use self::{functional::is_functional, mask::MaskPattern, module::Module};
-use crate::{
-
-    types::{Color, EcLevel, Version},
-};
+use crate::types::{Color, EcLevel, Version};
 
 /// `Canvas` is an intermediate helper structure to render error-corrected data
 /// into a QR code.
@@ -125,7 +122,7 @@ impl Canvas {
         let x = usize::try_from(x).unwrap();
         let y = if y < 0 { y + self.height } else { y };
         let y = usize::try_from(y).unwrap();
-        y * self.width.try_into().unwrap() + x
+        y * usize::try_from(self.width).unwrap() + x
     }
 
     /// Obtains a module at the given coordinates. For convenience, negative
