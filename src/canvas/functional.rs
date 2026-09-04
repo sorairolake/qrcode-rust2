@@ -55,7 +55,7 @@ pub fn is_functional(version: Version, width: i16, x: i16, y: i16) -> bool {
                 1 => false,
                 2..=6 => (width - 7 - x).abs() <= 2 && (width - 7 - y).abs() <= 2,
                 _ => {
-                    let positions = ALIGNMENT_PATTERN_POSITIONS[(a - 7).into()];
+                    let positions = ALIGNMENT_PATTERN_POSITIONS[usize::from(a - 7)];
                     let last = positions.len() - 1;
                     for (i, align_x) in positions.iter().enumerate() {
                         for (j, align_y) in positions.iter().enumerate() {

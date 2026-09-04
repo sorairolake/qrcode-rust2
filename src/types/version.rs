@@ -96,7 +96,7 @@ impl Version {
         T: Copy + Default + PartialEq,
     {
         match self {
-            Self::Normal(v) => Ok(table[(u8::from(v) - 1).into()][ec_level as usize]),
+            Self::Normal(v) => Ok(table[usize::from(u8::from(v) - 1)][ec_level as usize]),
             Self::Micro(v) => {
                 let obj = table[(u8::from(v) + 39).into()][ec_level as usize];
                 if obj == T::default() {
