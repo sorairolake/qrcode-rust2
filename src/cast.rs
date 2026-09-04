@@ -18,7 +18,6 @@ impl Truncate for u16 {
 
 #[expect(clippy::wrong_self_convention)]
 pub trait As {
-    fn as_u16(self) -> u16;
     fn as_u32(self) -> u32;
     fn as_usize(self) -> usize;
 }
@@ -27,10 +26,6 @@ macro_rules! impl_as {
     ($ty:ty) => {
         #[cfg(debug_assertions)]
         impl As for $ty {
-            fn as_u16(self) -> u16 {
-                u16::try_from(self).unwrap()
-            }
-
             fn as_u32(self) -> u32 {
                 u32::try_from(self).unwrap()
             }
@@ -42,10 +37,6 @@ macro_rules! impl_as {
 
         #[cfg(not(debug_assertions))]
         impl As for $ty {
-            fn as_u16(self) -> u16 {
-                self as u16
-            }
-
             fn as_u32(self) -> u32 {
                 self as u32
             }
