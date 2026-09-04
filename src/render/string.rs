@@ -94,7 +94,7 @@ impl<P: Element> RenderCanvas for Canvas<P> {
 
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
         let width = width.as_usize();
-        let height = height.try_into().unwrap();
+        let height = isize::try_from(height).unwrap();
         let buffer = vec![light_pixel; height.as_usize() * width];
         let dark_cap = dark_pixel.str_len().try_into().unwrap();
         let light_cap = light_pixel.str_len().try_into().unwrap();
