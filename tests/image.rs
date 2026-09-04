@@ -25,7 +25,7 @@ fn annex_i_qr_as_image() {
     let code =
         QrCode::with_version(b"01234567", Version::Normal(NormalVersion::V1), EcLevel::M).unwrap();
     let image = code.render::<Luma<u8>>().build();
-    let expected = image::load_from_memory(include_bytes!("data/test_annex_i_qr_as_image.png"))
+    let expected = image::load_from_memory(include_bytes!("data/annex_i_qr_as_image.png"))
         .unwrap()
         .into_luma8();
     assert_eq!(image.dimensions(), expected.dimensions());
@@ -42,16 +42,15 @@ fn annex_i_micro_qr_as_image() {
         .dark_color(Rgb([128, 0, 0]))
         .light_color(Rgb([255, 255, 128]))
         .build();
-    let expected =
-        image::load_from_memory(include_bytes!("data/test_annex_i_micro_qr_as_image.png"))
-            .unwrap()
-            .into_rgb8();
+    let expected = image::load_from_memory(include_bytes!("data/annex_i_micro_qr_as_image.png"))
+        .unwrap()
+        .into_rgb8();
     assert_eq!(image.dimensions(), expected.dimensions());
     assert_eq!(image.into_raw(), expected.into_raw());
 }
 
 #[test]
-fn annex_i_rmqr_as_image() {
+fn rmqr_as_image() {
     let code = QrCode::with_version(
         b"0123456",
         Version::RectMicro(RectMicroVersion::R11x27),
@@ -59,7 +58,7 @@ fn annex_i_rmqr_as_image() {
     )
     .unwrap();
     let image = code.render::<Luma<u8>>().build();
-    let expected = image::load_from_memory(include_bytes!("data/test_annex_i_rmqr_as_image.png"))
+    let expected = image::load_from_memory(include_bytes!("data/rmqr_as_image.png"))
         .unwrap()
         .into_luma8();
     assert_eq!(image.dimensions(), expected.dimensions());
@@ -71,10 +70,9 @@ fn qr_v40_ec_l_as_image() {
     {
         let code = QrCode::with_error_correction_level(&INPUT_DATA[..2953], EcLevel::L).unwrap();
         let image = code.render::<Luma<u8>>().build();
-        let expected =
-            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_l_as_image.png"))
-                .unwrap()
-                .into_luma8();
+        let expected = image::load_from_memory(include_bytes!("data/qr_v40_ec_l_as_image.png"))
+            .unwrap()
+            .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
         assert_eq!(image.into_raw(), expected.into_raw());
     }
@@ -90,10 +88,9 @@ fn qr_v40_ec_l_as_image() {
         )
         .unwrap();
         let image = code.render::<Luma<u8>>().build();
-        let expected =
-            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_l_as_image.png"))
-                .unwrap()
-                .into_luma8();
+        let expected = image::load_from_memory(include_bytes!("data/qr_v40_ec_l_as_image.png"))
+            .unwrap()
+            .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
         assert_eq!(image.into_raw(), expected.into_raw());
     }
@@ -113,10 +110,9 @@ fn qr_v40_ec_m_as_image() {
     {
         let code = QrCode::new(&INPUT_DATA[..2331]).unwrap();
         let image = code.render::<Luma<u8>>().build();
-        let expected =
-            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_m_as_image.png"))
-                .unwrap()
-                .into_luma8();
+        let expected = image::load_from_memory(include_bytes!("data/qr_v40_ec_m_as_image.png"))
+            .unwrap()
+            .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
         assert_eq!(image.into_raw(), expected.into_raw());
     }
@@ -127,10 +123,9 @@ fn qr_v40_ec_m_as_image() {
     {
         let code = QrCode::with_error_correction_level(&INPUT_DATA[..2331], EcLevel::M).unwrap();
         let image = code.render::<Luma<u8>>().build();
-        let expected =
-            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_m_as_image.png"))
-                .unwrap()
-                .into_luma8();
+        let expected = image::load_from_memory(include_bytes!("data/qr_v40_ec_m_as_image.png"))
+            .unwrap()
+            .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
         assert_eq!(image.into_raw(), expected.into_raw());
     }
@@ -146,10 +141,9 @@ fn qr_v40_ec_m_as_image() {
         )
         .unwrap();
         let image = code.render::<Luma<u8>>().build();
-        let expected =
-            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_m_as_image.png"))
-                .unwrap()
-                .into_luma8();
+        let expected = image::load_from_memory(include_bytes!("data/qr_v40_ec_m_as_image.png"))
+            .unwrap()
+            .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
         assert_eq!(image.into_raw(), expected.into_raw());
     }
@@ -169,10 +163,9 @@ fn qr_v40_ec_h_as_image() {
     {
         let code = QrCode::with_error_correction_level(&INPUT_DATA[..1273], EcLevel::H).unwrap();
         let image = code.render::<Luma<u8>>().build();
-        let expected =
-            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_h_as_image.png"))
-                .unwrap()
-                .into_luma8();
+        let expected = image::load_from_memory(include_bytes!("data/qr_v40_ec_h_as_image.png"))
+            .unwrap()
+            .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
         assert_eq!(image.into_raw(), expected.into_raw());
     }
@@ -188,10 +181,9 @@ fn qr_v40_ec_h_as_image() {
         )
         .unwrap();
         let image = code.render::<Luma<u8>>().build();
-        let expected =
-            image::load_from_memory(include_bytes!("data/test_qr_v40_ec_h_as_image.png"))
-                .unwrap()
-                .into_luma8();
+        let expected = image::load_from_memory(include_bytes!("data/qr_v40_ec_h_as_image.png"))
+            .unwrap()
+            .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
         assert_eq!(image.into_raw(), expected.into_raw());
     }
@@ -207,13 +199,13 @@ fn qr_v40_ec_h_as_image() {
 }
 
 #[test]
-fn micro_qr_v4_ec_l_as_image() {
+fn micro_qr_m4_ec_l_as_image() {
     {
         let code =
             QrCode::micro_with_error_correction_level(&INPUT_DATA[..15], EcLevel::L).unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_l_as_image.png"))
+            image::load_from_memory(include_bytes!("data/micro_qr_m4_ec_l_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -233,7 +225,7 @@ fn micro_qr_v4_ec_l_as_image() {
         .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_l_as_image.png"))
+            image::load_from_memory(include_bytes!("data/micro_qr_m4_ec_l_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -251,12 +243,12 @@ fn micro_qr_v4_ec_l_as_image() {
 }
 
 #[test]
-fn micro_qr_v4_ec_m_as_image() {
+fn micro_qr_m4_ec_m_as_image() {
     {
         let code = QrCode::new_micro(&INPUT_DATA[..13]).unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_m_as_image.png"))
+            image::load_from_memory(include_bytes!("data/micro_qr_m4_ec_m_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -271,7 +263,7 @@ fn micro_qr_v4_ec_m_as_image() {
             QrCode::micro_with_error_correction_level(&INPUT_DATA[..13], EcLevel::M).unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_m_as_image.png"))
+            image::load_from_memory(include_bytes!("data/micro_qr_m4_ec_m_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -291,7 +283,7 @@ fn micro_qr_v4_ec_m_as_image() {
         .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_m_as_image.png"))
+            image::load_from_memory(include_bytes!("data/micro_qr_m4_ec_m_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -309,12 +301,12 @@ fn micro_qr_v4_ec_m_as_image() {
 }
 
 #[test]
-fn micro_qr_v4_ec_q_as_image() {
+fn micro_qr_m4_ec_q_as_image() {
     {
         let code = QrCode::micro_with_error_correction_level(&INPUT_DATA[..9], EcLevel::Q).unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_q_as_image.png"))
+            image::load_from_memory(include_bytes!("data/micro_qr_m4_ec_q_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -334,7 +326,7 @@ fn micro_qr_v4_ec_q_as_image() {
         .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_micro_qr_v4_ec_q_as_image.png"))
+            image::load_from_memory(include_bytes!("data/micro_qr_m4_ec_q_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -352,12 +344,12 @@ fn micro_qr_v4_ec_q_as_image() {
 }
 
 #[test]
-fn rmqr_vr17x139_ec_m_as_image() {
+fn rmqr_r17x139_ec_m_as_image() {
     {
         let code = QrCode::new_rect_micro(&INPUT_DATA[..150]).unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_rmqr_vr17x139_ec_m_as_image.png"))
+            image::load_from_memory(include_bytes!("data/rmqr_r17x139_ec_m_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -372,7 +364,7 @@ fn rmqr_vr17x139_ec_m_as_image() {
             QrCode::rect_micro_with_error_correction_level(&INPUT_DATA[..150], EcLevel::M).unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_rmqr_vr17x139_ec_m_as_image.png"))
+            image::load_from_memory(include_bytes!("data/rmqr_r17x139_ec_m_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -392,7 +384,7 @@ fn rmqr_vr17x139_ec_m_as_image() {
         .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_rmqr_vr17x139_ec_m_as_image.png"))
+            image::load_from_memory(include_bytes!("data/rmqr_r17x139_ec_m_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -410,13 +402,13 @@ fn rmqr_vr17x139_ec_m_as_image() {
 }
 
 #[test]
-fn rmqr_vr17x139_ec_h_as_image() {
+fn rmqr_r17x139_ec_h_as_image() {
     {
         let code =
             QrCode::rect_micro_with_error_correction_level(&INPUT_DATA[..74], EcLevel::H).unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_rmqr_vr17x139_ec_h_as_image.png"))
+            image::load_from_memory(include_bytes!("data/rmqr_r17x139_ec_h_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
@@ -436,7 +428,7 @@ fn rmqr_vr17x139_ec_h_as_image() {
         .unwrap();
         let image = code.render::<Luma<u8>>().build();
         let expected =
-            image::load_from_memory(include_bytes!("data/test_rmqr_vr17x139_ec_h_as_image.png"))
+            image::load_from_memory(include_bytes!("data/rmqr_r17x139_ec_h_as_image.png"))
                 .unwrap()
                 .into_luma8();
         assert_eq!(image.dimensions(), expected.dimensions());
