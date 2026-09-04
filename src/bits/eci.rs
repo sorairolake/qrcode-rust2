@@ -6,12 +6,10 @@
 //! Implementation of features related to ECI.
 
 use super::{Bits, mode_indicator::ExtendedMode};
-use crate::{
-    cast::As,
-    error::{Error, Result},
-};
+use crate::error::{Error, Result};
 
 impl Bits {
+    #[expect(clippy::missing_panics_doc)]
     /// Pushes an ECI (Extended Channel Interpretation) designator to the bits.
     ///
     /// An ECI designator is a 6-digit number to specify the character set of
