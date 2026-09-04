@@ -43,16 +43,16 @@ impl Bits {
         self.push_mode_indicator(ExtendedMode::Eci)?;
         match eci_designator {
             0..=127 => {
-                self.push_number(8, eci_designator.as_u16());
+                self.push_number(8, eci_designator.try_into().unwrap());
             }
             128..=16383 => {
                 self.push_number(2, 0b10);
-                self.push_number(14, eci_designator.as_u16());
+                self.push_number(14, eci_designator.try_into().unwrap());
             }
             16384..=999_999 => {
                 self.push_number(3, 0b110);
-                self.push_number(5, (eci_designator >> 16).as_u16());
-                self.push_number(16, (eci_designator & 0xFFFF).as_u16());
+                self.push_number(5, (eci_designator >> 16).try_into().unwrap());
+                self.push_number(16, (eci_designator & 0xFFFF).try_into().unwrap());
             }
             _ => return Err(Error::InvalidEciDesignator),
         }
