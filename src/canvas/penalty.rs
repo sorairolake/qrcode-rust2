@@ -134,7 +134,7 @@ impl Canvas {
         let dark_modules = self.modules.iter().filter(|m| m.is_dark()).count();
         let total_modules = self.modules.len();
         let ratio = dark_modules * 200 / total_modules;
-        ratio.abs_diff(100).as_u16()
+        ratio.abs_diff(100).try_into().unwrap()
     }
 
     /// Computes the penalty score for having too many light modules on the
@@ -157,7 +157,7 @@ impl Canvas {
             .filter(|j| !self.get(-1, *j).is_dark())
             .count();
 
-        (h + v + 15 * cmp::max(h, v)).as_u16()
+        (h + v + 15 * cmp::max(h, v)).try_into().unwrap()
     }
 
     /// Computes the total penalty scores. A QR code having higher points is
