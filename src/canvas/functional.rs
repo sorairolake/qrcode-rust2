@@ -8,7 +8,7 @@
 //! All functional patterns before data placement.
 
 use super::{Canvas, alignment::ALIGNMENT_PATTERN_POSITIONS};
-use crate::{cast::As, types::Version};
+use crate::types::Version;
 
 impl Canvas {
     /// Draws all functional patterns, before data placement.
@@ -55,7 +55,7 @@ pub fn is_functional(version: Version, width: i16, x: i16, y: i16) -> bool {
                 1 => false,
                 2..=6 => (width - 7 - x).abs() <= 2 && (width - 7 - y).abs() <= 2,
                 _ => {
-                    let positions = ALIGNMENT_PATTERN_POSITIONS[(a - 7).as_usize()];
+                    let positions = ALIGNMENT_PATTERN_POSITIONS[(a - 7).into()];
                     let last = positions.len() - 1;
                     for (i, align_x) in positions.iter().enumerate() {
                         for (j, align_y) in positions.iter().enumerate() {
