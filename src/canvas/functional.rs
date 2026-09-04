@@ -41,7 +41,7 @@ pub fn is_functional(version: Version, width: i16, x: i16, y: i16) -> bool {
         Version::Micro(_) => x == 0 || y == 0 || (x < 9 && y < 9),
         Version::RectMicro(_) => unimplemented!(),
         Version::Normal(a) => {
-            let a = u8::from(a).as_i16();
+            let a = u8::from(a);
             let timing_patterns = x == 6 || y == 6;
             let top_left_finder_pattern = x < 9 && y < 9;
             let bottom_left_finder_pattern = x < 9 && y >= width - 8;
