@@ -108,7 +108,7 @@ impl Bits {
         if n > 16 || number >= (1 << n) {
             Err(Error::DataTooLong)
         } else {
-            self.push_number(n, number.as_u16());
+            self.push_number(n, number.try_into().unwrap());
             Ok(())
         }
     }
