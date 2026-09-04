@@ -11,10 +11,7 @@ use alloc::boxed::Box;
 use core::{cmp, iter};
 
 use super::{Canvas, Module};
-use crate::{
-    cast::As,
-    types::{Color, Version},
-};
+use crate::types::{Color, Version};
 
 impl Canvas {
     /// Computes the penalty score for having too many adjacent modules with the
