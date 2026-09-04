@@ -51,7 +51,7 @@ impl Version {
     pub fn width(self) -> i16 {
         match self {
             Self::Normal(v) => i16::try_from(u8::from(v)).unwrap() * 4 + 17,
-            Self::Micro(v) => u8::from(v).try_into().unwrap() * 2 + 9,
+            Self::Micro(v) => i16::try_from(u8::from(v)).unwrap() * 2 + 9,
             Self::RectMicro(v) => {
                 let (_, w) = <(u8, u8)>::from(v);
                 w.try_into().unwrap()
