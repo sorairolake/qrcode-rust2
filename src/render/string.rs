@@ -96,10 +96,10 @@ impl<P: Element> RenderCanvas for Canvas<P> {
         let width = width.as_usize();
         let height = isize::try_from(height).unwrap();
         let buffer = vec![light_pixel; height.as_usize() * width];
-        let dark_cap = dark_pixel.str_len().try_into().unwrap();
-        let light_cap = light_pixel.str_len().try_into().unwrap();
+        let dark_cap = isize::try_from(dark_pixel.str_len()).unwrap();
+        let light_cap = isize::try_from(light_pixel.str_len()).unwrap();
         let dark_cap_inc = dark_cap - light_cap;
-        let capacity = light_cap * width.try_into().unwrap() * height + (height - 1);
+        let capacity = light_cap * isize::try_from(width).unwrap() * height + (height - 1);
         Self {
             buffer,
             width,
