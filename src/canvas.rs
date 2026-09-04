@@ -121,8 +121,10 @@ impl Canvas {
     }
 
     fn coords_to_index(&self, x: i16, y: i16) -> usize {
-        let x = if x < 0 { x + self.width } else { x }.try_into().unwrap();
-        let y = if y < 0 { y + self.height } else { y }.try_into().unwrap();
+        let x = if x < 0 { x + self.width } else { x };
+        let x = usize::try_from(x).unwrap();
+        let y = if y < 0 { y + self.height } else { y };
+        let y = usize::try_from(y).unwrap();
         y * self.width.try_into().unwrap() + x
     }
 
