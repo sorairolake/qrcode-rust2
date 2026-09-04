@@ -50,11 +50,11 @@ impl Version {
     #[must_use]
     pub fn width(self) -> i16 {
         match self {
-            Self::Normal(v) => i16::try_from(u8::from(v)).unwrap() * 4 + 17,
-            Self::Micro(v) => i16::try_from(u8::from(v)).unwrap() * 2 + 9,
+            Self::Normal(v) => i16::from(u8::from(v)) * 4 + 17,
+            Self::Micro(v) => i16::from(u8::from(v)) * 2 + 9,
             Self::RectMicro(v) => {
                 let (_, w) = <(u8, u8)>::from(v);
-                w.try_into().unwrap()
+                w.into()
             }
         }
     }
@@ -77,7 +77,7 @@ impl Version {
     pub fn height(self) -> i16 {
         if let Self::RectMicro(v) = self {
             let (h, _) = <(u8, u8)>::from(v);
-            h.try_into().unwrap()
+            h.into()
         } else {
             self.width()
         }
