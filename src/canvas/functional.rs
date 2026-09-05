@@ -33,7 +33,7 @@ impl Canvas {
 #[must_use]
 pub fn is_functional(version: Version, width: u8, x: i16, y: i16) -> bool {
     debug_assert_eq!(width, version.width());
-    let width = width.into();
+    let width = i16::from(width);
 
     let x = if x < 0 { x + width } else { x };
     let y = if y < 0 { y + width } else { y };
