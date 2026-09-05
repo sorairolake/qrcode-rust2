@@ -155,7 +155,7 @@ impl NormalVersion {
 
     /// Gets the number of "modules" on each size of the QR code model 2, i.e.
     /// the width and height of the code.
-    /// 
+    ///
     /// # Examples
     ///
     /// ```
