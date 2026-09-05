@@ -26,7 +26,6 @@ pub use self::{
     mode_indicator::ExtendedMode,
 };
 use crate::{
-    cast::Truncate,
     error::{Error, Result},
     types::{EcLevel, Version},
 };
@@ -76,23 +75,41 @@ impl Bits {
         let last_index = self.data.len().wrapping_sub(1);
         match (self.bit_offset, b) {
             (0, 0..=8) => {
-                self.data.push((number << (8 - b)).truncate_as_u8());
+                // TODO: use `u16::truncate()` when stable.
+                // <https://github.com/rust-lang/rust/issues/154330>
+                self.data.push((number << (8 - b)) as u8);
             }
             (0, _) => {
-                self.data.push((number >> (b - 8)).truncate_as_u8());
-                self.data.push((number << (16 - b)).truncate_as_u8());
+                // TODO: use `u16::truncate()` when stable.
+                // <https://github.com/rust-lang/rust/issues/154330>
+                self.data.push((number >> (b - 8)) as u8);
+                // TODO: use `u16::truncate()` when stable.
+                // <https://github.com/rust-lang/rust/issues/154330>
+                self.data.push((number << (16 - b)) as u8);
             }
             (_, 0..=8) => {
-                self.data[last_index] |= (number << (8 - b)).truncate_as_u8();
+                // TODO: use `u16::truncate()` when stable.
+                // <https://github.com/rust-lang/rust/issues/154330>
+                self.data[last_index] |= (number << (8 - b)) as u8;
             }
             (_, 9..=16) => {
-                self.data[last_index] |= (number >> (b - 8)).truncate_as_u8();
-                self.data.push((number << (16 - b)).truncate_as_u8());
+                // TODO: use `u16::truncate()` when stable.
+                // <https://github.com/rust-lang/rust/issues/154330>
+                self.data[last_index] |= (number >> (b - 8)) as u8;
+                // TODO: use `u16::truncate()` when stable.
+                // <https://github.com/rust-lang/rust/issues/154330>
+                self.data.push((number << (16 - b)) as u8);
             }
             _ => {
-                self.data[last_index] |= (number >> (b - 8)).truncate_as_u8();
-                self.data.push((number >> (b - 16)).truncate_as_u8());
-                self.data.push((number << (24 - b)).truncate_as_u8());
+                // TODO: use `u16::truncate()` when stable.
+                // <https://github.com/rust-lang/rust/issues/154330>
+                self.data[last_index] |= (number >> (b - 8)) as u8;
+                // TODO: use `u16::truncate()` when stable.
+                // <https://github.com/rust-lang/rust/issues/154330>
+                self.data.push((number >> (b - 16)) as u8);
+                // TODO: use `u16::truncate()` when stable.
+                // <https://github.com/rust-lang/rust/issues/154330>
+                self.data.push((number << (24 - b)) as u8);
             }
         }
         self.bit_offset = b & 7;
