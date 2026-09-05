@@ -105,7 +105,7 @@ impl<'a, P: Pixel> Renderer<'a, P> {
         quiet_zone: u32,
     ) -> Self {
         assert_eq!(
-            horizontal_modules_count * vertical_modules_count,
+            horizontal_modules_count.into() * vertical_modules_count.into(),
             content.len()
         );
         let horizontal_modules_count = horizontal_modules_count.try_into().unwrap();
