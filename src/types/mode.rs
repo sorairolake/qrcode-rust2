@@ -10,7 +10,6 @@
 use core::cmp::Ordering;
 
 use super::{NormalVersion, Version};
-use crate::cast::As;
 
 /// The mode indicator, which specifies the character set of the encoded data.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -50,7 +49,7 @@ impl Mode {
     pub fn length_bits_count(self, version: Version) -> usize {
         match version {
             Version::Micro(a) => {
-                let a = u8::from(a).as_usize();
+                let a = u8::from(a).into();
                 match self {
                     Self::Numeric => 2 + a,
                     Self::Alphanumeric | Self::Byte => 1 + a,
