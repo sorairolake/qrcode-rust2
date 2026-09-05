@@ -83,7 +83,7 @@ impl Canvas {
             Version::Micro(_) => {}
             Version::Normal(a) if a <= NormalVersion::V6 => {}
             Version::Normal(a) => {
-                let version_info = VERSION_INFOS[(u8::from(a) - 7).into()];
+                let version_info = VERSION_INFOS[usize::from(u8::from(a) - 7)];
                 self.draw_number(
                     version_info,
                     18,
