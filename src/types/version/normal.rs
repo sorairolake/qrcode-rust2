@@ -152,6 +152,55 @@ impl NormalVersion {
     /// assert_eq!(NormalVersion::MAX, NormalVersion::V40);
     /// ```
     pub const MAX: Self = Self::V40;
+
+    /// Gets the number of horizontally-arranged "modules" on each size of the
+    /// QR code, i.e. the width of the code.
+    ///
+    /// Except for rMQR code, the width is the same as the height.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
+    ///
+    /// assert_eq!(Version::Normal(NormalVersion::V40).width(), 177);
+    /// assert_eq!(Version::Micro(MicroVersion::M4).width(), 17);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).width(), 139);
+    /// ```
+    #[must_use]
+    pub fn width(self) -> u8 {
+        match self {
+            Self::Normal(v) => u8::from(v) * 4 + 17,
+            Self::Micro(v) => u8::from(v) * 2 + 9,
+            Self::RectMicro(v) => {
+                let (_, w) = <(u8, u8)>::from(v);
+                w
+            }
+        }
+    }
+
+    /// Returns the number of bits needed to encode the mode indicator.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
+    ///
+    /// assert_eq!(Version::Normal(NormalVersion::V40).mode_bits_count(), 4);
+    /// assert_eq!(Version::Micro(MicroVersion::M4).mode_bits_count(), 3);
+    /// assert_eq!(
+    ///     Version::RectMicro(RectMicroVersion::R17x139).mode_bits_count(),
+    ///     3
+    /// );
+    /// ```
+    #[must_use]
+    pub fn mode_bits_count(self) -> usize {
+        match self {
+            Self::Normal(_) => 4,
+            Self::Micro(a) => (u8::from(a) - 1).into(),
+            Self::RectMicro(_) => 3,
+        }
+    }
 }
 
 impl From<NormalVersion> for u8 {
