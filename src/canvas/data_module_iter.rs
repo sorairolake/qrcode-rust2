@@ -18,13 +18,13 @@ pub struct DataModuleIter {
 
 impl DataModuleIter {
     pub fn new(version: Version) -> Self {
+        let (mut width, mut height) = (version.width().into(), version.height().into());
         // In rMQR code, disregarding the bottom and right alignment patterns
         // works well.
-        let (width, height) = if version.is_rect_micro() {
-            (version.width() - 1, version.height() - 1)
-        } else {
-            (version.width(), version.height())
-        };
+        if version.is_rect_micro() {
+            width -= 1;
+            height -= 1;
+        }
         let timing_pattern_column = if version.is_normal() { 6 } else { 0 };
 
         let (x, y) = (width - 1, height - 1);
