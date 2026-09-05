@@ -73,13 +73,14 @@ impl Bits {
 
         let b = self.bit_offset + n;
         let last_index = self.data.len().wrapping_sub(1);
-        #[expect(clippy::cast_possible_truncation)]
         match (self.bit_offset, b) {
+            #[expect(clippy::cast_possible_truncation)]
             (0, 0..=8) => {
                 // TODO: use `u16::truncate()` when stable.
                 // <https://github.com/rust-lang/rust/issues/154330>
                 self.data.push((number << (8 - b)) as u8);
             }
+            #[expect(clippy::cast_possible_truncation)]
             (0, _) => {
                 // TODO: use `u16::truncate()` when stable.
                 // <https://github.com/rust-lang/rust/issues/154330>
@@ -88,11 +89,13 @@ impl Bits {
                 // <https://github.com/rust-lang/rust/issues/154330>
                 self.data.push((number << (16 - b)) as u8);
             }
+            #[expect(clippy::cast_possible_truncation)]
             (_, 0..=8) => {
                 // TODO: use `u16::truncate()` when stable.
                 // <https://github.com/rust-lang/rust/issues/154330>
                 self.data[last_index] |= (number << (8 - b)) as u8;
             }
+            #[expect(clippy::cast_possible_truncation)]
             (_, 9..=16) => {
                 // TODO: use `u16::truncate()` when stable.
                 // <https://github.com/rust-lang/rust/issues/154330>
@@ -101,6 +104,7 @@ impl Bits {
                 // <https://github.com/rust-lang/rust/issues/154330>
                 self.data.push((number << (16 - b)) as u8);
             }
+            #[expect(clippy::cast_possible_truncation)]
             _ => {
                 // TODO: use `u16::truncate()` when stable.
                 // <https://github.com/rust-lang/rust/issues/154330>
