@@ -56,11 +56,11 @@ impl MicroVersion {
     /// ```
     /// use qrcode2::MicroVersion;
     ///
-    /// assert_eq!(MicroVersion::M1.width(), 11);
-    /// assert_eq!(MicroVersion::M4.width(), 17);
+    /// assert_eq!(MicroVersion::M1.size(), 11);
+    /// assert_eq!(MicroVersion::M4.size(), 17);
     /// ```
     #[must_use]
-    pub fn width(self) -> u8 {
+    pub fn size(self) -> u8 {
         u8::from(self) * 2 + 9
     }
 
