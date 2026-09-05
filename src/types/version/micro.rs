@@ -50,7 +50,7 @@ impl MicroVersion {
 
     /// Gets the number of "modules" on each size of the Micro QR code, i.e. the
     /// width and height of the code.
-    /// 
+    ///
     /// # Examples
     ///
     /// ```
