@@ -165,7 +165,8 @@ impl RectMicroVersion {
         Self::R17x139,
     ];
 
-    /// Gets the number of horizontally-arranged "modules" on each size of the rMQR code, i.e. the width of the code.
+    /// Gets the number of horizontally-arranged "modules" on each size of the
+    /// rMQR code, i.e. the width of the code.
     ///
     /// # Examples
     ///
@@ -181,7 +182,8 @@ impl RectMicroVersion {
         w
     }
 
-    /// Gets the number of vertically-arranged "modules" on each size of the rMQR code, i.e. the height of the code.
+    /// Gets the number of vertically-arranged "modules" on each size of the
+    /// rMQR code, i.e. the height of the code.
     ///
     /// # Examples
     ///
@@ -208,7 +210,7 @@ impl RectMicroVersion {
     /// assert_eq!(RectMicroVersion::R17x139.mode_bits_count(), 3);
     /// ```
     #[must_use]
-    pub fn mode_bits_count(self) -> usize {
+    pub const fn mode_bits_count(self) -> usize {
         3
     }
 
