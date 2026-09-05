@@ -11,8 +11,8 @@ use crate::types::Version;
 pub struct DataModuleIter {
     x: i16,
     y: i16,
-    width: i16,
-    height: i16,
+    width: u8,
+    height: u8,
     timing_pattern_column: i16,
 }
 
