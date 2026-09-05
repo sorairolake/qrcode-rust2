@@ -83,8 +83,8 @@ pub struct QrCode {
     content: Vec<Color>,
     version: Version,
     ec_level: EcLevel,
-    width: usize,
-    height: usize,
+    width: u8,
+    height: u8,
 }
 
 impl QrCode {
@@ -308,7 +308,7 @@ impl QrCode {
         canvas.draw_all_functional_patterns();
         canvas.draw_data(&encoded_data, &ec_data);
         let content = canvas.apply_best_mask().into_colors();
-        let (width, height) = (version.width().into(), version.height().into());
+        let (width, height) = (version.width(), version.height());
         Ok(Self {
             content,
             version,
@@ -361,7 +361,7 @@ impl QrCode {
     /// assert_eq!(code.width(), 27);
     /// ```
     #[must_use]
-    pub const fn width(&self) -> usize {
+    pub const fn width(&self) -> u8 {
         self.width
     }
 
@@ -378,7 +378,7 @@ impl QrCode {
     /// assert_eq!(code.height(), 13);
     /// ```
     #[must_use]
-    pub const fn height(&self) -> usize {
+    pub const fn height(&self) -> u8 {
         self.height
     }
 
