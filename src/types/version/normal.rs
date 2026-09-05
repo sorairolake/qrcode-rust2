@@ -153,8 +153,7 @@ impl NormalVersion {
     /// ```
     pub const MAX: Self = Self::V40;
 
-    /// Gets the number of "modules" on each size of the QR code model 2, i.e.
-    /// the width and height of the code.
+    /// Gets the number of modules on each side.
     ///
     /// # Examples
     ///
