@@ -410,7 +410,7 @@ impl QrCode {
     pub fn is_functional(&self, x: usize, y: usize) -> bool {
         let x = x.try_into().unwrap();
         let y = y.try_into().unwrap();
-        canvas::is_functional(self.version, self.version.width().into(), x, y)
+        canvas::is_functional(self.version, self.version.width(), x, y)
     }
 
     /// Converts the QR code into a human-readable string. This is mainly for
