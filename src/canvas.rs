@@ -69,7 +69,7 @@ impl Canvas {
     /// Constructs a new canvas big enough for a QR code of the given version.
     #[must_use]
     pub fn new(version: Version, ec_level: EcLevel) -> Self {
-        let (width, height) = (version.width().into(), version.height().into());
+        let (width, height) = (i16::from(version.width()), i16::from(version.height()));
         let modules = vec![Module::Empty; (height * width).try_into().unwrap()];
         Self {
             width,
