@@ -272,7 +272,6 @@ impl QrCode {
         Self::with_bits(bits, ec_level)
     }
 
-    #[expect(clippy::missing_panics_doc)]
     /// Constructs a new QR code with encoded bits.
     ///
     /// Use this method only if there are very special need to manipulate the
@@ -309,10 +308,7 @@ impl QrCode {
         canvas.draw_all_functional_patterns();
         canvas.draw_data(&encoded_data, &ec_data);
         let content = canvas.apply_best_mask().into_colors();
-        let (width, height) = (
-            version.width().try_into().unwrap(),
-            version.height().try_into().unwrap(),
-        );
+        let (width, height) = (version.width().into(), version.height().into());
         Ok(Self {
             content,
             version,

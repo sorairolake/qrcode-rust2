@@ -27,6 +27,12 @@ project adheres to https://semver.org/[Semantic Versioning].
 * Compute globally optimal mode segmentation (ISO/IEC 18004 Annex J) instead of
   the previous greedy heuristic ({pull-request-url}/148[#148])
 * Change internal representation of `Version` ({pull-request-url}/180[#180])
+* Change the return type of `Version::width` to `u8`
+  ({pull-request-url}/194[#194])
+* Change the return type of `Version::height` to `u8`
+  ({pull-request-url}/194[#194])
+* Change the type of `width` parameter of `canvas::is_functional` to `u8`
+  ({pull-request-url}/194[#194])
 
 === Fixed
 

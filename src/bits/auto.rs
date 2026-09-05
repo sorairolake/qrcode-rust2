@@ -278,7 +278,7 @@ pub fn encode_auto_rect_micro(
         RectMicroStrategy::Height => possible_versions.first(),
         RectMicroStrategy::Area => possible_versions
             .iter()
-            .min_by_key(|v| v.height() * v.width()),
+            .min_by_key(|v| u16::from(v.height()) * u16::from(v.width())),
     };
 
     if let Some(version) = min_version {
