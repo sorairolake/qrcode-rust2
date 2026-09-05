@@ -31,6 +31,12 @@ project adheres to https://semver.org/[Semantic Versioning].
   ({pull-request-url}/194[#194])
 * Change the return type of `Version::height` to `u8`
   ({pull-request-url}/194[#194])
+* Change the return type of `QrCode::width` to `u8`
+  ({pull-request-url}/199[#199])
+* Change the return type of `QrCode::height` to `u8`
+  ({pull-request-url}/199[#199])
+* Change the type of parameters of `Renderer::new`
+  ({pull-request-url}/199[#199])
 
 === Fixed
 
