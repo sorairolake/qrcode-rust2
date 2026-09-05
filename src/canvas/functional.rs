@@ -142,49 +142,49 @@ mod tests {
     #[test]
     fn is_functional_qr_1() {
         let version = Version::Normal(NormalVersion::V1);
-        assert!(is_functional(version, version.width(), 0, 0));
-        assert!(is_functional(version, version.width(), 10, 6));
-        assert!(!is_functional(version, version.width(), 10, 5));
-        assert!(!is_functional(version, version.width(), 14, 14));
-        assert!(is_functional(version, version.width(), 6, 11));
-        assert!(!is_functional(version, version.width(), 4, 11));
-        assert!(is_functional(version, version.width(), 4, 13));
-        assert!(is_functional(version, version.width(), 17, 7));
-        assert!(!is_functional(version, version.width(), 17, 17));
+        assert!(is_functional(version, version.width().into(), 0, 0));
+        assert!(is_functional(version, version.width().into(), 10, 6));
+        assert!(!is_functional(version, version.width().into(), 10, 5));
+        assert!(!is_functional(version, version.width().into(), 14, 14));
+        assert!(is_functional(version, version.width().into(), 6, 11));
+        assert!(!is_functional(version, version.width().into(), 4, 11));
+        assert!(is_functional(version, version.width().into(), 4, 13));
+        assert!(is_functional(version, version.width().into(), 17, 7));
+        assert!(!is_functional(version, version.width().into(), 17, 17));
     }
 
     #[test]
     fn is_functional_qr_3() {
         let version = Version::Normal(NormalVersion::V3);
-        assert!(is_functional(version, version.width(), 0, 0));
-        assert!(!is_functional(version, version.width(), 25, 24));
-        assert!(is_functional(version, version.width(), 24, 24));
-        assert!(!is_functional(version, version.width(), 9, 25));
-        assert!(!is_functional(version, version.width(), 20, 0));
-        assert!(is_functional(version, version.width(), 21, 0));
+        assert!(is_functional(version, version.width().into(), 0, 0));
+        assert!(!is_functional(version, version.width().into(), 25, 24));
+        assert!(is_functional(version, version.width().into(), 24, 24));
+        assert!(!is_functional(version, version.width().into(), 9, 25));
+        assert!(!is_functional(version, version.width().into(), 20, 0));
+        assert!(is_functional(version, version.width().into(), 21, 0));
     }
 
     #[test]
     fn is_functional_qr_7() {
         let version = Version::Normal(NormalVersion::V7);
-        assert!(is_functional(version, version.width(), 21, 4));
-        assert!(is_functional(version, version.width(), 7, 21));
-        assert!(is_functional(version, version.width(), 22, 22));
-        assert!(is_functional(version, version.width(), 8, 8));
-        assert!(!is_functional(version, version.width(), 19, 5));
-        assert!(!is_functional(version, version.width(), 36, 3));
-        assert!(!is_functional(version, version.width(), 4, 36));
-        assert!(is_functional(version, version.width(), 38, 38));
+        assert!(is_functional(version, version.width().into(), 21, 4));
+        assert!(is_functional(version, version.width().into(), 7, 21));
+        assert!(is_functional(version, version.width().into(), 22, 22));
+        assert!(is_functional(version, version.width().into(), 8, 8));
+        assert!(!is_functional(version, version.width().into(), 19, 5));
+        assert!(!is_functional(version, version.width().into(), 36, 3));
+        assert!(!is_functional(version, version.width().into(), 4, 36));
+        assert!(is_functional(version, version.width().into(), 38, 38));
     }
 
     #[test]
     fn is_functional_micro() {
         let version = Version::Micro(MicroVersion::M1);
-        assert!(is_functional(version, version.width(), 8, 0));
-        assert!(is_functional(version, version.width(), 10, 0));
-        assert!(!is_functional(version, version.width(), 10, 1));
-        assert!(is_functional(version, version.width(), 8, 8));
-        assert!(is_functional(version, version.width(), 0, 9));
-        assert!(!is_functional(version, version.width(), 1, 9));
+        assert!(is_functional(version, version.width().into(), 8, 0));
+        assert!(is_functional(version, version.width().into(), 10, 0));
+        assert!(!is_functional(version, version.width().into(), 10, 1));
+        assert!(is_functional(version, version.width().into(), 8, 8));
+        assert!(is_functional(version, version.width().into(), 0, 9));
+        assert!(!is_functional(version, version.width().into(), 1, 9));
     }
 }
