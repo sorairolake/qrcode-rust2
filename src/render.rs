@@ -100,8 +100,8 @@ impl<'a, P: Pixel> Renderer<'a, P> {
     #[must_use]
     pub fn new(
         content: &'a [Color],
-        horizontal_modules_count: usize,
-        vertical_modules_count: usize,
+        horizontal_modules_count: u8,
+        vertical_modules_count: u8,
         quiet_zone: u32,
     ) -> Self {
         assert_eq!(
