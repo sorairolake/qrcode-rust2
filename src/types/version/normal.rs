@@ -153,19 +153,18 @@ impl NormalVersion {
     /// ```
     pub const MAX: Self = Self::V40;
 
-    /// Gets the number of "modules" on each size of the QR code model 2, i.e.
-    /// the width and height of the code.
+    /// Gets the number of modules on each side.
     ///
     /// # Examples
     ///
     /// ```
     /// use qrcode2::NormalVersion;
     ///
-    /// assert_eq!(NormalVersion::V1.width(), 21);
-    /// assert_eq!(NormalVersion::V40.width(), 177);
+    /// assert_eq!(NormalVersion::V1.size(), 21);
+    /// assert_eq!(NormalVersion::V40.size(), 177);
     /// ```
     #[must_use]
-    pub fn width(self) -> u8 {
+    pub fn size(self) -> u8 {
         u8::from(self) * 4 + 17
     }
 

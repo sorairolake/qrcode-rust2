@@ -30,8 +30,7 @@ pub enum Version {
 }
 
 impl Version {
-    /// Gets the number of horizontally-arranged "modules" on each size of the
-    /// QR code, i.e. the width of the code.
+    /// Gets the number of modules in the width.
     ///
     /// Except for rMQR code, the width is the same as the height.
     ///
@@ -47,14 +46,13 @@ impl Version {
     #[must_use]
     pub fn width(self) -> u8 {
         match self {
-            Self::Normal(v) => v.width(),
-            Self::Micro(v) => v.width(),
+            Self::Normal(v) => v.size(),
+            Self::Micro(v) => v.size(),
             Self::RectMicro(v) => v.width(),
         }
     }
 
-    /// Gets the number of vertically-arranged "modules" on each size of the QR
-    /// code, i.e. the height of the code.
+    /// Gets the number of modules in the height.
     ///
     /// Except for rMQR code, the height is the same as the width.
     ///
@@ -70,8 +68,8 @@ impl Version {
     #[must_use]
     pub fn height(self) -> u8 {
         match self {
-            Self::Normal(v) => v.width(),
-            Self::Micro(v) => v.width(),
+            Self::Normal(v) => v.size(),
+            Self::Micro(v) => v.size(),
             Self::RectMicro(v) => v.height(),
         }
     }
