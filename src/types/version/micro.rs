@@ -48,30 +48,19 @@ impl MicroVersion {
     /// All versions of Micro QR code.
     pub(crate) const ALL: [Self; 4] = [Self::M1, Self::M2, Self::M3, Self::M4];
 
-    /// Gets the number of horizontally-arranged "modules" on each size of the
-    /// QR code, i.e. the width of the code.
-    ///
-    /// Except for rMQR code, the width is the same as the height.
-    ///
+    /// Gets the number of "modules" on each size of the Micro QR code, i.e. the width and height of the code.
+    /// 
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
+    /// use qrcode2::MicroVersion;
     ///
-    /// assert_eq!(Version::Normal(NormalVersion::V40).width(), 177);
-    /// assert_eq!(Version::Micro(MicroVersion::M4).width(), 17);
-    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).width(), 139);
+    /// assert_eq!(MicroVersion::M1.width(), 11);
+    /// assert_eq!(MicroVersion::M4.width(), 17);
     /// ```
     #[must_use]
     pub fn width(self) -> u8 {
-        match self {
-            Self::Normal(v) => u8::from(v) * 4 + 17,
-            Self::Micro(v) => u8::from(v) * 2 + 9,
-            Self::RectMicro(v) => {
-                let (_, w) = <(u8, u8)>::from(v);
-                w
-            }
-        }
+        u8::from(self) * 2 + 9
     }
 
     /// Returns the number of bits needed to encode the mode indicator.
@@ -79,22 +68,14 @@ impl MicroVersion {
     /// # Examples
     ///
     /// ```
-    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
+    /// use qrcode2::MicroVersion;
     ///
-    /// assert_eq!(Version::Normal(NormalVersion::V40).mode_bits_count(), 4);
-    /// assert_eq!(Version::Micro(MicroVersion::M4).mode_bits_count(), 3);
-    /// assert_eq!(
-    ///     Version::RectMicro(RectMicroVersion::R17x139).mode_bits_count(),
-    ///     3
-    /// );
+    /// assert_eq!(MicroVersion::M1.mode_bits_count(), 0);
+    /// assert_eq!(MicroVersion::M4.mode_bits_count(), 3);
     /// ```
     #[must_use]
     pub fn mode_bits_count(self) -> usize {
-        match self {
-            Self::Normal(_) => 4,
-            Self::Micro(a) => (u8::from(a) - 1).into(),
-            Self::RectMicro(_) => 3,
-        }
+        (u8::from(self) - 1).into()
     }
 }
 
