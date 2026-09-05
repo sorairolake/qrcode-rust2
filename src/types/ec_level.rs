@@ -10,22 +10,30 @@
 #[derive(Clone, Copy, Debug, Default, Eq, Ord, PartialEq, PartialOrd)]
 pub enum EcLevel {
     /// Low error correction. Allows up to 7% of wrong blocks.
-    L = 0,
+    L,
 
     /// Medium error correction. Allows up to 15% of wrong blocks.
     #[default]
-    M = 1,
+    M,
 
     /// "Quartile" error correction. Allows up to 25% of wrong blocks.
-    Q = 2,
+    Q,
 
     /// High error correction. Allows up to 30% of wrong blocks.
-    H = 3,
+    H,
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn ec_level() {
+        assert_eq!(EcLevel::L as u8, 0);
+        assert_eq!(EcLevel::M as u8, 1);
+        assert_eq!(EcLevel::Q as u8, 2);
+        assert_eq!(EcLevel::H as u8, 3);
+    }
 
     #[test]
     fn default_works() {
