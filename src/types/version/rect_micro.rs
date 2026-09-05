@@ -210,7 +210,7 @@ impl RectMicroVersion {
     /// assert_eq!(RectMicroVersion::R17x139.mode_bits_count(), 3);
     /// ```
     #[must_use]
-    pub const fn mode_bits_count(self) -> u8 {
+    pub const fn mode_bits_count(self) -> usize {
         3
     }
 
