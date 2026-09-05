@@ -75,8 +75,8 @@ impl MicroVersion {
     /// assert_eq!(MicroVersion::M4.mode_bits_count(), 3);
     /// ```
     #[must_use]
-    pub fn mode_bits_count(self) -> usize {
-        (u8::from(self) - 1).into()
+    pub fn mode_bits_count(self) -> u8 {
+        u8::from(self) - 1
     }
 }
 
