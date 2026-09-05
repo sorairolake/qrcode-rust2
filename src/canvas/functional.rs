@@ -34,8 +34,12 @@ impl Canvas {
 pub fn is_functional(version: Version, width: i16, x: i16, y: i16) -> bool {
     debug_assert_eq!(width, version.width().into());
 
-    let x = if x < 0 { x + width } else { x };
-    let y = if y < 0 { y + width } else { y };
+    if x < 0 {
+        x += width;
+    }
+    if y < 0 {
+        y += width;
+    }
 
     match version {
         Version::Micro(_) => x == 0 || y == 0 || (x < 9 && y < 9),
