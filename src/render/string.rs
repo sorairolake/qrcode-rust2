@@ -20,7 +20,6 @@
 use alloc::{string::String, vec, vec::Vec};
 
 use crate::{
-    cast::As,
     render::{Canvas as RenderCanvas, Pixel},
     types::Color,
 };
@@ -93,13 +92,13 @@ impl<P: Element> RenderCanvas for Canvas<P> {
     type Image = String;
 
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
-        let width = width.as_usize();
-        let height = height.as_isize();
-        let buffer = vec![light_pixel; height.as_usize() * width];
-        let dark_cap = dark_pixel.str_len().as_isize();
-        let light_cap = light_pixel.str_len().as_isize();
+        let width = usize::try_from(width).unwrap();
+        let height = isize::try_from(height).unwrap();
+        let buffer = vec![light_pixel; usize::try_from(height).unwrap() * width];
+        let dark_cap = isize::try_from(dark_pixel.str_len()).unwrap();
+        let light_cap = isize::try_from(light_pixel.str_len()).unwrap();
         let dark_cap_inc = dark_cap - light_cap;
-        let capacity = light_cap * width.as_isize() * height + (height - 1);
+        let capacity = light_cap * isize::try_from(width).unwrap() * height + (height - 1);
         Self {
             buffer,
             width,
@@ -110,14 +109,14 @@ impl<P: Element> RenderCanvas for Canvas<P> {
     }
 
     fn draw_dark_pixel(&mut self, x: u32, y: u32) {
-        let x = x.as_usize();
-        let y = y.as_usize();
+        let x = usize::try_from(x).unwrap();
+        let y = usize::try_from(y).unwrap();
         self.capacity += self.dark_cap_inc;
         self.buffer[x + y * self.width] = self.dark_pixel;
     }
 
     fn into_image(self) -> Self::Image {
-        let mut result = String::with_capacity(self.capacity.as_usize());
+        let mut result = String::with_capacity(self.capacity.try_into().unwrap());
         for (i, pixel) in self.buffer.into_iter().enumerate() {
             if i != 0 && i.is_multiple_of(self.width) {
                 result.push('\n');

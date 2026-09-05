@@ -8,10 +8,7 @@
 //! Implementation of features related to the alignment patterns.
 
 use super::{Canvas, Module};
-use crate::{
-    cast::As,
-    types::{Color, NormalVersion, Version},
-};
+use crate::types::{Color, NormalVersion, Version};
 
 impl Canvas {
     /// Draws a alignment pattern with the center at (x, y).
@@ -55,7 +52,7 @@ impl Canvas {
             Version::Micro(_) | Version::Normal(NormalVersion::V1) | Version::RectMicro(_) => {}
             Version::Normal(a) if a <= NormalVersion::V6 => self.draw_alignment_pattern_at(-7, -7),
             Version::Normal(a) => {
-                let positions = ALIGNMENT_PATTERN_POSITIONS[(u8::from(a) - 7).as_usize()];
+                let positions = ALIGNMENT_PATTERN_POSITIONS[usize::from(u8::from(a) - 7)];
                 for x in positions {
                     for y in positions {
                         self.draw_alignment_pattern_at(*x, *y);

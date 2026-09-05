@@ -11,10 +11,7 @@ use alloc::boxed::Box;
 use core::{cmp, iter};
 
 use super::{Canvas, Module};
-use crate::{
-    cast::As,
-    types::{Color, Version},
-};
+use crate::types::{Color, Version};
 
 impl Canvas {
     /// Computes the penalty score for having too many adjacent modules with the
@@ -134,7 +131,7 @@ impl Canvas {
         let dark_modules = self.modules.iter().filter(|m| m.is_dark()).count();
         let total_modules = self.modules.len();
         let ratio = dark_modules * 200 / total_modules;
-        ratio.abs_diff(100).as_u16()
+        ratio.abs_diff(100).try_into().unwrap()
     }
 
     /// Computes the penalty score for having too many light modules on the
@@ -157,7 +154,7 @@ impl Canvas {
             .filter(|j| !self.get(-1, *j).is_dark())
             .count();
 
-        (h + v + 15 * cmp::max(h, v)).as_u16()
+        (h + v + 15 * cmp::max(h, v)).try_into().unwrap()
     }
 
     /// Computes the total penalty scores. A QR code having higher points is
@@ -296,8 +293,8 @@ mod tests {
 
         let mut c = Canvas::new(Version::Micro(MicroVersion::M4), EcLevel::Q);
         for i in 0_i16..17 {
-            c.put(i, -1, HORIZONTAL_SIDE[i.as_usize()]);
-            c.put(-1, i, VERTICAL_SIDE[i.as_usize()]);
+            c.put(i, -1, HORIZONTAL_SIDE[usize::try_from(i).unwrap()]);
+            c.put(-1, i, VERTICAL_SIDE[usize::try_from(i).unwrap()]);
         }
 
         assert_eq!(c.compute_light_side_penalty_score(), 168);

@@ -22,7 +22,7 @@ pub mod unicode;
 
 use core::cmp;
 
-use crate::{cast::As, types::Color};
+use crate::types::Color;
 
 /// Abstraction of an image pixel.
 pub trait Pixel: Copy + Sized {
@@ -108,8 +108,8 @@ impl<'a, P: Pixel> Renderer<'a, P> {
             horizontal_modules_count * vertical_modules_count,
             content.len()
         );
-        let horizontal_modules_count = horizontal_modules_count.as_u32();
-        let vertical_modules_count = vertical_modules_count.as_u32();
+        let horizontal_modules_count = horizontal_modules_count.try_into().unwrap();
+        let vertical_modules_count = vertical_modules_count.try_into().unwrap();
         let module_size = P::default_unit_size();
         let dark_color = P::default_color(Color::Dark);
         let light_color = P::default_color(Color::Light);
