@@ -48,7 +48,8 @@ impl MicroVersion {
     /// All versions of Micro QR code.
     pub(crate) const ALL: [Self; 4] = [Self::M1, Self::M2, Self::M3, Self::M4];
 
-    /// Gets the number of "modules" on each size of the Micro QR code, i.e. the width and height of the code.
+    /// Gets the number of "modules" on each size of the Micro QR code, i.e. the
+    /// width and height of the code.
     /// 
     /// # Examples
     ///
