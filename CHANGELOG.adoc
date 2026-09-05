@@ -31,8 +31,6 @@ project adheres to https://semver.org/[Semantic Versioning].
   ({pull-request-url}/194[#194])
 * Change the return type of `Version::height` to `u8`
   ({pull-request-url}/194[#194])
-* Change the type of `width` parameter of `canvas::is_functional` to `u8`
-  ({pull-request-url}/194[#194])
 
 === Fixed
 
