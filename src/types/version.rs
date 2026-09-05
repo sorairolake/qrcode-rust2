@@ -47,12 +47,9 @@ impl Version {
     #[must_use]
     pub fn width(self) -> u8 {
         match self {
-            Self::Normal(v) => u8::from(v) * 4 + 17,
-            Self::Micro(v) => u8::from(v) * 2 + 9,
-            Self::RectMicro(v) => {
-                let (_, w) = <(u8, u8)>::from(v);
-                w
-            }
+            Self::Normal(v) => v.width(),
+            Self::Micro(v) => v.width(),
+            Self::RectMicro(v) => v.width(),
         }
     }
 
@@ -72,11 +69,10 @@ impl Version {
     /// ```
     #[must_use]
     pub fn height(self) -> u8 {
-        if let Self::RectMicro(v) = self {
-            let (h, _) = <(u8, u8)>::from(v);
-            h
-        } else {
-            self.width()
+        match self {
+            Self::Normal(v) => v.width(),
+            Self::Micro(v) => v.width(),
+            Self::RectMicro(v) => v.height(),
         }
     }
 
@@ -134,9 +130,9 @@ impl Version {
     #[must_use]
     pub fn mode_bits_count(self) -> usize {
         match self {
-            Self::Normal(_) => 4,
-            Self::Micro(a) => (u8::from(a) - 1).into(),
-            Self::RectMicro(_) => 3,
+            Self::Normal(a) => a.mode_bits_count(),
+            Self::Micro(a) => a.mode_bits_count(),
+            Self::RectMicro(a) => a.mode_bits_count(),
         }
     }
 
@@ -236,6 +232,7 @@ mod tests {
     #[test]
     fn mode_bits_count() {
         assert_eq!(Version::Normal(NormalVersion::V1).mode_bits_count(), 4);
+        assert_eq!(Version::Normal(NormalVersion::V40).mode_bits_count(), 4);
         for version in MicroVersion::ALL {
             assert_eq!(
                 Version::Micro(version).mode_bits_count(),
@@ -244,6 +241,14 @@ mod tests {
         }
         assert_eq!(
             Version::RectMicro(RectMicroVersion::R7x43).mode_bits_count(),
+            3
+        );
+        assert_eq!(
+            Version::RectMicro(RectMicroVersion::R11x27).mode_bits_count(),
+            3
+        );
+        assert_eq!(
+            Version::RectMicro(RectMicroVersion::R17x139).mode_bits_count(),
             3
         );
     }
