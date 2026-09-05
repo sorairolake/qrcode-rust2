@@ -165,8 +165,7 @@ impl RectMicroVersion {
         Self::R17x139,
     ];
 
-    /// Gets the number of horizontally-arranged "modules" on each size of the
-    /// rMQR code, i.e. the width of the code.
+    /// Gets the number of modules in the width.
     ///
     /// # Examples
     ///
@@ -182,8 +181,7 @@ impl RectMicroVersion {
         w
     }
 
-    /// Gets the number of vertically-arranged "modules" on each size of the
-    /// rMQR code, i.e. the height of the code.
+    /// Gets the number of modules in the height.
     ///
     /// # Examples
     ///
