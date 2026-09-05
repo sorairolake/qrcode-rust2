@@ -308,7 +308,7 @@ impl QrCode {
         canvas.draw_all_functional_patterns();
         canvas.draw_data(&encoded_data, &ec_data);
         let content = canvas.apply_best_mask().into_colors();
-        let (width, height) = (version.width().into(), version.height().into());
+        let (width, height) = (version.width(), version.height());
         Ok(Self {
             content,
             version,
