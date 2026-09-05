@@ -45,13 +45,13 @@ impl Version {
     /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).width(), 139);
     /// ```
     #[must_use]
-    pub fn width(self) -> i16 {
+    pub fn width(self) -> u8 {
         match self {
-            Self::Normal(v) => i16::from(u8::from(v)) * 4 + 17,
-            Self::Micro(v) => i16::from(u8::from(v)) * 2 + 9,
+            Self::Normal(v) => u8::from(v) * 4 + 17,
+            Self::Micro(v) => u8::from(v) * 2 + 9,
             Self::RectMicro(v) => {
                 let (_, w) = <(u8, u8)>::from(v);
-                w.into()
+                w
             }
         }
     }
@@ -71,10 +71,10 @@ impl Version {
     /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).height(), 17);
     /// ```
     #[must_use]
-    pub fn height(self) -> i16 {
+    pub fn height(self) -> u8 {
         if let Self::RectMicro(v) = self {
             let (h, _) = <(u8, u8)>::from(v);
-            h.into()
+            h
         } else {
             self.width()
         }
