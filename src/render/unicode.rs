@@ -17,10 +17,7 @@
 
 use alloc::{string::String, vec, vec::Vec};
 
-use crate::{
-    cast::As,
-    render::{Canvas as RenderCanvas, Color, Pixel},
-};
+use crate::render::{Canvas as RenderCanvas, Color, Pixel};
 
 const CODEPAGE: [char; 4] = [' ', '\u{2584}', '\u{2580}', '\u{2588}'];
 
@@ -73,7 +70,7 @@ impl RenderCanvas for Canvas1x2 {
     type Image = String;
 
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
-        let canvas = vec![light_pixel.value(); (height * width).as_usize()];
+        let canvas = vec![light_pixel.value(); (height * width).try_into().unwrap()];
         let dark_pixel = dark_pixel.value();
         Self {
             canvas,
@@ -83,11 +80,11 @@ impl RenderCanvas for Canvas1x2 {
     }
 
     fn draw_dark_pixel(&mut self, x: u32, y: u32) {
-        self.canvas[(x + y * self.width).as_usize()] = self.dark_pixel;
+        self.canvas[(x + y * self.width).try_into().unwrap()] = self.dark_pixel;
     }
 
     fn into_image(self) -> Self::Image {
-        let width = self.width.as_usize();
+        let width = self.width.try_into().unwrap();
         let mut result = String::new();
 
         // Chopping the array into 2-line chunks.
