@@ -80,7 +80,7 @@ impl RenderCanvas for Canvas1x2 {
     }
 
     fn draw_dark_pixel(&mut self, x: u32, y: u32) {
-        self.canvas[(x + y * self.width).try_into().unwrap()] = self.dark_pixel;
+        self.canvas[usize::try_from(x + y * self.width).unwrap()] = self.dark_pixel;
     }
 
     fn into_image(self) -> Self::Image {
