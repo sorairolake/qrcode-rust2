@@ -8,10 +8,7 @@
 //! information.
 
 use super::Canvas;
-use crate::{
-    cast::As,
-    types::{Color, EcLevel, NormalVersion, Version},
-};
+use crate::types::{Color, EcLevel, NormalVersion, Version};
 
 impl Canvas {
     /// Draws a big-endian integer onto the canvas with the given coordinates.
@@ -86,7 +83,7 @@ impl Canvas {
             Version::Micro(_) => {}
             Version::Normal(a) if a <= NormalVersion::V6 => {}
             Version::Normal(a) => {
-                let version_info = VERSION_INFOS[(u8::from(a) - 7).as_usize()];
+                let version_info = VERSION_INFOS[(u8::from(a) - 7).into()];
                 self.draw_number(
                     version_info,
                     18,
