@@ -138,7 +138,7 @@ impl Canvas {
                 let simple_format_number = symbol_number << 2 | micro_pattern_number;
                 FORMAT_INFOS_MICRO_QR[simple_format_number]
             }
-            Version::RectMicro(_) => return,
+            Version::RectMicro(_) => unreachable!(),
         };
         self.draw_format_info_patterns_with_number(format_number);
     }
