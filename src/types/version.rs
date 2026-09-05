@@ -47,8 +47,8 @@ impl Version {
     #[must_use]
     pub fn width(self) -> u8 {
         match self {
-            Self::Normal(v) => v.width(),
-            Self::Micro(v) => v.width(),
+            Self::Normal(v) => v.size(),
+            Self::Micro(v) => v.size(),
             Self::RectMicro(v) => v.width(),
         }
     }
@@ -70,8 +70,8 @@ impl Version {
     #[must_use]
     pub fn height(self) -> u8 {
         match self {
-            Self::Normal(v) => v.width(),
-            Self::Micro(v) => v.width(),
+            Self::Normal(v) => v.size(),
+            Self::Micro(v) => v.size(),
             Self::RectMicro(v) => v.height(),
         }
     }
