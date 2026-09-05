@@ -476,7 +476,7 @@ impl Index<(usize, usize)> for QrCode {
     type Output = Color;
 
     fn index(&self, (x, y): (usize, usize)) -> &Self::Output {
-        let index = y * self.width.into() + x;
+        let index = y * usize::from(self.width) + x;
         &self.content[index]
     }
 }
