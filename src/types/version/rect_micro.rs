@@ -165,6 +165,79 @@ impl RectMicroVersion {
         Self::R17x139,
     ];
 
+    /// Gets the number of horizontally-arranged "modules" on each size of the
+    /// QR code, i.e. the width of the code.
+    ///
+    /// Except for rMQR code, the width is the same as the height.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
+    ///
+    /// assert_eq!(Version::Normal(NormalVersion::V40).width(), 177);
+    /// assert_eq!(Version::Micro(MicroVersion::M4).width(), 17);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).width(), 139);
+    /// ```
+    #[must_use]
+    pub fn width(self) -> u8 {
+        match self {
+            Self::Normal(v) => u8::from(v) * 4 + 17,
+            Self::Micro(v) => u8::from(v) * 2 + 9,
+            Self::RectMicro(v) => {
+                let (_, w) = <(u8, u8)>::from(v);
+                w
+            }
+        }
+    }
+
+    /// Gets the number of vertically-arranged "modules" on each size of the QR
+    /// code, i.e. the height of the code.
+    ///
+    /// Except for rMQR code, the height is the same as the width.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
+    ///
+    /// assert_eq!(Version::Normal(NormalVersion::V40).height(), 177);
+    /// assert_eq!(Version::Micro(MicroVersion::M4).height(), 17);
+    /// assert_eq!(Version::RectMicro(RectMicroVersion::R17x139).height(), 17);
+    /// ```
+    #[must_use]
+    pub fn height(self) -> u8 {
+        if let Self::RectMicro(v) = self {
+            let (h, _) = <(u8, u8)>::from(v);
+            h
+        } else {
+            self.width()
+        }
+    }
+
+    /// Returns the number of bits needed to encode the mode indicator.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::{MicroVersion, NormalVersion, RectMicroVersion, Version};
+    ///
+    /// assert_eq!(Version::Normal(NormalVersion::V40).mode_bits_count(), 4);
+    /// assert_eq!(Version::Micro(MicroVersion::M4).mode_bits_count(), 3);
+    /// assert_eq!(
+    ///     Version::RectMicro(RectMicroVersion::R17x139).mode_bits_count(),
+    ///     3
+    /// );
+    /// ```
+    #[must_use]
+    pub fn mode_bits_count(self) -> usize {
+        match self {
+            Self::Normal(_) => 4,
+            Self::Micro(a) => (u8::from(a) - 1).into(),
+            Self::RectMicro(_) => 3,
+        }
+    }
+
     /// Gets the index of the version of the rMQR code.
     pub(crate) const fn index(self) -> usize {
         match self {
