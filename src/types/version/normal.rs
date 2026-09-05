@@ -152,6 +152,37 @@ impl NormalVersion {
     /// assert_eq!(NormalVersion::MAX, NormalVersion::V40);
     /// ```
     pub const MAX: Self = Self::V40;
+
+    /// Gets the number of "modules" on each size of the QR code model 2, i.e.
+    /// the width and height of the code.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::NormalVersion;
+    ///
+    /// assert_eq!(NormalVersion::V1.width(), 21);
+    /// assert_eq!(NormalVersion::V40.width(), 177);
+    /// ```
+    #[must_use]
+    pub fn width(self) -> u8 {
+        u8::from(self) * 4 + 17
+    }
+
+    /// Returns the number of bits needed to encode the mode indicator.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::NormalVersion;
+    ///
+    /// assert_eq!(NormalVersion::V1.mode_bits_count(), 4);
+    /// assert_eq!(NormalVersion::V40.mode_bits_count(), 4);
+    /// ```
+    #[must_use]
+    pub const fn mode_bits_count(self) -> usize {
+        4
+    }
 }
 
 impl From<NormalVersion> for u8 {

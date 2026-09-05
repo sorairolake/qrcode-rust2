@@ -165,6 +165,55 @@ impl RectMicroVersion {
         Self::R17x139,
     ];
 
+    /// Gets the number of horizontally-arranged "modules" on each size of the
+    /// rMQR code, i.e. the width of the code.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::RectMicroVersion;
+    ///
+    /// assert_eq!(RectMicroVersion::R7x43.width(), 43);
+    /// assert_eq!(RectMicroVersion::R17x139.width(), 139);
+    /// ```
+    #[must_use]
+    pub fn width(self) -> u8 {
+        let (_, w) = <(u8, u8)>::from(self);
+        w
+    }
+
+    /// Gets the number of vertically-arranged "modules" on each size of the
+    /// rMQR code, i.e. the height of the code.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::RectMicroVersion;
+    ///
+    /// assert_eq!(RectMicroVersion::R7x43.height(), 7);
+    /// assert_eq!(RectMicroVersion::R17x139.height(), 17);
+    /// ```
+    #[must_use]
+    pub fn height(self) -> u8 {
+        let (h, _) = <(u8, u8)>::from(self);
+        h
+    }
+
+    /// Returns the number of bits needed to encode the mode indicator.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::RectMicroVersion;
+    ///
+    /// assert_eq!(RectMicroVersion::R7x43.mode_bits_count(), 3);
+    /// assert_eq!(RectMicroVersion::R17x139.mode_bits_count(), 3);
+    /// ```
+    #[must_use]
+    pub const fn mode_bits_count(self) -> usize {
+        3
+    }
+
     /// Gets the index of the version of the rMQR code.
     pub(crate) const fn index(self) -> usize {
         match self {

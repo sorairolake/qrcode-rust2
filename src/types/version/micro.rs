@@ -47,6 +47,37 @@ impl MicroVersion {
 
     /// All versions of Micro QR code.
     pub(crate) const ALL: [Self; 4] = [Self::M1, Self::M2, Self::M3, Self::M4];
+
+    /// Gets the number of "modules" on each size of the Micro QR code, i.e. the
+    /// width and height of the code.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::MicroVersion;
+    ///
+    /// assert_eq!(MicroVersion::M1.width(), 11);
+    /// assert_eq!(MicroVersion::M4.width(), 17);
+    /// ```
+    #[must_use]
+    pub fn width(self) -> u8 {
+        u8::from(self) * 2 + 9
+    }
+
+    /// Returns the number of bits needed to encode the mode indicator.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::MicroVersion;
+    ///
+    /// assert_eq!(MicroVersion::M1.mode_bits_count(), 0);
+    /// assert_eq!(MicroVersion::M4.mode_bits_count(), 3);
+    /// ```
+    #[must_use]
+    pub fn mode_bits_count(self) -> usize {
+        (u8::from(self) - 1).into()
+    }
 }
 
 impl From<MicroVersion> for u8 {
