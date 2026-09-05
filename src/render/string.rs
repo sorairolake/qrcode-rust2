@@ -20,7 +20,6 @@
 use alloc::{string::String, vec, vec::Vec};
 
 use crate::{
-
     render::{Canvas as RenderCanvas, Pixel},
     types::Color,
 };
@@ -93,9 +92,9 @@ impl<P: Element> RenderCanvas for Canvas<P> {
     type Image = String;
 
     fn new(width: u32, height: u32, dark_pixel: Self::Pixel, light_pixel: Self::Pixel) -> Self {
-        let width = width.try_into().unwrap();
+        let width = usize::try_from(width).unwrap();
         let height = isize::try_from(height).unwrap();
-        let buffer = vec![light_pixel; height.try_into().unwrap() * width];
+        let buffer = vec![light_pixel; usize::try_from(height).unwrap() * width];
         let dark_cap = isize::try_from(dark_pixel.str_len()).unwrap();
         let light_cap = isize::try_from(light_pixel.str_len()).unwrap();
         let dark_cap_inc = dark_cap - light_cap;
@@ -110,8 +109,8 @@ impl<P: Element> RenderCanvas for Canvas<P> {
     }
 
     fn draw_dark_pixel(&mut self, x: u32, y: u32) {
-        let x = x.try_into().unwrap();
-        let y = y.try_into().unwrap();
+        let x = usize::try_from(x).unwrap();
+        let y = usize::try_from(y).unwrap();
         self.capacity += self.dark_cap_inc;
         self.buffer[x + y * self.width] = self.dark_pixel;
     }
