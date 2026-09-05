@@ -180,7 +180,7 @@ impl NormalVersion {
     /// assert_eq!(NormalVersion::V40.mode_bits_count(), 4);
     /// ```
     #[must_use]
-    pub const fn mode_bits_count(self) -> usize {
+    pub const fn mode_bits_count(self) -> u8 {
         4
     }
 }
