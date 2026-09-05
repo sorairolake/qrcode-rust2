@@ -31,7 +31,7 @@ impl Canvas {
 /// Gets whether the module at the given coordinates represents a functional
 /// module.
 #[must_use]
-pub fn is_functional(version: Version, width: i16, x: i16, y: i16) -> bool {
+pub fn is_functional(version: Version, width: i16, mut x: i16, mut y: i16) -> bool {
     debug_assert_eq!(width, version.width().into());
 
     if x < 0 {
