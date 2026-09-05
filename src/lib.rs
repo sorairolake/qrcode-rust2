@@ -53,7 +53,6 @@ extern crate std;
 
 pub mod bits;
 pub mod canvas;
-mod cast;
 pub mod ec;
 pub mod error;
 pub mod optimize;
