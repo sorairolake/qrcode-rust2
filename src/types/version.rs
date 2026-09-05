@@ -128,7 +128,7 @@ impl Version {
     /// );
     /// ```
     #[must_use]
-    pub fn mode_bits_count(self) -> usize {
+    pub fn mode_bits_count(self) -> u8 {
         match self {
             Self::Normal(a) => a.mode_bits_count(),
             Self::Micro(a) => a.mode_bits_count(),
