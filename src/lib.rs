@@ -272,7 +272,6 @@ impl QrCode {
         Self::with_bits(bits, ec_level)
     }
 
-    #[expect(clippy::missing_panics_doc)]
     /// Constructs a new QR code with encoded bits.
     ///
     /// Use this method only if there are very special need to manipulate the
