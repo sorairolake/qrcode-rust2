@@ -16,7 +16,7 @@ pub enum EcLevel {
     #[default]
     M,
 
-    /// "Quartile" error correction. Allows up to 25% of wrong blocks.
+    /// Quartile error correction. Allows up to 25% of wrong blocks.
     Q,
 
     /// High error correction. Allows up to 30% of wrong blocks.
