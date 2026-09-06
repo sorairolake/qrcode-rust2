@@ -100,16 +100,16 @@ impl<'a, P: Pixel> Renderer<'a, P> {
     #[must_use]
     pub fn new(
         content: &'a [Color],
-        horizontal_modules_count: u8,
-        vertical_modules_count: u8,
+        horizontal_modules_count: usize,
+        vertical_modules_count: usize,
         quiet_zone: u32,
     ) -> Self {
         assert_eq!(
-            usize::from(horizontal_modules_count) * usize::from(vertical_modules_count),
+            horizontal_modules_count * vertical_modules_count,
             content.len()
         );
-        let horizontal_modules_count = horizontal_modules_count.into();
-        let vertical_modules_count = vertical_modules_count.into();
+        let horizontal_modules_count = horizontal_modules_count.try_into().unwrap();
+        let vertical_modules_count = vertical_modules_count.try_into().unwrap();
         let module_size = P::default_unit_size();
         let dark_color = P::default_color(Color::Dark);
         let light_color = P::default_color(Color::Light);
