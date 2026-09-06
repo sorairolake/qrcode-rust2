@@ -83,6 +83,8 @@ pub struct QrCode {
     content: Vec<Color>,
     version: Version,
     ec_level: EcLevel,
+    width: usize,
+    height: usize,
 }
 
 impl QrCode {
@@ -306,10 +308,13 @@ impl QrCode {
         canvas.draw_all_functional_patterns();
         canvas.draw_data(&encoded_data, &ec_data);
         let content = canvas.apply_best_mask().into_colors();
+        let (width, height) = (version.width().into(), version.height().into());
         Ok(Self {
             content,
             version,
             ec_level,
+            width,
+            height,
         })
     }
 
@@ -356,8 +361,8 @@ impl QrCode {
     /// assert_eq!(code.width(), 27);
     /// ```
     #[must_use]
-    pub fn width(&self) -> u8 {
-        self.version.width()
+    pub const fn width(&self) -> usize {
+        self.width
     }
 
     /// Gets the number of modules per side, i.e. the height of this QR code.
@@ -373,8 +378,8 @@ impl QrCode {
     /// assert_eq!(code.height(), 13);
     /// ```
     #[must_use]
-    pub fn height(&self) -> u8 {
-        self.version.height()
+    pub const fn height(&self) -> usize {
+        self.height
     }
 
     #[expect(clippy::missing_panics_doc)]
@@ -405,7 +410,7 @@ impl QrCode {
     pub fn is_functional(&self, x: usize, y: usize) -> bool {
         let x = x.try_into().unwrap();
         let y = y.try_into().unwrap();
-        canvas::is_functional(self.version, self.width().into(), x, y)
+        canvas::is_functional(self.version, self.version.width().into(), x, y)
     }
 
     /// Converts the QR code into a human-readable string. This is mainly for
@@ -463,7 +468,7 @@ impl QrCode {
     #[must_use]
     pub fn render<P: Pixel>(&self) -> Renderer<'_, P> {
         let quiet_zone = if self.version.is_normal() { 4 } else { 2 };
-        Renderer::new(&self.content, self.width(), self.height(), quiet_zone)
+        Renderer::new(&self.content, self.width, self.height, quiet_zone)
     }
 }
 
@@ -471,7 +476,7 @@ impl Index<(usize, usize)> for QrCode {
     type Output = Color;
 
     fn index(&self, (x, y): (usize, usize)) -> &Self::Output {
-        let index = y * usize::from(self.width()) + x;
+        let index = y * self.width + x;
         &self.content[index]
     }
 }
