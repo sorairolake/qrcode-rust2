@@ -83,8 +83,6 @@ pub struct QrCode {
     content: Vec<Color>,
     version: Version,
     ec_level: EcLevel,
-    width: usize,
-    height: usize,
 }
 
 impl QrCode {
@@ -308,13 +306,10 @@ impl QrCode {
         canvas.draw_all_functional_patterns();
         canvas.draw_data(&encoded_data, &ec_data);
         let content = canvas.apply_best_mask().into_colors();
-        let (width, height) = (version.width().into(), version.height().into());
         Ok(Self {
             content,
             version,
             ec_level,
-            width,
-            height,
         })
     }
 
@@ -348,7 +343,7 @@ impl QrCode {
         self.ec_level
     }
 
-    /// Gets the number of modules per side, i.e. the width of this QR code.
+    /// Gets the number of modules in the width.
     ///
     /// The width here does not contain the quiet zone paddings.
     ///
@@ -361,11 +356,11 @@ impl QrCode {
     /// assert_eq!(code.width(), 27);
     /// ```
     #[must_use]
-    pub const fn width(&self) -> usize {
-        self.width
+    pub fn width(&self) -> usize {
+        self.version.width().into()
     }
 
-    /// Gets the number of modules per side, i.e. the height of this QR code.
+    /// Gets the number of modules in the height.
     ///
     /// The height here does not contain the quiet zone paddings.
     ///
@@ -378,8 +373,8 @@ impl QrCode {
     /// assert_eq!(code.height(), 13);
     /// ```
     #[must_use]
-    pub const fn height(&self) -> usize {
-        self.height
+    pub fn height(&self) -> usize {
+        self.version.height().into()
     }
 
     #[expect(clippy::missing_panics_doc)]
@@ -468,7 +463,7 @@ impl QrCode {
     #[must_use]
     pub fn render<P: Pixel>(&self) -> Renderer<'_, P> {
         let quiet_zone = if self.version.is_normal() { 4 } else { 2 };
-        Renderer::new(&self.content, self.width, self.height, quiet_zone)
+        Renderer::new(&self.content, self.width(), self.height(), quiet_zone)
     }
 }
 
@@ -476,7 +471,7 @@ impl Index<(usize, usize)> for QrCode {
     type Output = Color;
 
     fn index(&self, (x, y): (usize, usize)) -> &Self::Output {
-        let index = y * self.width + x;
+        let index = y * self.width() + x;
         &self.content[index]
     }
 }
