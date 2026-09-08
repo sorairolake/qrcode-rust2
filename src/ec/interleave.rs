@@ -9,7 +9,7 @@
 use alloc::vec::Vec;
 use core::ops::Deref;
 
-/// This method interleaves a vector of slices into a single vector.
+/// This function interleaves a vector of slices into a single vector.
 ///
 /// It will first insert all the first elements of the slices in `blocks`, then
 /// all the second elements, then all the third elements, and so on.

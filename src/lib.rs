@@ -89,7 +89,7 @@ impl QrCode {
     /// Constructs a new QR code model 2 which automatically encodes the given
     /// data.
     ///
-    /// This method uses [`EcLevel::M`] and automatically chooses the smallest
+    /// This function uses [`EcLevel::M`] and automatically chooses the smallest
     /// QR code model 2 based on [`bits::encode_auto`].
     ///
     /// # Errors
@@ -111,7 +111,7 @@ impl QrCode {
     /// Constructs a new Micro QR code which automatically encodes the given
     /// data.
     ///
-    /// This method uses [`EcLevel::M`] and automatically chooses the smallest
+    /// This function uses [`EcLevel::M`] and automatically chooses the smallest
     /// Micro QR code based on [`bits::encode_auto_micro`].
     ///
     /// # Errors
@@ -132,7 +132,7 @@ impl QrCode {
 
     /// Constructs a new rMQR code which automatically encodes the given data.
     ///
-    /// This method uses [`EcLevel::M`] and automatically chooses the smallest
+    /// This function uses [`EcLevel::M`] and automatically chooses the smallest
     /// rMQR code based on [`bits::encode_auto_rect_micro`] and
     /// [`RectMicroStrategy::Area`].
     ///
@@ -155,8 +155,8 @@ impl QrCode {
     /// Constructs a new QR code model 2 which automatically encodes the given
     /// data at a specific error correction level.
     ///
-    /// This method automatically chooses the smallest QR code model 2 based on
-    /// [`bits::encode_auto`].
+    /// This function automatically chooses the smallest QR code model 2 based
+    /// on [`bits::encode_auto`].
     ///
     /// # Errors
     ///
@@ -178,7 +178,7 @@ impl QrCode {
     /// Constructs a new Micro QR code which automatically encodes the given
     /// data at a specific error correction level.
     ///
-    /// This method automatically chooses the smallest Micro QR code based on
+    /// This function automatically chooses the smallest Micro QR code based on
     /// [`bits::encode_auto_micro`].
     ///
     /// # Errors
@@ -204,7 +204,7 @@ impl QrCode {
     /// Constructs a new rMQR code which automatically encodes the given data at
     /// a specific error correction level.
     ///
-    /// This method automatically chooses the smallest rMQR code based on
+    /// This function automatically chooses the smallest rMQR code based on
     /// [`bits::encode_auto_rect_micro`] and [`RectMicroStrategy::Area`].
     ///
     /// # Errors
@@ -245,7 +245,7 @@ impl QrCode {
     ///     QrCode::with_version(b"Some data", Version::Normal(NormalVersion::V5), EcLevel::M).unwrap();
     /// ```
     ///
-    /// This method can also be used to generate Micro QR code or rMQR code.
+    /// This function can also be used to generate Micro QR code or rMQR code.
     ///
     /// ```
     /// use qrcode2::{EcLevel, MicroVersion, QrCode, RectMicroVersion, Version};
@@ -272,7 +272,7 @@ impl QrCode {
 
     /// Constructs a new QR code with encoded bits.
     ///
-    /// Use this method only if there are very special need to manipulate the
+    /// Use this function only if there are very special need to manipulate the
     /// raw bits before encoding. Some examples are:
     ///
     /// - Encode data using specific character set with ECI.
