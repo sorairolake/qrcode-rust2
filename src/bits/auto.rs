@@ -22,7 +22,7 @@ use crate::{
 /// Automatically determines the minimum QR code model 2 version to store the
 /// data, and encode the result.
 ///
-/// This method will not consider any Micro QR code or rMQR code versions.
+/// This function will not consider any Micro QR code or rMQR code versions.
 ///
 /// # Errors
 ///
@@ -144,7 +144,7 @@ mod encode_auto_tests {
 /// Automatically determines the minimum Micro QR code version to store the
 /// data, and encode the result.
 ///
-/// This method will not consider any QR code model 2 or rMQR code versions.
+/// This function will not consider any QR code model 2 or rMQR code versions.
 ///
 /// # Errors
 ///
@@ -227,7 +227,7 @@ pub enum RectMicroStrategy {
 /// Automatically determines the minimum rMQR code version to store the data,
 /// and encode the result.
 ///
-/// This method will not consider any QR code model 2 or Micro QR code versions.
+/// This function will not consider any QR code model 2 or Micro QR code versions.
 ///
 /// # Errors
 ///

@@ -19,10 +19,10 @@ pub use self::{capacity::max_allowed_errors, construct_codewords::construct_code
 
 /// Creates the error correction code in N bytes.
 ///
-/// This method only supports computing the error-correction code up to 69
+/// This function only supports computing the error-correction code up to 69
 /// bytes. Longer blocks will result in task panic.
 ///
-/// This method treats the data as a polynomial of the form (a\[0\]
+/// This function treats the data as a polynomial of the form (a\[0\]
 /// x<sup>m+n</sup> + a\[1\] x<sup>m+n-1</sup> + … + a\[m\] x<sup>n</sup>) in
 /// GF(2<sup>8</sup>), and then computes the polynomial modulus with a generator
 /// polynomial of degree N.
