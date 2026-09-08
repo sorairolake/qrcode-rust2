@@ -227,7 +227,8 @@ pub enum RectMicroStrategy {
 /// Automatically determines the minimum rMQR code version to store the data,
 /// and encode the result.
 ///
-/// This function will not consider any QR code model 2 or Micro QR code versions.
+/// This function will not consider any QR code model 2 or Micro QR code
+/// versions.
 ///
 /// # Errors
 ///
