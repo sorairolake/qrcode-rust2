@@ -155,8 +155,8 @@ impl QrCode {
     /// Constructs a new QR code model 2 which automatically encodes the given
     /// data at a specific error correction level.
     ///
-    /// This function automatically chooses the smallest QR code model 2 based on
-    /// [`bits::encode_auto`].
+    /// This function automatically chooses the smallest QR code model 2 based
+    /// on [`bits::encode_auto`].
     ///
     /// # Errors
     ///
