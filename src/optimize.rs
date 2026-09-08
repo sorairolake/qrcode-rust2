@@ -32,9 +32,9 @@ pub struct Optimizer<I> {
 impl<I: Iterator<Item = Segment>> Optimizer<I> {
     /// Optimizes the segments by combining adjacent segments when possible.
     ///
-    /// Currently this function uses a greedy algorithm by combining segments from
-    /// left to right until the new segment is longer than before. This function
-    /// does _not_ use Annex J from the ISO standard.
+    /// Currently this function uses a greedy algorithm by combining segments
+    /// from left to right until the new segment is longer than before. This
+    /// function does _not_ use Annex J from the ISO standard.
     pub fn new(mut segments: I, version: Version) -> Self {
         match segments.next() {
             None => Self {
