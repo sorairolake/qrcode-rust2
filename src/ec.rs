@@ -35,7 +35,7 @@ pub fn create_error_correction_code(data: &[u8], ec_code_size: usize) -> Vec<u8>
     res.resize(ec_code_size + data_len, 0);
 
     for i in 0..data_len {
-        let lead_coeff = res[i] as usize;
+        let lead_coeff = usize::from(res[i]);
         if lead_coeff == 0 {
             continue;
         }
