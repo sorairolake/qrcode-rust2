@@ -566,7 +566,7 @@ mod tests {
 }
 
 #[cfg(test)]
-mod iso_capacity {
+mod iso_capacity_tests {
     //! Data-driven conformance for QR character capacities (Micro, Model 2,
     //! rMQR).
     //!
@@ -690,13 +690,13 @@ mod iso_capacity {
                 assert!(
                     QrCode::with_version(fill(unit, cap), version, ec).is_ok(),
                     "{version:?} {ec:?}: {cap} of {:?} should fit",
-                    unit as char
+                    char::from(unit)
                 );
                 assert!(
                     QrCode::with_version(fill(unit, cap + 1), version, ec).is_err(),
                     "{version:?} {ec:?}: {} of {:?} should overflow",
                     cap + 1,
-                    unit as char
+                    char::from(unit)
                 );
             }
         }
