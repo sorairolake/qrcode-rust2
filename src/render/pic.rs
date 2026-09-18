@@ -23,8 +23,8 @@ use alloc::{format, string::String};
 use core::fmt::Write;
 
 use crate::{
-    render::{Canvas as RenderCanvas, Pixel},
-    types::Color as ModuleColor,
+    render::{self, Pixel},
+    types,
 };
 
 /// A PIC color.
@@ -35,7 +35,7 @@ impl Pixel for Color {
     type Image = String;
     type Canvas = Canvas;
 
-    fn default_color(_color: ModuleColor) -> Self {
+    fn default_color(_color: types::Color) -> Self {
         Self
     }
 }
@@ -46,7 +46,7 @@ pub struct Canvas {
     pic: String,
 }
 
-impl RenderCanvas for Canvas {
+impl render::Canvas for Canvas {
     type Pixel = Color;
     type Image = String;
 
