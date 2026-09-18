@@ -26,8 +26,8 @@ use core::{fmt::Write, marker::PhantomData};
 use csscolorparser::ParseColorError;
 
 use crate::{
-    render::{Canvas as RenderCanvas, Pixel},
-    types::Color as ModuleColor,
+    render::{self, Pixel},
+    types,
 };
 
 /// An SVG color.
@@ -65,7 +65,7 @@ impl<'a> Pixel for Color<'a> {
     type Image = String;
     type Canvas = Canvas<'a>;
 
-    fn default_color(color: ModuleColor) -> Self {
+    fn default_color(color: types::Color) -> Self {
         let color = color.select("#000", "#fff");
         Self::new(color).unwrap()
     }
@@ -78,7 +78,7 @@ pub struct Canvas<'a> {
     marker: PhantomData<Color<'a>>,
 }
 
-impl<'a> RenderCanvas for Canvas<'a> {
+impl<'a> render::Canvas for Canvas<'a> {
     type Pixel = Color<'a>;
     type Image = String;
 
