@@ -17,7 +17,7 @@
 
 use alloc::{string::String, vec, vec::Vec};
 
-use crate::render::{Canvas as RenderCanvas, Color, Pixel};
+use crate::render::{self, Color, Pixel};
 
 const CODEPAGE: [char; 4] = [' ', '\u{2584}', '\u{2580}', '\u{2588}'];
 
@@ -65,7 +65,7 @@ pub struct Canvas1x2 {
     dark_pixel: u8,
 }
 
-impl RenderCanvas for Canvas1x2 {
+impl render::Canvas for Canvas1x2 {
     type Pixel = Dense1x2;
     type Image = String;
 
