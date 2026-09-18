@@ -118,7 +118,7 @@ impl Iterator for Parser<'_> {
 
         loop {
             let (i, ecs) = self.ecs_iter.next()?;
-            let (next_state, action) = STATE_TRANSITION[self.state as usize + usize::from(ecs)];
+            let (next_state, action) = STATE_TRANSITION[self.state as usize + ecs as usize];
             self.state = next_state;
 
             let old_begin = self.begin;
