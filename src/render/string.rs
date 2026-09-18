@@ -20,7 +20,7 @@
 use alloc::{string::String, vec, vec::Vec};
 
 use crate::{
-    render::{Canvas as RenderCanvas, Pixel},
+    render::{self, Pixel},
     types::Color,
 };
 
@@ -87,7 +87,7 @@ impl<P: Element> Pixel for P {
     }
 }
 
-impl<P: Element> RenderCanvas for Canvas<P> {
+impl<P: Element> render::Canvas for Canvas<P> {
     type Pixel = P;
     type Image = String;
 
