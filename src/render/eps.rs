@@ -20,8 +20,8 @@ use alloc::{format, string::String};
 use core::fmt::Write;
 
 use crate::{
-    render::{Canvas as RenderCanvas, Pixel},
-    types::Color as ModuleColor,
+    render::{self, Pixel},
+    types,
 };
 
 /// An EPS color.
@@ -65,7 +65,7 @@ impl Pixel for Color {
     type Image = String;
     type Canvas = Canvas;
 
-    fn default_color(color: ModuleColor) -> Self {
+    fn default_color(color: types::Color) -> Self {
         let [red, green, blue] = color.select(Default::default(), [1.0; 3]);
         Self::new(red, green, blue).unwrap()
     }
@@ -78,7 +78,7 @@ pub struct Canvas {
     height: u32,
 }
 
-impl RenderCanvas for Canvas {
+impl render::Canvas for Canvas {
     type Pixel = Color;
     type Image = String;
 
