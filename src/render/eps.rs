@@ -20,7 +20,7 @@ use alloc::{format, string::String};
 use core::fmt::Write;
 
 use crate::{
-    render::{self, Pixel},
+    render::{Canvas, Pixel},
     types,
 };
 
@@ -78,7 +78,7 @@ pub struct Canvas {
     height: u32,
 }
 
-impl render::Canvas for Canvas {
+impl Canvas for Canvas {
     type Pixel = Color;
     type Image = String;
 
