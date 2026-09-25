@@ -11,6 +11,7 @@ use qrcode2::{
 
 #[test]
 fn annex_i_qr_as_pic() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Normal(NormalVersion::V1), EcLevel::M).unwrap();
     let image = code.render::<Color>().build();
@@ -20,6 +21,7 @@ fn annex_i_qr_as_pic() {
 
 #[test]
 fn annex_i_micro_qr_as_pic() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code.render::<Color>().min_dimensions(1, 1).build();
