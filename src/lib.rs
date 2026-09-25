@@ -516,6 +516,7 @@ mod tests {
 
     #[test]
     fn annex_i_micro_qr() {
+        // This uses the ISO Annex I as test vector.
         let code = QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L)
             .unwrap();
         assert_eq!(
