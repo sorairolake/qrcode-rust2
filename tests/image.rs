@@ -22,6 +22,7 @@ static INPUT_DATA: LazyLock<Vec<u8>> = LazyLock::new(|| {
 
 #[test]
 fn annex_i_qr_as_image() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Normal(NormalVersion::V1), EcLevel::M).unwrap();
     let image = code.render::<Luma<u8>>().build();
@@ -34,6 +35,7 @@ fn annex_i_qr_as_image() {
 
 #[test]
 fn annex_i_micro_qr_as_image() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
