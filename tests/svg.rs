@@ -11,6 +11,7 @@ use qrcode2::{
 
 #[test]
 fn annex_i_qr_as_svg() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Normal(NormalVersion::V1), EcLevel::M).unwrap();
     let image = code.render::<Color<'_>>().build();
@@ -20,6 +21,7 @@ fn annex_i_qr_as_svg() {
 
 #[test]
 fn annex_i_micro_qr_as_svg() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
@@ -47,6 +49,7 @@ fn rmqr_as_svg() {
 
 #[test]
 fn annex_i_micro_qr_as_svg_named_color() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
@@ -61,6 +64,7 @@ fn annex_i_micro_qr_as_svg_named_color() {
 
 #[test]
 fn annex_i_micro_qr_as_svg_rgb() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
@@ -75,6 +79,7 @@ fn annex_i_micro_qr_as_svg_rgb() {
 
 #[test]
 fn annex_i_micro_qr_as_svg_hsl() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
@@ -89,6 +94,7 @@ fn annex_i_micro_qr_as_svg_hsl() {
 
 #[test]
 fn annex_i_micro_qr_as_svg_hwb() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
@@ -103,6 +109,7 @@ fn annex_i_micro_qr_as_svg_hwb() {
 
 #[test]
 fn annex_i_micro_qr_as_svg_lab() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
@@ -117,6 +124,7 @@ fn annex_i_micro_qr_as_svg_lab() {
 
 #[test]
 fn annex_i_micro_qr_as_svg_lch() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
@@ -131,6 +139,7 @@ fn annex_i_micro_qr_as_svg_lch() {
 
 #[test]
 fn annex_i_micro_qr_as_svg_oklab() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
@@ -145,6 +154,7 @@ fn annex_i_micro_qr_as_svg_oklab() {
 
 #[test]
 fn annex_i_micro_qr_as_svg_oklch() {
+    // This uses the ISO Annex I as test vector.
     let code =
         QrCode::with_version(b"01234567", Version::Micro(MicroVersion::M2), EcLevel::L).unwrap();
     let image = code
