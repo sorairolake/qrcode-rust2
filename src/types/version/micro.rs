@@ -79,22 +79,6 @@ impl MicroVersion {
     }
 }
 
-impl From<MicroVersion> for u8 {
-    /// Converts a `MicroVersion` into a [`u8`] value.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use qrcode2::MicroVersion;
-    ///
-    /// assert_eq!(u8::from(MicroVersion::M1), 1);
-    /// assert_eq!(u8::from(MicroVersion::M4), 4);
-    /// ```
-    fn from(version: MicroVersion) -> Self {
-        version as Self
-    }
-}
-
 impl TryFrom<u8> for MicroVersion {
     type Error = Error;
 
@@ -125,17 +109,25 @@ impl TryFrom<u8> for MicroVersion {
     }
 }
 
+impl From<MicroVersion> for u8 {
+    /// Converts a `MicroVersion` into a [`u8`] value.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use qrcode2::MicroVersion;
+    ///
+    /// assert_eq!(u8::from(MicroVersion::M1), 1);
+    /// assert_eq!(u8::from(MicroVersion::M4), 4);
+    /// ```
+    fn from(version: MicroVersion) -> Self {
+        version as Self
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn from_micro_version_to_u8() {
-        assert_eq!(u8::from(MicroVersion::M1), 1);
-        assert_eq!(u8::from(MicroVersion::M2), 2);
-        assert_eq!(u8::from(MicroVersion::M3), 3);
-        assert_eq!(u8::from(MicroVersion::M4), 4);
-    }
 
     #[test]
     fn try_from_u8_to_micro_version() {
@@ -159,5 +151,13 @@ mod tests {
             MicroVersion::try_from(u8::MAX).unwrap_err(),
             Error::InvalidVersion
         );
+    }
+
+    #[test]
+    fn from_micro_version_to_u8() {
+        assert_eq!(u8::from(MicroVersion::M1), 1);
+        assert_eq!(u8::from(MicroVersion::M2), 2);
+        assert_eq!(u8::from(MicroVersion::M3), 3);
+        assert_eq!(u8::from(MicroVersion::M4), 4);
     }
 }
